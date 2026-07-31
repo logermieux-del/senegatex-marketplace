@@ -1,0 +1,84 @@
+import NextAuth, { type NextAuthOptions, type Session } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { compare } from 'bcryptjs';
+import { prisma } from './db';
+
+export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email', placeholder: 'user@example.com' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error('Missing email or password');
+        }
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email.toLowerCase() },
+        });
+
+        if (!user || !user.password) {
+          throw new Error('Invalid email or password');
+        }
+
+        const passwordMatch = await compare(credentials.password, user.password);
+
+        if (!passwordMatch) {
+          throw new Error('Invalid email or password');
+        }
+
+        if (user.isSuspended) {
+          throw new Error('Account suspended');
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          image: user.avatar,
+        };
+      },
+    }),
+  ],
+
+  pages: {
+    signIn: '/login',
+    error: '/login?error=true',
+  },
+
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
+  },
+
+  session: {
+    strategy: 'jwt',
+    maxAge: 7 * 24 * 60 * 60, // 7 days
+  },
+
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+export const handler = NextAuth(authOptions);
+
+// Helper function to get session in server components
+export async function getAuthSession(): Promise<Session | null> {
+  const { getServerSession } = await import('next-auth/next');
+  return getServerSession(authOptions);
+}
