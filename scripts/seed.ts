@@ -47,7 +47,7 @@ async function main() {
       price: 80000000, // 800,000 XOF
       city: 'Dakar',
       region: 'Dakar',
-      photos: ['https://res.cloudinary.com/example/image1.jpg'],
+      photos: JSON.stringify(['https://res.cloudinary.com/example/image1.jpg']),
       thumbnail: 'https://res.cloudinary.com/example/image1.jpg',
     },
   });
@@ -60,7 +60,7 @@ async function main() {
       category: 'furniture',
       price: 25000000, // 250,000 XOF
       city: 'Thiès',
-      photos: ['https://res.cloudinary.com/example/image2.jpg'],
+      photos: JSON.stringify(['https://res.cloudinary.com/example/image2.jpg']),
       thumbnail: 'https://res.cloudinary.com/example/image2.jpg',
     },
   });

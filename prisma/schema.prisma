@@ -1,12 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -16,13 +13,12 @@ model User {
   email         String     @unique
   phone         String?    @unique
   name          String
-  avatar        String?    // Cloudinary URL
+  avatar        String?
   bio           String?
-  role          UserRole   @default(USER) // USER, SELLER, ADMIN
+  role          String     @default("USER") // USER, SELLER, ADMIN
   emailVerified DateTime?
-  password      String     // bcrypt hashed
+  password      String
 
-  // Relations
   listings      Listing[]
   sentMessages  Message[]  @relation("sentMessages")
   receivedMessages Message[] @relation("receivedMessages")
@@ -32,7 +28,6 @@ model User {
   boughtTransactions Transaction[] @relation("buyer")
   moderatorActions ModeratorAction[]
 
-  // Metadata
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   isActive      Boolean    @default(true)
@@ -44,43 +39,33 @@ model User {
   @@index([isActive])
 }
 
-enum UserRole {
-  USER
-  SELLER
-  ADMIN
-}
-
-// Listing model (Product/Service listing)
+// Listing model
 model Listing {
   id            String     @id @default(cuid())
   userId        String
   user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   title         String
-  description   String     @db.Text
-  category      String     // e.g., "electronics", "furniture", "vehicles"
-  price         Int        // in XOF (cents)
+  description   String
+  category      String
+  price         Int
   currency      String     @default("XOF")
-  status        ListingStatus @default(ACTIVE) // ACTIVE, SOLD, DELETED
+  status        String     @default("ACTIVE") // ACTIVE, SOLD, DELETED
 
-  // Location (Senegal specific)
-  city          String     // Dakar, Thiès, etc.
-  region        String?    // Optional: region name
-  latitude      Float?     // GPS coordinates
+  city          String
+  region        String?
+  latitude      Float?
   longitude     Float?
 
-  // Media
-  photos        String[]   // Cloudinary URLs
-  thumbnail     String?    // Main photo
+  photos        String? // JSON array as string
+  thumbnail     String?
 
-  // Metadata
   viewCount     Int        @default(0)
   isFeatured    Boolean    @default(false)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  expiresAt     DateTime?  // Auto-archive after 90 days
+  expiresAt     DateTime?
 
-  // Relations
   messages      Message[]
   transactions  Transaction[]
   reports       Report[]
@@ -92,13 +77,7 @@ model Listing {
   @@index([createdAt])
 }
 
-enum ListingStatus {
-  ACTIVE
-  SOLD
-  DELETED
-}
-
-// Private messages between users
+// Private messages
 model Message {
   id            String     @id @default(cuid())
   fromUserId    String
@@ -107,10 +86,10 @@ model Message {
   toUserId      String
   to            User       @relation("receivedMessages", fields: [toUserId], references: [id], onDelete: Cascade)
 
-  listingId     String?    // Linked to listing (optional)
+  listingId     String?
   listing       Listing?   @relation(fields: [listingId], references: [id], onDelete: SetNull)
 
-  body          String     @db.Text
+  body          String
   isRead        Boolean    @default(false)
 
   createdAt     DateTime   @default(now())
@@ -134,16 +113,16 @@ model Transaction {
   buyerId       String
   buyer         User       @relation("buyer", fields: [buyerId], references: [id], onDelete: Cascade)
 
-  amount        Int        // in XOF (cents)
+  amount        Int
   currency      String     @default("XOF")
 
-  paymentMethod String     // "stripe", "wave", "orange_money"
-  paymentStatus PaymentStatus @default(PENDING)
+  paymentMethod String
+  paymentStatus String     @default("PENDING") // PENDING, PROCESSING, COMPLETED, FAILED, REFUNDED
 
-  stripePaymentId String?   // Stripe payment intent ID
-  waveTransactionId String? // Wave transaction ID
+  stripePaymentId String?
+  waveTransactionId String?
 
-  notes         String?    @db.Text
+  notes         String?
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -156,14 +135,6 @@ model Transaction {
   @@index([createdAt])
 }
 
-enum PaymentStatus {
-  PENDING
-  PROCESSING
-  COMPLETED
-  FAILED
-  REFUNDED
-}
-
 // Review/Rating
 model Review {
   id            String     @id @default(cuid())
@@ -173,17 +144,17 @@ model Review {
   toUserId      String
   to            User       @relation("receivedReviews", fields: [toUserId], references: [id], onDelete: Cascade)
 
-  rating        Int        // 1-5 stars
-  comment       String?    @db.Text
+  rating        Int
+  comment       String?
 
-  transactionId String?    // Optional: link to transaction
+  transactionId String?
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
   @@index([fromUserId])
   @@index([toUserId])
-  @@unique([fromUserId, toUserId]) // One review per user pair
+  @@unique([fromUserId, toUserId])
 }
 
 // Report/Flag content
@@ -192,15 +163,15 @@ model Report {
   listingId     String
   listing       Listing    @relation(fields: [listingId], references: [id], onDelete: Cascade)
 
-  reportedBy    String?    // User ID who reported (optional for anonymous)
+  reportedBy    String?
 
-  reason        String     // "inappropriate", "fraud", "duplicate", "contact_info", "offensive"
-  description   String     @db.Text
+  reason        String
+  description   String
 
-  status        ReportStatus @default(PENDING)
-  reviewedBy    String?    // Admin ID
+  status        String     @default("PENDING") // PENDING, RESOLVED, DISMISSED, ESCALATED
+  reviewedBy    String?
 
-  adminNotes    String?    @db.Text
+  adminNotes    String?
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -210,26 +181,19 @@ model Report {
   @@index([createdAt])
 }
 
-enum ReportStatus {
-  PENDING
-  RESOLVED
-  DISMISSED
-  ESCALATED
-}
-
 // Moderator/Admin actions
 model ModeratorAction {
   id            String     @id @default(cuid())
   userId        String
   moderator     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  action        String     // "suspend", "warn", "unlist", "ban"
-  reason        String     @db.Text
+  action        String
+  reason        String
 
-  targetUserId  String?    // User affected
-  targetListingId String?  // Listing affected
+  targetUserId  String?
+  targetListingId String?
 
-  duration      Int?       // Days (for suspend)
+  duration      Int?
 
   createdAt     DateTime   @default(now())
 
