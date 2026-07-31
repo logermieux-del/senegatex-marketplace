@@ -1,0 +1,78 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+.nyc_output/
+
+# Production build
+/.next/
+/out/
+/build/
+/dist/
+
+# Miscellaneous
+.DS_Store
+*.pem
+*.key
+*.crt
+*.csr
+*.jks
+
+# Environment variables (NEVER COMMIT)
+.env
+.env.local
+.env.*.local
+.env.*.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+.sublime-project
+.sublime-workspace
+
+# OS
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Docker
+.dockerignore
+
+# Database
+*.sqlite
+*.sqlite3
+/backups/
+
+# Playwright
+test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Redis
+dump.rdb
+
+# Temp
+.tmp/
+tmp/
+*.tmp
