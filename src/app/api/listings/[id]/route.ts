@@ -16,7 +16,17 @@ export async function GET(
     // Increment view count (async, don't await)
     incrementViewCount(params.id).catch(console.error);
 
-    return NextResponse.json(listing);
+    // Parse photos if stored as JSON string
+    const photos = listing.photos
+      ? (typeof listing.photos === 'string' ? JSON.parse(listing.photos) : listing.photos)
+      : [];
+
+    return NextResponse.json({
+      data: {
+        ...listing,
+        photos: Array.isArray(photos) ? photos : [photos],
+      },
+    });
   } catch (error: any) {
     console.error('GET /api/listings/[id] error:', error);
     return NextResponse.json({ error: error.message }, { status: 400 });
