@@ -1,0 +1,237 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test Before Deploy
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run tests
+        run: npm run test -- --run
+
+      - name: Build
+        run: npm run build
+
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Security Scan
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  deploy-staging:
+    needs: [test, security-scan]
+    runs-on: ubuntu-latest
+    name: Deploy to Staging
+    if: github.event_name == 'push' || github.event.inputs.environment == 'staging'
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to staging VPS
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_HOST: ${{ secrets.STAGING_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H $DEPLOY_HOST >> ~/.ssh/known_hosts 2>/dev/null
+
+          ./scripts/deploy.sh
+
+      - name: Health check
+        run: |
+          for i in {1..30}; do
+            if curl -sf https://staging.senegatex.sn/api/health > /dev/null; then
+              echo "✅ Health check passed"
+              exit 0
+            fi
+            echo "⏳ Waiting for application to be ready... ($i/30)"
+            sleep 2
+          done
+          echo "❌ Health check failed"
+          exit 1
+
+      - name: Notify Slack (Staging)
+        if: always()
+        uses: slackapi/slack-github-action@v1
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+          payload: |
+            {
+              "text": "Staging deployment ${{ job.status }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Staging Deploy* - ${{ job.status }}\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>"
+                  }
+                }
+              ]
+            }
+
+  deploy-production:
+    needs: [test, security-scan, deploy-staging]
+    runs-on: ubuntu-latest
+    name: Deploy to Production
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create deployment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.ref,
+              environment: 'production',
+              production_environment: true,
+              description: 'Production deployment',
+              required_contexts: []
+            });
+            console.log(`Deployment created: ${deployment.data.id}`);
+
+      - name: Deploy to production VPS
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_HOST: ${{ secrets.PRODUCTION_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DB_BACKUP_BEFORE_DEPLOY: 'true'
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H $DEPLOY_HOST >> ~/.ssh/known_hosts 2>/dev/null
+
+          # Backup database before deployment
+          ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST << 'EOF'
+            cd /home/senegatex
+            docker-compose -f docker-compose.prod.yml exec -T db pg_dump -U senegatex_user senegatex > backup_$(date +%Y%m%d_%H%M%S).sql
+            echo "✅ Database backup created"
+          EOF
+
+          ./scripts/deploy.sh
+
+      - name: Health check
+        run: |
+          for i in {1..60}; do
+            if curl -sf https://senegatex.sn/api/health > /dev/null; then
+              echo "✅ Health check passed"
+              exit 0
+            fi
+            echo "⏳ Waiting for application... ($i/60)"
+            sleep 2
+          done
+          echo "❌ Health check failed"
+          exit 1
+
+      - name: Run smoke tests
+        run: |
+          echo "Running smoke tests against production..."
+          npm ci --legacy-peer-deps
+          npx playwright test --project=chromium --grep @smoke
+
+      - name: Notify Slack (Production)
+        if: always()
+        uses: slackapi/slack-github-action@v1
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+          payload: |
+            {
+              "text": "🚀 Production deployment ${{ job.status }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Production Deploy* - ${{ job.status }}\nCommit: <${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n<https://senegatex.sn|View Live>"
+                  }
+                }
+              ]
+            }
+
+  monitor:
+    needs: [deploy-production]
+    runs-on: ubuntu-latest
+    name: Post-Deploy Monitoring
+    if: success()
+
+    steps:
+      - name: Check application metrics
+        run: |
+          echo "Checking application health metrics..."
+          # TODO: Integrate with monitoring service (Sentry, New Relic, etc)
+          curl -s https://api.example.com/metrics | jq .
+
+      - name: Alert on anomalies
+        if: failure()
+        uses: slackapi/slack-github-action@v1
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+          payload: |
+            {
+              "text": "⚠️ Production deployment anomalies detected",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "⚠️ *Production Deployment Anomalies*\nPlease check application health metrics\n<https://senegatex.sn/admin|Admin Dashboard>"
+                  }
+                }
+              ]
+            }
