@@ -22,12 +22,23 @@ export default function Home() {
         <p className="text-xl text-gray-600 mb-8">
           Discover amazing deals from neighbors near you
         </p>
-        <div className="flex gap-4 justify-center">
+        <div className="flex gap-4 justify-center mb-8">
           <button className="bg-orange-500 text-white px-6 py-3 rounded text-lg hover:bg-orange-600">
             Start Selling
           </button>
-          <button className="border-2 border-orange-500 text-orange-500 px-6 py-3 rounded text-lg hover:bg-orange-50">
+          <a href="#listings" className="border-2 border-orange-500 text-orange-500 px-6 py-3 rounded text-lg hover:bg-orange-50">
             Browse Listings
+          </a>
+        </div>
+        <div className="flex gap-2 justify-center mb-8">
+          <input
+            type="text"
+            placeholder="Search listings..."
+            data-testid="search-input"
+            className="px-4 py-2 border rounded-l w-64"
+          />
+          <button className="bg-orange-500 text-white px-4 py-2 rounded-r hover:bg-orange-600">
+            Search
           </button>
         </div>
       </section>
