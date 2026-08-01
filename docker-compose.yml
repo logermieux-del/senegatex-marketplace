@@ -9,7 +9,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/yombal
+      DATABASE_URL: postgresql://test:test@db:5432/yombal_test
       REDIS_URL: redis://redis:6379
       MEILISEARCH_URL: http://meilisearch:7700
       NEXTAUTH_URL: http://localhost:3000
@@ -30,18 +30,18 @@ services:
       - yombal
 
   db:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     container_name: yombal-db
     environment:
-      POSTGRES_DB: yombal
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: yombal_test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U test -d yombal_test"]
       interval: 10s
       timeout: 5s
       retries: 5
