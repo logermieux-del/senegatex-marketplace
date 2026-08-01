@@ -2,17 +2,8 @@ import { prisma } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
+import { transporterRegisterSchema } from '@/lib/validators';
 import { z } from 'zod';
-
-const registerSchema = z.object({
-  typeVehicule: z.enum(['moto', 'voiture', '3roues', 'camionnette']),
-  plaqueImmatriculation: z.string().min(3).max(20),
-  regionsCouvertes: z.array(z.string()).min(1),
-  tarifParZone: z.record(z.number()),
-  capaciteVolume: z.enum(['petit', 'moyen', 'gros']),
-});
-
-type RegisterInput = z.infer<typeof registerSchema>;
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,7 +13,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const data = registerSchema.parse(body);
+    const data = transporterRegisterSchema.parse(body);
 
     // Check if user already has a transporter profile
     const existingTransporter = await prisma.transporteur.findFirst({

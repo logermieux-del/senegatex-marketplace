@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { z } from 'zod';
+import { transporterUpdateSchema } from '@/lib/validators';
 
 export async function GET(
   req: NextRequest,
@@ -79,17 +80,6 @@ export async function GET(
   }
 }
 
-const updateSchema = z.object({
-  tarifParZone: z.record(z.number()).optional(),
-  regionsCouvertes: z.array(z.string()).optional(),
-  bio: z.string().max(500).optional(),
-  region: z.string().optional(),
-  arrondissement: z.string().optional(),
-  pointRetrait: z.string().optional(),
-});
-
-type UpdateInput = z.infer<typeof updateSchema>;
-
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -102,7 +92,7 @@ export async function PATCH(
 
     const { id } = await params;
     const body = await req.json();
-    const data = updateSchema.parse(body);
+    const data = transporterUpdateSchema.parse(body);
 
     // Verify ownership
     const transporteur = await prisma.transporteur.findUnique({

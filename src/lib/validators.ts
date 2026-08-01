@@ -59,3 +59,38 @@ export type CreateListingInput = z.infer<typeof createListingSchema>;
 export type CreateMessageInput = z.infer<typeof createMessageSchema>;
 export type CreateReviewInput = z.infer<typeof createReviewSchema>;
 export type CreateReportInput = z.infer<typeof createReportSchema>;
+
+// Transporteur validators
+export const transporterRegisterSchema = z.object({
+  typeVehicule: z.enum(['moto', 'voiture', '3roues', 'camionnette']),
+  plaqueImmatriculation: z.string().min(3).max(20).regex(/^[A-Z0-9\-\s]+$/, 'Invalid plate format'),
+  regionsCouvertes: z.array(z.string().min(1)).min(1, 'Select at least one region'),
+  tarifParZone: z.record(z.number().int().min(500)), // Min 500 XOF
+  capaciteVolume: z.enum(['petit', 'moyen', 'gros']),
+});
+
+export const transporterUpdateSchema = transporterRegisterSchema.partial().extend({
+  bio: z.string().max(500).optional(),
+  region: z.string().optional(),
+  arrondissement: z.string().optional(),
+  pointRetrait: z.string().optional(),
+});
+
+export const livraisonRatingSchema = z.object({
+  punctualite: z.number().int().min(1).max(5),
+  etatProduit: z.number().int().min(1).max(5),
+  communication: z.number().int().min(1).max(5),
+  professionalisme: z.number().int().min(1).max(5),
+  commentaire: z.string().max(1000).optional(),
+});
+
+export const disputeSchema = z.object({
+  raison: z.enum(['produit_casse', 'non_recu', 'retard', 'autre']),
+  description: z.string().min(10).max(1000),
+  preuves: z.array(z.string()).optional(),
+});
+
+export type TransporterRegisterInput = z.infer<typeof transporterRegisterSchema>;
+export type TransporterUpdateInput = z.infer<typeof transporterUpdateSchema>;
+export type LivraisonRatingInput = z.infer<typeof livraisonRatingSchema>;
+export type DisputeInput = z.infer<typeof disputeSchema>;

@@ -14,7 +14,6 @@ export default function VerifyTransporterPage({
 }) {
   const router = useRouter();
   const { status } = useSession();
-  const [_transporterId, setTransporterId] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -24,9 +23,11 @@ export default function VerifyTransporterPage({
     photoVehicule: null as File | null,
   });
 
-  // Initialize ID from params
+  // Initialize from params (used to track that page loaded properly)
   useEffect(() => {
-    params.then((p) => setTransporterId(p.id));
+    params.then((_p) => {
+      // Page loaded for transporter ID, ready for upload
+    });
   }, [params]);
 
   if (status === 'unauthenticated') {

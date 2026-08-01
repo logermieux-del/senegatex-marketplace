@@ -4,6 +4,21 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcryptjs';
 import { prisma } from './db';
 
+// Extend NextAuth types to include user.id
+declare module 'next-auth' {
+  interface User {
+    id: string;
+  }
+  interface Session {
+    user: {
+      id: string;
+      email?: string | null;
+      name?: string | null;
+      image?: string | null;
+    };
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
