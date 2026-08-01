@@ -35,6 +35,7 @@ export default function TransporterRegisterPage() {
     tarifParZone: {} as Record<string, number>,
     capaciteVolume: 'moyen',
   });
+  const [accepteConditions, setAccepteConditions] = useState(false);
 
   if (status === 'unauthenticated') {
     return (
@@ -85,7 +86,7 @@ export default function TransporterRegisterPage() {
       const res = await fetch('/api/transporteurs/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, accepteConditions }),
       });
 
       const result = await res.json();
@@ -224,12 +225,27 @@ export default function TransporterRegisterPage() {
                 </div>
               )}
 
+              {/* Terms acceptance */}
+              <label className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  checked={accepteConditions}
+                  onChange={(e) => setAccepteConditions(e.target.checked)}
+                  className="mt-1"
+                />
+                <span className="text-sm text-gray-700">
+                  I accept Yombal&apos;s terms of service for transporters,
+                  including the 5% commission on each delivery.
+                </span>
+              </label>
+
               <Button
                 type="submit"
                 disabled={
                   loading ||
                   !formData.plaqueImmatriculation ||
-                  formData.regionsCouvertes.length === 0
+                  formData.regionsCouvertes.length === 0 ||
+                  !accepteConditions
                 }
                 className="w-full"
               >

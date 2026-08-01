@@ -5,6 +5,8 @@ import { authOptions } from '@/lib/auth';
 import { transporterRegisterSchema } from '@/lib/validators';
 import { z } from 'zod';
 
+const CONDITIONS_VERSION = '1.0';
+
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -58,6 +60,8 @@ export async function POST(req: NextRequest) {
         tarifParZone: JSON.stringify(data.tarifParZone),
         capaciteVolume: data.capaciteVolume,
         statut: 'PENDING',
+        conditionsAccepteesAt: new Date(),
+        conditionsVersion: CONDITIONS_VERSION,
       },
     });
 

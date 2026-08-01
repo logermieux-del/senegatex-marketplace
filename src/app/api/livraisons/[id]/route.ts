@@ -2,6 +2,7 @@ import { prisma } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
+import { sendDeliveryStatusEmail } from '@/lib/external/email';
 import { z } from 'zod';
 
 // Mock GPS interpolation between two points
@@ -203,6 +204,42 @@ export async function PATCH(
       where: { id },
       data: updateData,
     });
+
+    if (data.statut === 'DELIVERED') {
+      await prisma.transporteur.update({
+        where: { id: livraison.transporteurId },
+        data: { nombreLivraisons: { increment: 1 }, lastActivityAt: new Date() },
+      });
+
+      // Create the payout record for manual reconciliation (admin pays via
+      // Wave/Orange Money and marks it paid — no automated payout API for MVP).
+      await prisma.paiementTransporteur.upsert({
+        where: { livraisonId: id },
+        create: {
+          livraisonId: id,
+          transporteurId: livraison.transporteurId,
+          montant: livraison.tarifNegocie - livraison.commissionYombal,
+          statut: 'PENDING',
+        },
+        update: {},
+      });
+    }
+
+    if (data.statut !== livraison.statut && livraison.transactionId) {
+      const transaction = await prisma.transaction.findUnique({
+        where: { id: livraison.transactionId },
+        include: { buyer: { select: { email: true, name: true } } },
+      });
+
+      if (transaction?.buyer.email) {
+        sendDeliveryStatusEmail({
+          toEmail: transaction.buyer.email,
+          toName: transaction.buyer.name,
+          statut: data.statut,
+          livraisonId: id,
+        }).catch((err) => console.error('Delivery status email failed:', err));
+      }
+    }
 
     return NextResponse.json({
       data: {

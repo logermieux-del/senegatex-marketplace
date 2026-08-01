@@ -4,14 +4,16 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcryptjs';
 import { prisma } from './db';
 
-// Extend NextAuth types to include user.id
+// Extend NextAuth types to include user.id and role
 declare module 'next-auth' {
   interface User {
     id: string;
+    role?: string;
   }
   interface Session {
     user: {
       id: string;
+      role?: string;
       email?: string | null;
       name?: string | null;
       image?: string | null;
@@ -56,6 +58,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.name,
           image: user.avatar,
+          role: user.role,
         };
       },
     }),
@@ -70,6 +73,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.role = user.role;
       }
       return token;
     },
@@ -77,6 +81,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
       return session;
     },

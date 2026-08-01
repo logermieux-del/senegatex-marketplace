@@ -238,7 +238,12 @@ model Transporteur {
   tauxDisputes          Float      @default(0.0) // 0-100 percent
   lastActivityAt        DateTime?
 
+  // Terms acceptance (simple digital acknowledgement, no e-signature provider)
+  conditionsAccepteesAt DateTime?
+  conditionsVersion     String?
+
   livraisons            Livraison[]
+  paiements             PaiementTransporteur[]
 
   createdAt             DateTime   @default(now())
   updatedAt             DateTime   @updatedAt
@@ -285,6 +290,7 @@ model Livraison {
   incident              Boolean    @default(false)
 
   disputes              Dispute[]
+  paiement              PaiementTransporteur?
 
   createdAt             DateTime   @default(now())
   updatedAt             DateTime   @updatedAt
@@ -317,6 +323,32 @@ model Dispute {
   updatedAt             DateTime   @updatedAt
 
   @@index([livraisonId])
+  @@index([statut])
+  @@index([createdAt])
+}
+
+// Paiement Transporteur (payout tracking — MVP: manual reconciliation, no automated payout API)
+model PaiementTransporteur {
+  id                    String     @id @default(cuid())
+
+  livraisonId           String     @unique
+  livraison             Livraison  @relation(fields: [livraisonId], references: [id], onDelete: Cascade)
+
+  transporteurId        String
+  transporteur          Transporteur @relation(fields: [transporteurId], references: [id], onDelete: Cascade)
+
+  montant               Int        // XOF, = tarifNegocie - commissionYombal
+  statut                String     @default("PENDING") // PENDING, PAID, FAILED
+
+  methode               String?    // "wave", "orange_money", "cash", "virement"
+  reference             String?    // Manual transaction reference (Wave/OM confirmation code)
+  paidByAdminId         String?
+  paidAt                DateTime?
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([transporteurId])
   @@index([statut])
   @@index([createdAt])
 }

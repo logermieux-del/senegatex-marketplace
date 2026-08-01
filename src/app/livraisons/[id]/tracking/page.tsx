@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Card } from '@/components/common/Card';
 import { Alert } from '@/components/common/Alert';
 import { Loading } from '@/components/common/Loading';
+import { Button } from '@/components/common/Button';
 
 interface Address {
   region: string;
@@ -358,6 +360,15 @@ export default function LivraisonTrackingPage() {
               </div>
             </Card.Body>
           </Card>
+        )}
+
+        {/* Report a problem */}
+        {['IN_TRANSIT', 'DELIVERED', 'FAILED'].includes(livraison.statut) && (
+          <div className="text-center">
+            <Link href={`/livraisons/${id}/dispute`}>
+              <Button variant="outline">Signaler un problème</Button>
+            </Link>
+          </div>
         )}
       </div>
     </div>

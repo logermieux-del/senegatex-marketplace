@@ -67,6 +67,9 @@ export const transporterRegisterSchema = z.object({
   regionsCouvertes: z.array(z.string().min(1)).min(1, 'Select at least one region'),
   tarifParZone: z.record(z.number().int().min(500)), // Min 500 XOF
   capaciteVolume: z.enum(['petit', 'moyen', 'gros']),
+  accepteConditions: z.literal(true, {
+    errorMap: () => ({ message: 'You must accept the terms of service' }),
+  }),
 });
 
 export const transporterUpdateSchema = transporterRegisterSchema.partial().extend({
