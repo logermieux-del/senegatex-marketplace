@@ -55,7 +55,9 @@ interface LivraisonTracking {
   tarifs: {
     negocie: number;
     commission: number;
+    assurance: number;
     montantTransporteur: number;
+    total: number;
   };
   timeline: TimelineData;
   gps: GPSLocation | null;
@@ -306,20 +308,25 @@ export default function LivraisonTrackingPage() {
               <div className="flex justify-between">
                 <span>Delivery Price</span>
                 <span className="font-semibold">
-                  {(livraison.tarifs.negocie / 1000).toLocaleString()} XOF
+                  {livraison.tarifs.negocie.toLocaleString()} XOF
                 </span>
               </div>
               <div className="flex justify-between text-gray-600">
-                <span>Yombal Commission (5%)</span>
-                <span>
-                  -{(livraison.tarifs.commission / 1000).toLocaleString()} XOF
-                </span>
+                <span>Delivery Insurance</span>
+                <span>+{livraison.tarifs.assurance.toLocaleString()} XOF</span>
               </div>
               <div className="border-t pt-2 flex justify-between font-semibold">
+                <span>Total to Pay</span>
+                <span>{livraison.tarifs.total.toLocaleString()} XOF</span>
+              </div>
+              <div className="flex justify-between text-gray-600 pt-2">
+                <span>Yombal Commission (5%)</span>
+                <span>-{livraison.tarifs.commission.toLocaleString()} XOF</span>
+              </div>
+              <div className="flex justify-between font-semibold">
                 <span>Transporter Earns</span>
                 <span>
-                  {(livraison.tarifs.montantTransporteur / 1000).toLocaleString()}{' '}
-                  XOF
+                  {livraison.tarifs.montantTransporteur.toLocaleString()} XOF
                 </span>
               </div>
             </div>

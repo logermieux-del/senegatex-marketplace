@@ -34,6 +34,7 @@ export async function GET(
         adresseArrivee: true,
         tarifNegocie: true,
         commissionYombal: true,
+        assuranceMontant: true,
         datePrise: true,
         dateEstimeeArrivee: true,
         dateArriveeReelle: true,
@@ -103,7 +104,9 @@ export async function GET(
       tarifs: {
         negocie: livraison.tarifNegocie,
         commission: livraison.commissionYombal,
+        assurance: livraison.assuranceMontant,
         montantTransporteur: livraison.tarifNegocie - livraison.commissionYombal,
+        total: livraison.tarifNegocie + livraison.assuranceMontant,
       },
       timeline: {
         createdAt: livraison.createdAt,

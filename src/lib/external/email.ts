@@ -343,6 +343,30 @@ export async function sendDisputeResolvedEmail(params: {
   return sendEmail({ to: toEmail, subject: '✅ Votre litige a été traité', html });
 }
 
+export async function sendRefundSentEmail(params: {
+  toEmail: string;
+  toName: string;
+  montant: number;
+  methode: string;
+}) {
+  const { toEmail, toName, montant, methode } = params;
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h1 style="color: #22c55e; margin: 0 0 10px 0;">💰 Remboursement envoyé</h1>
+        <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
+        <p style="color: #666; line-height: 1.6;">
+          Suite à votre litige, un remboursement de <strong>${montant.toLocaleString()} XOF</strong>
+          vous a été envoyé via <strong>${methode}</strong>.
+        </p>
+      </div>
+    </div>
+  `;
+
+  return sendEmail({ to: toEmail, subject: '💰 Remboursement envoyé', html });
+}
+
 export async function sendPaymentSentEmail(params: {
   toEmail: string;
   toName: string;

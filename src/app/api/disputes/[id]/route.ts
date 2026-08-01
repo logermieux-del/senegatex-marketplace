@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { recomputeDisputeRate } from '@/lib/transporteur-stats';
+import { getFundBalance } from '@/lib/assurance-fund';
 import { sendDisputeResolvedEmail } from '@/lib/external/email';
 import { z } from 'zod';
 
@@ -76,6 +77,10 @@ const resolveSchema = z.object({
       montant: z.number().int().min(0).optional(),
       notes: z.string().max(1000).optional(),
     })
+    .refine((r) => r.type !== 'remboursement' || (r.montant !== undefined && r.montant > 0), {
+      message: 'montant is required for a remboursement',
+      path: ['montant'],
+    })
     .optional(),
 });
 
@@ -103,6 +108,21 @@ export async function PATCH(
     const body = await req.json();
     const data = resolveSchema.parse(body);
 
+    const isRemboursement =
+      data.statut === 'RESOLVED' && data.resolution?.type === 'remboursement';
+
+    if (isRemboursement) {
+      const fund = await getFundBalance();
+      if (data.resolution!.montant! > fund.solde) {
+        return NextResponse.json(
+          {
+            error: `Fonds assurance insuffisant (solde: ${fund.solde} XOF, demandé: ${data.resolution!.montant} XOF)`,
+          },
+          { status: 400 }
+        );
+      }
+    }
+
     const updated = await prisma.dispute.update({
       where: { id },
       data: {
@@ -112,6 +132,18 @@ export async function PATCH(
         dateResolution: data.statut === 'RESOLVED' ? new Date() : undefined,
       },
     });
+
+    if (isRemboursement) {
+      await prisma.remboursementAssurance.create({
+        data: {
+          disputeId: id,
+          livraisonId: dispute.livraisonId,
+          beneficiaireUserId: dispute.signaleParUserId,
+          montant: data.resolution!.montant!,
+          statut: 'PENDING',
+        },
+      });
+    }
 
     const stats = await recomputeDisputeRate(dispute.livraison.transporteurId);
 
