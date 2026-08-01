@@ -1,6 +1,12 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend: Resend | null = null;
+function getResendClient(): Resend | null {
+  if (!process.env.RESEND_API_KEY) return null;
+  if (!resend) resend = new Resend(process.env.RESEND_API_KEY);
+  return resend;
+}
+
 const FROM_EMAIL = 'notifications@yombal.sn';
 
 interface EmailParams {
@@ -10,6 +16,12 @@ interface EmailParams {
 }
 
 async function sendEmail({ to, subject, html }: EmailParams) {
+  const resend = getResendClient();
+  if (!resend) {
+    console.error('Email service error: RESEND_API_KEY is not configured');
+    return null;
+  }
+
   try {
     const result = await resend.emails.send({
       from: FROM_EMAIL,
