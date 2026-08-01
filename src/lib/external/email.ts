@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM_EMAIL = 'notifications@senegatex.sn';
+const FROM_EMAIL = 'notifications@yombal.sn';
 
 interface EmailParams {
   to: string;
@@ -216,11 +216,11 @@ export async function sendWelcomeEmail(params: {
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px; background: #fff7ed; border-radius: 8px;">
       <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h1 style="color: #f97316; margin: 0 0 10px 0;">🎉 Welcome to Senegatex!</h1>
+        <h1 style="color: #f97316; margin: 0 0 10px 0;">🎉 Welcome to Yombal!</h1>
         <p style="color: #666; margin: 0 0 20px 0;">Hello <strong>${name}</strong>,</p>
 
         <p style="color: #666; line-height: 1.6;">
-          Thank you for joining Senegatex, the #1 marketplace for buying and selling locally in Senegal.
+          Thank you for joining Yombal, the #1 marketplace for buying and selling locally in Senegal.
         </p>
 
         <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -248,7 +248,7 @@ export async function sendWelcomeEmail(params: {
 
   return sendEmail({
     to: email,
-    subject: `🎉 Welcome to Senegatex, ${name}!`,
+    subject: `🎉 Welcome to Yombal, ${name}!`,
     html,
   });
 }

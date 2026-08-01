@@ -289,7 +289,7 @@ RESEND_API_KEY="re_xxx"
 # Settings → Secrets and variables → Actions
 
 # 3. VPS setup (one-time)
-export HOSTINGER_USER="senegatex"
+export HOSTINGER_USER="yombal"
 export HOSTINGER_HOST="your-vps-ip"
 ./scripts/deploy.sh
 
@@ -297,10 +297,10 @@ export HOSTINGER_HOST="your-vps-ip"
 git push origin main
 
 # 5. Watch deployment workflow in GitHub
-# https://github.com/logermieux-del/senegatex-marketplace/actions
+# https://github.com/logermieux-del/yombal-marketplace/actions
 
 # 6. Visit production site
-https://senegatex.sn
+https://yombal.sn
 ```
 
 ---
@@ -326,7 +326,7 @@ https://senegatex.sn
 
 ## 🎯 What Was Delivered
 
-**Senegatex MVP - Production Ready**
+**Yombal MVP - Production Ready**
 
 - ✅ Full marketplace functionality (browse, list, buy, message)
 - ✅ Payment processing (Stripe + Wave)

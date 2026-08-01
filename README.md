@@ -1,4 +1,4 @@
-# Senegatex Marketplace
+# Yombal Marketplace
 
 🚀 A Craigslist/Vinted-style marketplace for buying and selling locally in Senegal.
 
@@ -14,7 +14,7 @@
 ```bash
 # 1. Clone and install
 git clone <repo-url>
-cd senegatex-marketplace
+cd yombal-marketplace
 npm install
 
 # 2. Setup environment

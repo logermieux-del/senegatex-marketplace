@@ -1,8 +1,8 @@
-# Deployment Guide - Senegatex
+# Deployment Guide - Yombal
 
 ## 🚀 Overview
 
-Senegatex can be deployed to Hostinger VPS (€60-100/month) or similar providers.
+Yombal can be deployed to Hostinger VPS (€60-100/month) or similar providers.
 
 **Stack:**
 - **Runtime:** Next.js (Node.js 20+)
@@ -46,7 +46,7 @@ Senegatex can be deployed to Hostinger VPS (€60-100/month) or similar provider
 
 ```bash
 # From your local machine
-export HOSTINGER_USER="senegatex"
+export HOSTINGER_USER="yombal"
 export HOSTINGER_HOST="your-vps-ip"
 export SSH_PRIVATE_KEY=$(cat ~/.ssh/id_rsa)
 
@@ -73,8 +73,8 @@ curl -L "https://github.com/docker/compose/releases/latest/download/docker-compo
 chmod +x /usr/local/bin/docker-compose
 
 # Clone repository
-git clone https://github.com/logermieux-del/senegatex-marketplace.git /home/senegatex
-cd /home/senegatex
+git clone https://github.com/logermieux-del/yombal-marketplace.git /home/yombal
+cd /home/yombal
 
 # Create production environment file
 cp .env.example .env.production
@@ -90,12 +90,12 @@ nano .env.production
 
 ```bash
 # Database
-DATABASE_URL=postgresql://senegatex_user:$(openssl rand -base64 32)@db:5432/senegatex
-DB_USER=senegatex_user
+DATABASE_URL=postgresql://yombal_user:$(openssl rand -base64 32)@db:5432/yombal
+DB_USER=yombal_user
 DB_PASSWORD=$(openssl rand -base64 32)
 
 # NextAuth
-NEXTAUTH_URL=https://senegatex.sn
+NEXTAUTH_URL=https://yombal.sn
 NEXTAUTH_SECRET=$(openssl rand -base64 32)
 
 # Redis
@@ -122,13 +122,13 @@ CLOUDINARY_API_KEY=YOUR_KEY
 CLOUDINARY_API_SECRET=YOUR_SECRET
 
 # Domain
-DOMAIN=senegatex.sn
+DOMAIN=yombal.sn
 ```
 
 ### Start Services
 
 ```bash
-cd /home/senegatex
+cd /home/yombal
 
 # Start all containers
 docker-compose -f docker-compose.prod.yml up -d
@@ -160,34 +160,34 @@ apt-get install -y certbot python3-certbot-nginx
 
 ```bash
 certbot certonly --standalone \
-  -d senegatex.sn \
-  -d www.senegatex.sn \
-  --email admin@senegatex.sn \
+  -d yombal.sn \
+  -d www.yombal.sn \
+  --email admin@yombal.sn \
   --agree-tos \
   -n
 
 # Copy to app directory
-cp /etc/letsencrypt/live/senegatex.sn/fullchain.pem /home/senegatex/ssl/cert.pem
-cp /etc/letsencrypt/live/senegatex.sn/privkey.pem /home/senegatex/ssl/key.pem
+cp /etc/letsencrypt/live/yombal.sn/fullchain.pem /home/yombal/ssl/cert.pem
+cp /etc/letsencrypt/live/yombal.sn/privkey.pem /home/yombal/ssl/key.pem
 
 # Set permissions
-chown 1001:1001 /home/senegatex/ssl/cert.pem
-chown 1001:1001 /home/senegatex/ssl/key.pem
+chown 1001:1001 /home/yombal/ssl/cert.pem
+chown 1001:1001 /home/yombal/ssl/key.pem
 ```
 
 ### Auto-Renew Certificates
 
 ```bash
 # Create renewal hook
-cat > /etc/letsencrypt/renewal-hooks/post/senegatex.sh << 'EOF'
+cat > /etc/letsencrypt/renewal-hooks/post/yombal.sh << 'EOF'
 #!/bin/bash
-cp /etc/letsencrypt/live/senegatex.sn/fullchain.pem /home/senegatex/ssl/cert.pem
-cp /etc/letsencrypt/live/senegatex.sn/privkey.pem /home/senegatex/ssl/key.pem
-chown 1001:1001 /home/senegatex/ssl/cert.pem /home/senegatex/ssl/key.pem
-docker-compose -f /home/senegatex/docker-compose.prod.yml restart nginx
+cp /etc/letsencrypt/live/yombal.sn/fullchain.pem /home/yombal/ssl/cert.pem
+cp /etc/letsencrypt/live/yombal.sn/privkey.pem /home/yombal/ssl/key.pem
+chown 1001:1001 /home/yombal/ssl/cert.pem /home/yombal/ssl/key.pem
+docker-compose -f /home/yombal/docker-compose.prod.yml restart nginx
 EOF
 
-chmod +x /etc/letsencrypt/renewal-hooks/post/senegatex.sh
+chmod +x /etc/letsencrypt/renewal-hooks/post/yombal.sh
 
 # Add to crontab
 (crontab -l 2>/dev/null; echo "0 3 * * * certbot renew --quiet") | crontab -
@@ -203,7 +203,7 @@ Add to repository settings → Secrets and variables → Actions:
 
 ```
 DEPLOY_KEY: <SSH private key for deployment>
-DEPLOY_USER: senegatex
+DEPLOY_USER: yombal
 STAGING_HOST: <staging VPS IP>
 PRODUCTION_HOST: <production VPS IP>
 SLACK_WEBHOOK: <optional Slack webhook>
@@ -242,7 +242,7 @@ df -h
 
 # Check database size
 docker-compose -f docker-compose.prod.yml exec db \
-  psql -U senegatex_user -d senegatex -c "SELECT pg_size_pretty(pg_database_size('senegatex'));"
+  psql -U yombal_user -d yombal -c "SELECT pg_size_pretty(pg_database_size('yombal'));"
 ```
 
 ---
@@ -254,11 +254,11 @@ docker-compose -f docker-compose.prod.yml exec db \
 ```bash
 # Manual backup
 docker-compose -f docker-compose.prod.yml exec db \
-  pg_dump -U senegatex_user senegatex > backup_$(date +%Y%m%d_%H%M%S).sql
+  pg_dump -U yombal_user yombal > backup_$(date +%Y%m%d_%H%M%S).sql
 
 # Automated backup (daily)
 # Add to crontab:
-0 2 * * * cd /home/senegatex && docker-compose -f docker-compose.prod.yml exec -T db pg_dump -U senegatex_user senegatex | gzip > backups/backup_$(date +\%Y\%m\%d_\%H\%M\%S).sql.gz
+0 2 * * * cd /home/yombal && docker-compose -f docker-compose.prod.yml exec -T db pg_dump -U yombal_user yombal | gzip > backups/backup_$(date +\%Y\%m\%d_\%H\%M\%S).sql.gz
 ```
 
 ### Restore from Backup
@@ -272,7 +272,7 @@ docker-compose -f docker-compose.prod.yml up -d db
 sleep 10
 
 docker-compose -f docker-compose.prod.yml exec -T db \
-  psql -U senegatex_user -d senegatex < backup_20240115_023045.sql
+  psql -U yombal_user -d yombal < backup_20240115_023045.sql
 
 # Start all services
 docker-compose -f docker-compose.prod.yml up -d
@@ -314,7 +314,7 @@ docker-compose -f docker-compose.prod.yml ps db
 
 # Test connection
 docker-compose -f docker-compose.prod.yml exec db \
-  psql -U senegatex_user -d senegatex -c "SELECT 1"
+  psql -U yombal_user -d yombal -c "SELECT 1"
 
 # Check logs
 docker-compose -f docker-compose.prod.yml logs db
@@ -338,7 +338,7 @@ rm backups/*.sql.gz
 
 ```bash
 # Test certificate
-curl -I https://senegatex.sn
+curl -I https://yombal.sn
 
 # Check expiration
 certbot certificates
@@ -376,14 +376,14 @@ certbot renew --force-renewal
 ./scripts/deploy.sh
 
 # Check application status
-curl https://senegatex.sn/api/health
+curl https://yombal.sn/api/health
 
 # View admin dashboard
-https://senegatex.sn/admin
+https://yombal.sn/admin
 
 # View logs in real-time
-ssh senegatex@your-vps-ip
-cd /home/senegatex
+ssh yombal@your-vps-ip
+cd /home/yombal
 docker-compose -f docker-compose.prod.yml logs -f
 ```
 

@@ -10,7 +10,7 @@
 ## Step 1: Install Dependencies
 
 ```bash
-cd senegatex-marketplace
+cd yombal-marketplace
 npm install
 ```
 
@@ -30,7 +30,7 @@ Edit `.env.local` with your configuration:
 ```bash
 # Critical variables to generate/update:
 NEXTAUTH_SECRET=<run: openssl rand -base64 32>
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/senegatex
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/yombal
 REDIS_URL=redis://localhost:6379
 MEILISEARCH_URL=http://localhost:7700
 ```
@@ -51,10 +51,10 @@ docker-compose ps
 Expected output:
 ```
 NAME                 STATUS
-senegatex-app        Up (health: starting)
-senegatex-db         Up (healthy)
-senegatex-redis      Up (healthy)
-senegatex-search     Up
+yombal-app        Up (health: starting)
+yombal-db         Up (healthy)
+yombal-redis      Up (healthy)
+yombal-search     Up
 ```
 
 **Wait for health checks** (30 seconds):
@@ -119,7 +119,7 @@ Visit **http://localhost:3000** 🎉
 ### PostgreSQL Database
 Command-line access:
 ```bash
-docker-compose exec db psql -U postgres -d senegatex
+docker-compose exec db psql -U postgres -d yombal
 ```
 
 Common queries:
@@ -163,7 +163,7 @@ npm run test:e2e          # Headless
 npm run test:e2e:ui       # Interactive UI
 ```
 
-Tests are in `tests/` directory and use real database (`test_senegatex`).
+Tests are in `tests/` directory and use real database (`test_yombal`).
 
 ---
 

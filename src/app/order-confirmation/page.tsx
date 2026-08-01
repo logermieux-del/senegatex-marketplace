@@ -12,7 +12,7 @@ export default function OrderConfirmationPage() {
       <header className="border-b bg-white">
         <nav className="max-w-7xl mx-auto px-4 py-4">
           <Link href="/" className="text-2xl font-bold text-orange-500">
-            Senegatex
+            Yombal
           </Link>
         </nav>
       </header>

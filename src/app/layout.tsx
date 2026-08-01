@@ -3,7 +3,7 @@ import { SessionProvider } from 'next-auth/react';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Senegatex - Buy & Sell Locally in Senegal',
+  title: 'Yombal - Buy & Sell Locally in Senegal',
   description: 'Marketplace for buying and selling locally in Senegal',
   keywords: ['marketplace', 'senegal', 'buy', 'sell', 'classifieds'],
 };

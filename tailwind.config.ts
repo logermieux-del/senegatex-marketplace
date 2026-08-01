@@ -12,7 +12,7 @@ const config: Config = {
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        // Senegatex brand colors
+        // Yombal brand colors
         primary: {
           50: '#fffbf0',
           100: '#fef3e2',

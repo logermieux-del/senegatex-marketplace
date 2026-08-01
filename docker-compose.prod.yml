@@ -6,13 +6,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: senegatex-app
+    container_name: yombal-app
     restart: always
     ports:
       - "3000:3000"
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/senegatex
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/yombal
       NEXTAUTH_URL: https://${DOMAIN}
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       REDIS_URL: redis://redis:6379
@@ -32,7 +32,7 @@ services:
       meilisearch:
         condition: service_healthy
     networks:
-      - senegatex-network
+      - yombal-network
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"]
       interval: 30s
@@ -43,19 +43,19 @@ services:
   # PostgreSQL Database
   db:
     image: postgres:16-alpine
-    container_name: senegatex-db
+    container_name: yombal-db
     restart: always
     environment:
-      POSTGRES_DB: senegatex
+      POSTGRES_DB: yombal
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./scripts/backup.sh:/docker-entrypoint-initdb.d/backup.sh
     networks:
-      - senegatex-network
+      - yombal-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d senegatex"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d yombal"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -63,13 +63,13 @@ services:
   # Redis Cache & Sessions
   redis:
     image: redis:7-alpine
-    container_name: senegatex-redis
+    container_name: yombal-redis
     restart: always
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     volumes:
       - redis_data:/data
     networks:
-      - senegatex-network
+      - yombal-network
     healthcheck:
       test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
       interval: 10s
@@ -79,7 +79,7 @@ services:
   # Meilisearch (Search Engine)
   meilisearch:
     image: getmeili/meilisearch:v1.5
-    container_name: senegatex-search
+    container_name: yombal-search
     restart: always
     environment:
       MEILI_MASTER_KEY: ${MEILISEARCH_MASTER_KEY}
@@ -87,7 +87,7 @@ services:
     volumes:
       - meilisearch_data:/meili_data
     networks:
-      - senegatex-network
+      - yombal-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
       interval: 10s
@@ -97,7 +97,7 @@ services:
   # Nginx Reverse Proxy (Optional - recommended for production)
   nginx:
     image: nginx:alpine
-    container_name: senegatex-proxy
+    container_name: yombal-proxy
     restart: always
     ports:
       - "80:80"
@@ -109,7 +109,7 @@ services:
     depends_on:
       - app
     networks:
-      - senegatex-network
+      - yombal-network
 
 volumes:
   db_data:
@@ -120,5 +120,5 @@ volumes:
     driver: local
 
 networks:
-  senegatex-network:
+  yombal-network:
     driver: bridge

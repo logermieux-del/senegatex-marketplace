@@ -1,4 +1,4 @@
-# CLAUDE.md — Senegatex Marketplace Architecture
+# CLAUDE.md — Yombal Marketplace Architecture
 
 ## 🎯 Objectif
 Marketplace pour acheter/vendre localement au Sénégal (style Leboncoin/Vinted).
@@ -206,7 +206,7 @@ Tables:
 
 ```bash
 # Database
-DATABASE_URL="postgresql://postgres:password@localhost:5432/senegatex"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/yombal"
 
 # NextAuth
 NEXTAUTH_URL="http://localhost:3000"
@@ -269,7 +269,7 @@ NEXT_PUBLIC_ENABLE_ORANGE_MONEY=true
 
 ### API Security
 - ✅ **Rate limiting:** 100 reqs/min per IP (API routes)
-- ✅ **CORS:** Only `localhost:3000` in dev, `senegatex.sn` in prod
+- ✅ **CORS:** Only `localhost:3000` in dev, `yombal.sn` in prod
 - ✅ **CSRF protection:** NextAuth built-in
 - ✅ **Content Security Policy:** Strict headers in nginx
 - ✅ **API versioning:** `/api/v1/*` (future-proof)
@@ -303,7 +303,7 @@ npm run test
 npm run test:e2e
 ```
 - **Real browser:** Chromium, Firefox, WebKit
-- **Real database:** Separate `test_senegatex` DB
+- **Real database:** Separate `test_yombal` DB
 - **Tests:**
   - Auth (signup, login, logout, forgot password)
   - Listings (create, view, edit, delete, with photos)

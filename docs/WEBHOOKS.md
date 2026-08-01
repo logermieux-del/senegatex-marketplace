@@ -1,4 +1,4 @@
-# Webhooks Documentation - Senegatex
+# Webhooks Documentation - Yombal
 
 ## Stripe Webhooks
 

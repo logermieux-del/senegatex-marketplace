@@ -47,7 +47,7 @@ export default function LoginPage() {
             Welcome Back
           </h1>
           <p className="text-center text-gray-600 mb-8">
-            Sign in to your Senegatex account
+            Sign in to your Yombal account
           </p>
 
           {errorMsg && (

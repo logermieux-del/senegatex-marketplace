@@ -68,7 +68,7 @@ export default function SignupPage() {
             Get Started
           </h1>
           <p className="text-center text-gray-600 mb-8">
-            Create your Senegatex account
+            Create your Yombal account
           </p>
 
           {errors.general && (

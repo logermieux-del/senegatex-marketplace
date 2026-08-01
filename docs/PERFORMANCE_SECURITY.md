@@ -1,4 +1,4 @@
-# Performance & Security Guide - Senegatex
+# Performance & Security Guide - Yombal
 
 ## ⚡ Performance Optimization (Phase 7C)
 
@@ -149,7 +149,7 @@ npm run lighthouse
 npm run analytics
 
 # Performance Dashboard
-https://senegatex.sn/admin → Performance tab (coming soon)
+https://yombal.sn/admin → Performance tab (coming soon)
 ```
 
 **Targets:**
@@ -410,7 +410,7 @@ logger.info('Payment processed', {
 ### Uptime Monitoring
 
 ```
-Ping senegatex.sn/api/health every 5 minutes
+Ping yombal.sn/api/health every 5 minutes
 Alert if down for > 5 minutes
 Runbook: Restart app container
 ```

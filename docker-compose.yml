@@ -5,11 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: senegatex-app
+    container_name: yombal-app
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/senegatex
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/yombal
       REDIS_URL: redis://redis:6379
       MEILISEARCH_URL: http://meilisearch:7700
       NEXTAUTH_URL: http://localhost:3000
@@ -27,13 +27,13 @@ services:
         condition: service_started
     command: npm run dev
     networks:
-      - senegatex
+      - yombal
 
   db:
     image: postgres:15-alpine
-    container_name: senegatex-db
+    container_name: yombal-db
     environment:
-      POSTGRES_DB: senegatex
+      POSTGRES_DB: yombal
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -46,11 +46,11 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - senegatex
+      - yombal
 
   redis:
     image: redis:7-alpine
-    container_name: senegatex-redis
+    container_name: yombal-redis
     ports:
       - "6379:6379"
     volumes:
@@ -61,11 +61,11 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - senegatex
+      - yombal
 
   meilisearch:
     image: getmeili/meilisearch:latest
-    container_name: senegatex-search
+    container_name: yombal-search
     environment:
       MEILI_MASTER_KEY: DebugKey1234567890
       MEILI_ENV: development
@@ -74,7 +74,7 @@ services:
     volumes:
       - meilisearch_data:/meili_data
     networks:
-      - senegatex
+      - yombal
 
 volumes:
   postgres_data:
@@ -82,5 +82,5 @@ volumes:
   meilisearch_data:
 
 networks:
-  senegatex:
+  yombal:
     driver: bridge

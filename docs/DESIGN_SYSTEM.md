@@ -1,4 +1,4 @@
-# Design System - Senegatex
+# Design System - Yombal
 
 ## 🎨 Palette de Couleurs
 

@@ -132,7 +132,7 @@ export default function CheckoutPage() {
       <header className="border-b bg-white">
         <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold text-orange-500">
-            Senegatex
+            Yombal
           </Link>
         </nav>
       </header>

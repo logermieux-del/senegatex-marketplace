@@ -13,7 +13,7 @@ export interface UploadResult {
   height: number;
 }
 
-export async function uploadImage(file: Buffer, folder: string = 'senegatex'): Promise<UploadResult> {
+export async function uploadImage(file: Buffer, folder: string = 'yombal'): Promise<UploadResult> {
   return new Promise((resolve, reject) => {
     const upload = cloudinary.uploader.upload_stream(
       {
@@ -42,7 +42,7 @@ export async function uploadImage(file: Buffer, folder: string = 'senegatex'): P
 
 export async function uploadMultipleImages(
   files: Buffer[],
-  folder: string = 'senegatex'
+  folder: string = 'yombal'
 ): Promise<UploadResult[]> {
   return Promise.all(files.map((file) => uploadImage(file, folder)));
 }

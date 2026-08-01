@@ -63,7 +63,7 @@ jobs:
         env:
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
-          POSTGRES_DB: senegatex_test
+          POSTGRES_DB: yombal_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -96,7 +96,7 @@ jobs:
 
       - name: Setup test environment
         env:
-          DATABASE_URL: postgresql://test:test@localhost:5432/senegatex_test
+          DATABASE_URL: postgresql://test:test@localhost:5432/yombal_test
           REDIS_URL: redis://localhost:6379
           NEXTAUTH_URL: http://localhost:3000
           NEXTAUTH_SECRET: test-secret-key
@@ -110,7 +110,7 @@ jobs:
 
       - name: Run E2E tests
         env:
-          DATABASE_URL: postgresql://test:test@localhost:5432/senegatex_test
+          DATABASE_URL: postgresql://test:test@localhost:5432/yombal_test
           REDIS_URL: redis://localhost:6379
           NEXTAUTH_URL: http://localhost:3000
           NEXTAUTH_SECRET: test-secret-key

@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     // Upload to Cloudinary
     const result = await uploadImage(
       fileBuffer,
-      `senegatex/user-${session.user.id}`
+      `yombal/user-${session.user.id}`
     );
 
     return NextResponse.json(result, { status: 201 });

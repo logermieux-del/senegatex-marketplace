@@ -1,4 +1,4 @@
-# Testing Guide - Senegatex
+# Testing Guide - Yombal
 
 ## Unit Tests (Vitest)
 

@@ -3,7 +3,7 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-br from-orange-50 to-white">
       <header className="border-b border-gray-200">
         <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold text-orange-500">Senegatex</div>
+          <div className="text-2xl font-bold text-orange-500">Yombal</div>
           <div className="flex gap-4">
             <a href="/login" className="text-gray-700 hover:text-orange-500">
               Login
@@ -64,7 +64,7 @@ export default function Home() {
 
       <footer className="bg-gray-900 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <p>© 2026 Senegatex. All rights reserved.</p>
+          <p>© 2026 Yombal. All rights reserved.</p>
         </div>
       </footer>
     </main>

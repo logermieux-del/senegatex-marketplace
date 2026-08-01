@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
                   amount: ${amount}
                   currency: "${currency}"
                   recipientPhone: "${buyerPhone}"
-                  reason: "Senegatex - ${listing.title}"
+                  reason: "Yombal - ${listing.title}"
                 }) {
                   transactionId
                   status

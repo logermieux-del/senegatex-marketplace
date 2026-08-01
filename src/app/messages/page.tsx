@@ -47,7 +47,7 @@ export default function MessagesPage() {
       <header className="bg-white border-b">
         <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold text-orange-500">
-            Senegatex
+            Yombal
           </Link>
           <div className="flex gap-4">
             <Link href="/login" className="text-gray-700">Login</Link>
