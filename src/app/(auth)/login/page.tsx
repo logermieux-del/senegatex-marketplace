@@ -36,7 +36,7 @@ function LoginForm() {
       });
 
       if (result?.error) {
-        setErrorMsg(result.error);
+        setErrorMsg('Invalid credentials');
       } else if (result?.ok) {
         router.push('/');
       }
@@ -115,7 +115,7 @@ function LoginForm() {
 
           <div className="mt-6 pt-6 border-t border-gray-200">
             <p className="text-xs text-gray-500 text-center">
-              Test account: seller@example.com / password123
+              Test account: seller@example.com / Password123
             </p>
           </div>
         </div>

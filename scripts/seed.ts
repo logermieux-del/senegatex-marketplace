@@ -15,7 +15,7 @@ async function main() {
   await prisma.user.deleteMany();
 
   // Create test users
-  const password = await bcrypt.hash('password123', 12);
+  const password = await bcrypt.hash('Password123', 12);
 
   const seller = await prisma.user.create({
     data: {
@@ -87,8 +87,8 @@ async function main() {
 
   console.log('✅ Seeding complete!');
   console.log('Test users:');
-  console.log(`- Seller: ${seller.email} / password123`);
-  console.log(`- Buyer: ${buyer.email} / password123`);
+  console.log(`- Seller: ${seller.email} / Password123`);
+  console.log(`- Buyer: ${buyer.email} / Password123`);
 }
 
 main()
