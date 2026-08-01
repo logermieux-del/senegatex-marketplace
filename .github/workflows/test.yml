@@ -57,6 +57,12 @@ jobs:
     runs-on: ubuntu-latest
     name: E2E Tests (Playwright)
 
+    env:
+      DATABASE_URL: postgresql://test:test@localhost:5432/yombal_test
+      REDIS_URL: redis://localhost:6379
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: test-secret-key
+
     services:
       postgres:
         image: postgres:16-alpine
@@ -95,11 +101,6 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Setup test environment
-        env:
-          DATABASE_URL: postgresql://test:test@localhost:5432/yombal_test
-          REDIS_URL: redis://localhost:6379
-          NEXTAUTH_URL: http://localhost:3000
-          NEXTAUTH_SECRET: test-secret-key
         run: |
           npm run build
           npx prisma migrate deploy
@@ -109,11 +110,6 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run E2E tests
-        env:
-          DATABASE_URL: postgresql://test:test@localhost:5432/yombal_test
-          REDIS_URL: redis://localhost:6379
-          NEXTAUTH_URL: http://localhost:3000
-          NEXTAUTH_SECRET: test-secret-key
         run: npm run test:e2e
 
       - name: Upload Playwright report
