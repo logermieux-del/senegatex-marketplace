@@ -15,9 +15,14 @@ model User {
   name          String
   avatar        String?
   bio           String?
-  role          String     @default("USER") // USER, SELLER, ADMIN
+  role          String     @default("USER") // USER, SELLER, ADMIN, TRANSPORTER
   emailVerified DateTime?
   password      String
+
+  // Geographic info
+  region        String?    // Dakar, Thiès, Kaolack, etc.
+  arrondissement String?   // Plateau, Medina, Parcelles, etc.
+  pointRetrait  String?    // Preferred pickup address
 
   listings      Listing[]
   sentMessages  Message[]  @relation("sentMessages")
@@ -28,6 +33,10 @@ model User {
   boughtTransactions Transaction[] @relation("buyer")
   moderatorActions ModeratorAction[]
 
+  // Transporter data
+  transporteur  Transporteur?
+  disputesSignaled Dispute[] @relation("signalePar")
+
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   isActive      Boolean    @default(true)
@@ -37,6 +46,7 @@ model User {
   @@index([email])
   @@index([phone])
   @@index([isActive])
+  @@index([region])
 }
 
 // Listing model
@@ -198,5 +208,115 @@ model ModeratorAction {
   createdAt     DateTime   @default(now())
 
   @@index([userId])
+  @@index([createdAt])
+}
+
+// ============ TRANSPORTEUR ECOSYSTEM ============
+
+// Transporteur (Driver/Courier)
+model Transporteur {
+  id                    String     @id @default(cuid())
+  userId                String     @unique
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  typeVehicule          String     // "moto", "voiture", "3roues", "camionnette"
+  plaqueImmatriculation String     @unique
+
+  // Coverage & Pricing
+  regionsCouvertes      String     // JSON array: ["Dakar", "Thiès", ...]
+  tarifParZone          String     // JSON: {Dakar: 2500, Thiès: 4000, ...}
+  capaciteVolume        String     // "petit", "moyen", "gros"
+
+  // Verification & Status
+  statut                String     @default("PENDING") // PENDING, VERIFIED, ACTIVE, SUSPENDED, INACTIVE
+  documentsVerification String?    // JSON: {cin, photoVehicule, certificatCirculation, dateVerification}
+  dateVerification      DateTime?
+
+  // Metrics
+  notianceGlobale       Float      @default(0.0) // 0-5
+  nombreLivraisons      Int        @default(0)
+  tauxDisputes          Float      @default(0.0) // 0-100 percent
+  lastActivityAt        DateTime?
+
+  livraisons            Livraison[]
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([statut])
+  @@index([regionsCouvertes])
+}
+
+// Livraison (Delivery/Order)
+model Livraison {
+  id                    String     @id @default(cuid())
+
+  // Transaction reference
+  transactionId         String?    // FK to Transaction (future link)
+
+  transporteurId        String
+  transporteur          Transporteur @relation(fields: [transporteurId], references: [id], onDelete: Cascade)
+
+  // Addresses
+  adresseDepart         String     // JSON: {region, arrondissement, rue, lat, lng}
+  adresseArrivee        String     // JSON: {region, arrondissement, rue, lat, lng}
+
+  // Status & Tracking
+  statut                String     @default("PENDING") // PENDING, ACCEPTED, PICKED_UP, IN_TRANSIT, DELIVERED, FAILED
+  locationActuelle      String?    // JSON: {lat, lng, timestamp}
+
+  // Pricing
+  tarifNegocie          Int        // XOF
+  commissionYombal      Int        // XOF (5-10% of tarif)
+
+  // Timeline
+  datePrise             DateTime?
+  dateEstimeeArrivee    DateTime?
+  dateArriveeReelle     DateTime?
+
+  // Proof & Documents
+  photoPreuve           String?    // URL to delivery photo
+
+  // Rating (après livraison)
+  ratingAcheteur        String?    // JSON: {punctualite, etatProduit, communication, professionalisme, commentaire}
+
+  // Incident tracking
+  incident              Boolean    @default(false)
+
+  disputes              Dispute[]
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([transporteurId])
+  @@index([statut])
+  @@index([createdAt])
+}
+
+// Dispute (Claim/Incident resolution)
+model Dispute {
+  id                    String     @id @default(cuid())
+  livraisonId           String
+  livraison             Livraison  @relation(fields: [livraisonId], references: [id], onDelete: Cascade)
+
+  signaleParUserId      String
+  signalePar            User       @relation("signalePar", fields: [signaleParUserId], references: [id], onDelete: Cascade)
+
+  raison                String     // "produit_casse", "non_recu", "retard", "autre"
+  description           String
+  preuves               String?    // JSON: {photos: [...], notes: "..."}
+
+  statut                String     @default("OPEN") // OPEN, IN_REVIEW, RESOLVED, ESCALATED
+  resolution            String?    // JSON: {type: "remboursement|compensation", montant, notes}
+
+  reviewedByAdmin       String?
+  dateResolution        DateTime?
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([livraisonId])
+  @@index([statut])
   @@index([createdAt])
 }

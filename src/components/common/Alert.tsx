@@ -5,7 +5,8 @@ type AlertType = 'success' | 'error' | 'warning' | 'info';
 interface AlertProps {
   type: AlertType;
   title?: string;
-  message: string;
+  message?: string;
+  children?: React.ReactNode;
   onClose?: () => void;
   dismissible?: boolean;
 }
@@ -41,6 +42,7 @@ export function Alert({
   type,
   title,
   message,
+  children,
   onClose,
   dismissible = true,
 }: AlertProps) {
@@ -52,7 +54,8 @@ export function Alert({
 
       <div className="flex-1">
         {title && <p className="font-bold mb-1">{title}</p>}
-        <p>{message}</p>
+        {message && <p>{message}</p>}
+        {children && <div>{children}</div>}
       </div>
 
       {dismissible && onClose && (

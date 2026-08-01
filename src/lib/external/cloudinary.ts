@@ -57,6 +57,12 @@ export async function deleteImage(publicId: string): Promise<boolean> {
   }
 }
 
+export async function uploadToCloudinary(file: File, folder: string = 'yombal'): Promise<string> {
+  const buffer = await file.arrayBuffer();
+  const result = await uploadImage(Buffer.from(buffer), folder);
+  return result.url;
+}
+
 export function getOptimizedUrl(publicId: string, width?: number, height?: number): string {
   let url = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`;
 

@@ -52,7 +52,7 @@ async function main() {
     },
   });
 
-  const listing2 = await prisma.listing.create({
+  const _listing2 = await prisma.listing.create({
     data: {
       userId: seller.id,
       title: 'Wooden Dining Table',

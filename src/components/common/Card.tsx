@@ -7,7 +7,22 @@ interface CardProps {
   onClick?: () => void;
 }
 
-export function Card({
+interface CardHeaderProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+interface CardBodyProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+interface CardFooterProps {
+  children: React.ReactNode;
+  align?: 'left' | 'center' | 'right';
+}
+
+function CardRoot({
   children,
   className = '',
   hoverable = false,
@@ -28,38 +43,19 @@ export function Card({
   );
 }
 
-interface CardHeaderProps {
-  title: string;
-  subtitle?: string;
-  action?: React.ReactNode;
-}
-
-export function CardHeader({ title, subtitle, action }: CardHeaderProps) {
+function CardHeader({ children, className = '' }: CardHeaderProps) {
   return (
-    <div className="flex justify-between items-start mb-4">
-      <div>
-        <h3 className="text-lg font-bold text-gray-900">{title}</h3>
-        {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
-      </div>
-      {action && <div>{action}</div>}
+    <div className={`mb-4 ${className}`}>
+      {children}
     </div>
   );
 }
 
-interface CardBodyProps {
-  children: React.ReactNode;
+function CardBody({ children, className = '' }: CardBodyProps) {
+  return <div className={`text-gray-700 ${className}`}>{children}</div>;
 }
 
-export function CardBody({ children }: CardBodyProps) {
-  return <div className="text-gray-700">{children}</div>;
-}
-
-interface CardFooterProps {
-  children: React.ReactNode;
-  align?: 'left' | 'center' | 'right';
-}
-
-export function CardFooter({ children, align = 'right' }: CardFooterProps) {
+function CardFooter({ children, align = 'right' }: CardFooterProps) {
   const alignClass = {
     left: 'justify-start',
     center: 'justify-center',
@@ -72,3 +68,11 @@ export function CardFooter({ children, align = 'right' }: CardFooterProps) {
     </div>
   );
 }
+
+// Compose as static properties
+CardRoot.Header = CardHeader;
+CardRoot.Body = CardBody;
+CardRoot.Footer = CardFooter;
+
+export const Card = CardRoot;
+export { CardHeader, CardBody, CardFooter };
