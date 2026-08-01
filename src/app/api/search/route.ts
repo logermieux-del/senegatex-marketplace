@@ -33,11 +33,9 @@ export async function GET(request: NextRequest) {
       },
       processingTimeMs: results.processingTimeMs,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Search error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Search failed' },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : 'Search failed';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

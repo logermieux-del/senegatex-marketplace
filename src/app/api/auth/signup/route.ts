@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ZodError } from 'zod';
 import { signupSchema } from '@/lib/validators';
 import { hashPassword } from '@/lib/password';
 import { prisma } from '@/lib/db';
@@ -45,12 +46,11 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
-    if (error.issues) {
-      // Zod validation error
+  } catch (error) {
+    if (error instanceof ZodError) {
       const details: Record<string, string> = {};
-      error.issues.forEach((issue: any) => {
-        details[issue.path[0]] = issue.message;
+      error.issues.forEach((issue) => {
+        details[String(issue.path[0])] = issue.message;
       });
       return NextResponse.json(
         { error: 'Validation error', details },

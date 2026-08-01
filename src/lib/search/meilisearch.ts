@@ -1,4 +1,5 @@
 import { MeiliSearch } from 'meilisearch';
+import type { Listing } from '@prisma/client';
 
 const client = new MeiliSearch({
   host: process.env.MEILISEARCH_URL || 'http://localhost:7700',
@@ -38,7 +39,7 @@ export async function searchListings(query: string, filters?: SearchFilters, pag
   }
 }
 
-export async function indexListing(listing: any) {
+export async function indexListing(listing: Listing) {
   try {
     await searchIndex.addDocuments([
       {

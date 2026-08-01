@@ -149,10 +149,12 @@ export default function AdminPage() {
 
             {/* Pending Reports */}
             <Card className="mb-8">
-              <CardHeader
-                title="Pending Reports"
-                subtitle={`${stats.pendingReports} items flagged for review`}
-              />
+              <CardHeader>
+                <h2 className="text-lg font-bold text-gray-900">Pending Reports</h2>
+                <p className="text-sm text-gray-600">
+                  {stats.pendingReports} items flagged for review
+                </p>
+              </CardHeader>
               <CardBody>
                 {reports.length === 0 ? (
                   <p className="text-gray-600 text-center py-8">No pending reports</p>
@@ -242,7 +244,10 @@ export default function AdminPage() {
 
             {/* Activity Log */}
             <Card className="mt-8">
-              <CardHeader title="Activity Log" subtitle="Recent admin actions" />
+              <CardHeader>
+                <h2 className="text-lg font-bold text-gray-900">Activity Log</h2>
+                <p className="text-sm text-gray-600">Recent admin actions</p>
+              </CardHeader>
               <CardBody>
                 <p className="text-gray-600 text-center py-8">
                   No activity yet (coming soon)

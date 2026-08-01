@@ -54,7 +54,7 @@ test.describe('Listings', () => {
     await expect(page).toHaveURL(/city=Dakar/);
   });
 
-  test('should create new listing (logged in)', async ({ page, context }) => {
+  test('should create new listing (logged in)', async ({ page }) => {
     // Login first
     await page.goto(`${BASE_URL}/login`);
     await page.fill('input[type="email"]', 'seller@example.com');

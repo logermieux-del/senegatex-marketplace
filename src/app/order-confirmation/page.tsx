@@ -1,9 +1,18 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 export default function OrderConfirmationPage() {
+  return (
+    <Suspense fallback={null}>
+      <OrderConfirmation />
+    </Suspense>
+  );
+}
+
+function OrderConfirmation() {
   const searchParams = useSearchParams();
   const transactionId = searchParams.get('transactionId');
 

@@ -25,7 +25,7 @@ export async function uploadImage(file: Buffer, folder: string = 'yombal'): Prom
         ],
       },
       (error, result) => {
-        if (error) reject(error);
+        if (error || !result) reject(error || new Error('Cloudinary upload failed'));
         else
           resolve({
             url: result.secure_url,

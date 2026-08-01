@@ -9,7 +9,7 @@ const messageSchema = z.object({
   body: z.string().min(1).max(5000),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await getAuthSession();
     if (!session?.user?.id) {
@@ -46,12 +46,10 @@ export async function GET(request: NextRequest) {
         createdAt: msg.createdAt,
       })),
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Get messages error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to fetch messages' },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : 'Failed to fetch messages';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
@@ -87,16 +85,14 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(message, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Create message error:', error);
 
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors[0].message }, { status: 400 });
+      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
     }
 
-    return NextResponse.json(
-      { error: error.message || 'Failed to send message' },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : 'Failed to send message';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -9,6 +9,7 @@ interface AlertProps {
   children?: React.ReactNode;
   onClose?: () => void;
   dismissible?: boolean;
+  className?: string;
 }
 
 const typeStyles: Record<AlertType, { bg: string; border: string; text: string; icon: string }> = {
@@ -45,11 +46,12 @@ export function Alert({
   children,
   onClose,
   dismissible = true,
+  className = '',
 }: AlertProps) {
   const styles = typeStyles[type];
 
   return (
-    <div className={`${styles.bg} border ${styles.border} ${styles.text} px-4 py-4 rounded-lg flex gap-3`}>
+    <div className={`${styles.bg} border ${styles.border} ${styles.text} px-4 py-4 rounded-lg flex gap-3 ${className}`}>
       <span className="text-lg flex-shrink-0">{styles.icon}</span>
 
       <div className="flex-1">

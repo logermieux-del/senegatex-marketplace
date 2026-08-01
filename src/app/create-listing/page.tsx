@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Button, Input, Textarea, Select, Alert, Card, CardBody, CardFooter } from '@/components/common';
+import { Button, Input, Textarea, Select, Alert, Card, CardBody } from '@/components/common';
 
 const CATEGORIES = [
   { value: '', label: 'Select a category' },
@@ -123,7 +123,7 @@ export default function CreateListingPage() {
         <Card>
           <CardBody>
             <h1 className="text-3xl font-bold mb-2">Create New Listing</h1>
-            <p className="text-gray-600 mb-6">Share what you're selling with the Yombal community</p>
+            <p className="text-gray-600 mb-6">Share what you&apos;re selling with the Yombal community</p>
 
             {error && (
               <Alert

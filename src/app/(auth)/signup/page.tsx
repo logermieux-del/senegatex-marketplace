@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { signupSchema, type SignupInput } from '@/lib/validators';
+import { ZodError } from 'zod';
+import { signupSchema } from '@/lib/validators';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -44,12 +45,11 @@ export default function SignupPage() {
 
       // Success - redirect to login
       router.push('/login?registered=true');
-    } catch (err: any) {
-      if (err.issues) {
-        // Zod validation errors
+    } catch (err) {
+      if (err instanceof ZodError) {
         const newErrors: Record<string, string> = {};
-        err.issues.forEach((issue: any) => {
-          newErrors[issue.path[0]] = issue.message;
+        err.issues.forEach((issue) => {
+          newErrors[String(issue.path[0])] = issue.message;
         });
         setErrors(newErrors);
       } else {

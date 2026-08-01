@@ -50,11 +50,9 @@ export async function PATCH(
     }
 
     return NextResponse.json(report);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Report update error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to update report' },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : 'Failed to update report';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

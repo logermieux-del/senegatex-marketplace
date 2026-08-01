@@ -2,10 +2,18 @@
 
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
@@ -32,7 +40,7 @@ export default function LoginPage() {
       } else if (result?.ok) {
         router.push('/');
       }
-    } catch (err) {
+    } catch {
       setErrorMsg('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
@@ -98,7 +106,7 @@ export default function LoginPage() {
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/signup" className="text-orange-500 hover:text-orange-600 font-medium">
                 Sign up
               </Link>
