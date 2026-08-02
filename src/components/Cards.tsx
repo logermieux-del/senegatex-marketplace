@@ -1,4 +1,4 @@
-import { Heart, Trophy, TrendingUp } from 'lucide-react';
+import { Heart, Trophy } from 'lucide-react';
 
 /* Match Card - Premium Sports */
 export function MatchCard({

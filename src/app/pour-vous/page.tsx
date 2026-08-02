@@ -162,7 +162,6 @@ export default function PourVous() {
                 key={article.id}
                 title={article.title}
                 category={article.category}
-                icon={article.icon}
                 timestamp={article.timestamp}
                 reads={article.reads}
                 isLiked={likedArticles.has(article.id)}
