@@ -9,7 +9,7 @@ interface SearchBarProps {
 
 export function SearchBar({ onSearch, placeholder = 'Search listings...' }: SearchBarProps) {
   const [query, setQuery] = useState('');
-  const debounceTimer = useRef<NodeJS.Timeout>();
+  const debounceTimer = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
     if (debounceTimer.current) {
