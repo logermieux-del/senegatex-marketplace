@@ -1,0 +1,14 @@
+{
+  "skills": [
+    {
+      "name": "frontend-design",
+      "path": ".claude/skills/frontend-design",
+      "description": "Guidance for distinctive, intentional visual design"
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "path": ".claude/skills/ui-ux-pro-max",
+      "description": "AI-powered design intelligence with 84 UI styles, 192 color palettes, 74 font pairings, 98 UX guidelines, and 25 chart types"
+    }
+  ]
+}

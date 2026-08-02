@@ -77,3 +77,4 @@ dump.rdb
 .tmp/
 tmp/
 *.tmp
+__pycache__/
