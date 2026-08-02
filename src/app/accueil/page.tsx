@@ -70,13 +70,13 @@ export default function Accueil() {
           {/* Hero Content */}
           <div className="relative z-10 text-center max-w-4xl px-4">
             <div className="accent-bar mb-8 w-24 mx-auto rounded-full"></div>
-            <h1 className="font-serif text-6xl md:text-7xl font-bold mb-6 text-primary-100">
+            <h1 className="font-serif text-6xl md:text-7xl font-bold mb-6 text-white">
               Afro <span className="text-blue-500">Sport</span>
             </h1>
-            <p className="text-xl md:text-2xl text-primary-300 mb-4 font-light tracking-wide">
+            <p className="text-xl md:text-2xl text-gray-200 mb-4 font-light tracking-wide">
               La Plateforme Premium du Sport Africain
             </p>
-            <p className="text-primary-400 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
               Suivez tous les matchs en direct, classements, actualités et performances des meilleures athlètes du continent.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
@@ -120,7 +120,7 @@ export default function Accueil() {
           <div className="mb-12">
             <div className="flex items-center gap-3 mb-2">
               <Zap className="w-6 h-6 text-blue-500" />
-              <h2 className="font-serif text-4xl font-bold">Matchs en Direct</h2>
+              <h2 className="font-serif text-4xl font-bold text-white">Matchs en Direct</h2>
             </div>
             <div className="accent-bar w-20 mt-4"></div>
           </div>
@@ -131,7 +131,7 @@ export default function Accueil() {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <p className="text-blue-400 text-sm font-bold uppercase tracking-widest">{match.sport}</p>
-                    <h3 className="text-xl font-bold mt-2">{match.teams}</h3>
+                    <h3 className="text-xl font-bold mt-2 text-white">{match.teams}</h3>
                   </div>
                   <span className={`px-3 py-1 rounded text-xs font-bold uppercase ${
                     match.status === 'EN DIRECT' ? 'bg-blue-500/20 text-blue-300' :
@@ -155,8 +155,8 @@ export default function Accueil() {
           <div className="max-w-7xl mx-auto px-4">
             <div className="mb-12">
               <div className="flex items-center gap-3 mb-2">
-                <Trophy className="w-6 h-6 text-primary-400" />
-                <h2 className="font-serif text-4xl font-bold">Top Athlètes</h2>
+                <Trophy className="w-6 h-6 text-blue-400" />
+                <h2 className="font-serif text-4xl font-bold text-white">Top Athlètes</h2>
               </div>
               <div className="accent-bar w-20 mt-4"></div>
             </div>
@@ -165,19 +165,19 @@ export default function Accueil() {
               {topPlayers.map((player, idx) => (
                 <div key={idx} className="card-premium">
                   <div className="text-center">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-primary-400 mx-auto mb-4 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 mx-auto mb-4 flex items-center justify-center">
                       <Activity className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="font-bold text-lg mb-1">{player.name}</h3>
-                    <p className="text-primary-400 text-sm mb-4">{player.sport}</p>
+                    <h3 className="font-bold text-lg mb-1 text-white">{player.name}</h3>
+                    <p className="text-gray-400 text-sm mb-4">{player.sport}</p>
                     <div className="flex justify-around pt-4 border-t border-secondary-600">
                       <div className="text-center">
                         <p className="text-2xl font-bold text-blue-500">{player.rating}</p>
-                        <p className="text-xs text-primary-400">Rating</p>
+                        <p className="text-xs text-gray-400">Rating</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-primary-400">{player.matches}</p>
-                        <p className="text-xs text-primary-400">Matchs</p>
+                        <p className="text-2xl font-bold text-blue-400">{player.matches}</p>
+                        <p className="text-xs text-gray-400">Matchs</p>
                       </div>
                     </div>
                   </div>
@@ -191,8 +191,8 @@ export default function Accueil() {
         <section className="max-w-7xl mx-auto px-4 py-20">
           <div className="mb-12">
             <div className="flex items-center gap-3 mb-2">
-              <TrendingUp className="w-6 h-6 text-accent-500" />
-              <h2 className="font-serif text-4xl font-bold">En Tendance</h2>
+              <TrendingUp className="w-6 h-6 text-blue-500" />
+              <h2 className="font-serif text-4xl font-bold text-white">En Tendance</h2>
             </div>
             <div className="accent-bar w-20 mt-4"></div>
           </div>
@@ -203,8 +203,8 @@ export default function Accueil() {
                 <div className="flex justify-between items-start gap-4">
                   <div className="flex-1">
                     <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">{article.category}</p>
-                    <h3 className="text-xl font-bold mb-3">{article.title}</h3>
-                    <div className="flex items-center gap-4 text-primary-400 text-sm">
+                    <h3 className="text-xl font-bold mb-3 text-white">{article.title}</h3>
+                    <div className="flex items-center gap-4 text-gray-400 text-sm">
                       <span>{article.timestamp}</span>
                       <span>•</span>
                       <span>{article.reads.toLocaleString()} lectures</span>
@@ -223,12 +223,12 @@ export default function Accueil() {
         </section>
 
         {/* Premium CTA Section */}
-        <section className="bg-gradient-to-r from-blue-600/30 to-primary-400/30 border-t-4 border-blue-500 py-20">
+        <section className="bg-gradient-to-r from-blue-600/20 to-blue-700/20 border-t-4 border-blue-500 py-20">
           <div className="max-w-4xl mx-auto text-center px-4">
-            <h2 className="font-serif text-5xl font-bold mb-6">
+            <h2 className="font-serif text-5xl font-bold mb-6 text-white">
               Rejoignez la Communauté Premium
             </h2>
-            <p className="text-xl text-primary-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
               Accès exclusif aux analyses détaillées, notifications en direct, et contenu premium des meilleures athlètes africaines.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">

@@ -27,7 +27,7 @@ export function MatchCard({
       <div className="flex justify-between items-start mb-4">
         <div>
           <p className="text-blue-400 text-sm font-bold uppercase tracking-widest">{sport}</p>
-          <h3 className="text-xl font-bold mt-2">{teams}</h3>
+          <h3 className="text-xl font-bold mt-2 text-white">{teams}</h3>
         </div>
         <span className={`px-3 py-1 rounded text-xs font-bold uppercase ${config.bg} ${config.text}`}>
           {config.badge}
@@ -56,19 +56,19 @@ export function AthleteCard({
   return (
     <div className="card-premium">
       <div className="text-center">
-        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-primary-400 mx-auto mb-4 flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 mx-auto mb-4 flex items-center justify-center">
           <Trophy className="w-8 h-8 text-white" />
         </div>
-        <h3 className="font-bold text-lg mb-1">{name}</h3>
-        <p className="text-primary-400 text-sm mb-4">{sport}</p>
+        <h3 className="font-bold text-lg mb-1 text-white">{name}</h3>
+        <p className="text-gray-400 text-sm mb-4">{sport}</p>
         <div className="flex justify-around pt-4 border-t border-secondary-600">
           <div className="text-center">
             <p className="text-2xl font-bold text-blue-500">{rating}</p>
-            <p className="text-xs text-primary-400">Rating</p>
+            <p className="text-xs text-gray-400">Rating</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-primary-400">{matches}</p>
-            <p className="text-xs text-primary-400">Matchs</p>
+            <p className="text-2xl font-bold text-blue-400">{matches}</p>
+            <p className="text-xs text-gray-400">Matchs</p>
           </div>
         </div>
       </div>
@@ -97,8 +97,8 @@ export function ArticleCard({
       <div className="flex justify-between items-start gap-4">
         <div className="flex-1">
           <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">{category}</p>
-          <h3 className="text-xl font-bold mb-3">{title}</h3>
-          <div className="flex items-center gap-4 text-primary-400 text-sm">
+          <h3 className="text-xl font-bold mb-3 text-white">{title}</h3>
+          <div className="flex items-center gap-4 text-gray-400 text-sm">
             <span>{timestamp}</span>
             <span>•</span>
             <span>{reads.toLocaleString()} lectures</span>

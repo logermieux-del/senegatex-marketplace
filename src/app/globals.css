@@ -2,14 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Option C: Hybrid Premium Palette */
+/* Premium Palette: Navy Blue + White + Black */
 :root {
-  --creme: #f5f2ec;
-  --bronze: #c9a36b;
-  --blue-sport: #0ea5e9;
-  --oxblood: #6e1f23;
-  --near-black: #0a0908;
-  --slate: #48516b;
+  --white: #ffffff;
+  --navy-blue: #1e3a8a;
+  --deep-navy: #0c2340;
+  --blue: #2563eb;
+  --black: #000000;
 }
 
 html {
@@ -18,12 +17,12 @@ html {
 
 body {
   overflow-x: hidden;
-  @apply bg-secondary-900 text-primary-100;
+  @apply bg-secondary-900 text-white;
 }
 
-/* Premium Typography */
+/* Premium Typography - Black and White */
 h1, h2, h3, h4, h5, h6 {
-  @apply font-serif font-bold tracking-tight;
+  @apply font-serif font-bold tracking-tight text-white;
 }
 
 h1 { @apply text-5xl md:text-6xl; }
@@ -46,34 +45,35 @@ h3 { @apply text-2xl md:text-3xl; }
 }
 
 .btn-blue {
-  @apply btn-premium bg-blue-500 text-white hover:bg-blue-600;
+  @apply btn-premium bg-blue-600 text-white hover:bg-blue-700;
 }
 
-.btn-bronze {
-  @apply btn-premium bg-primary-400 text-secondary-900 hover:bg-primary-500;
+.btn-navy {
+  @apply btn-premium bg-accent-800 text-white hover:bg-accent-900;
 }
 
-.btn-accent {
-  @apply btn-premium bg-accent-600 text-primary-100 hover:bg-accent-700;
+.btn-white {
+  @apply btn-premium bg-white text-secondary-900 hover:bg-gray-100;
 }
 
 /* Luxury Card Styles */
 .card-premium {
-  @apply bg-secondary-800 border border-secondary-600 rounded-xl p-6 transition-all duration-300;
+  @apply bg-secondary-800 border border-secondary-700 rounded-xl p-6 transition-all duration-300;
 }
 
 .card-premium:hover {
-  border-color: rgb(59 130 246 / 0.5);
-  box-shadow: 0 20px 25px -5px rgb(14 165 233 / 0.1);
+  border-color: rgb(37 99 235 / 0.5);
+  box-shadow: 0 20px 25px -5px rgb(37 99 235 / 0.15);
+  background-color: rgb(30 41 59 / 0.8);
 }
 
 .card-glass {
-  @apply backdrop-blur-md bg-secondary-800/50 border border-primary-100/10 rounded-xl p-6;
+  @apply backdrop-blur-md bg-secondary-800/50 border border-white/10 rounded-xl p-6;
 }
 
 /* Accent Bar */
 .accent-bar {
-  @apply h-1 bg-gradient-to-r from-blue-500 via-primary-400 to-accent-500;
+  @apply h-1 bg-gradient-to-r from-blue-600 via-accent-400 to-blue-700;
 }
 
 /* Premium Stats */
@@ -86,7 +86,7 @@ h3 { @apply text-2xl md:text-3xl; }
 }
 
 .stat-label {
-  @apply text-sm uppercase tracking-widest text-primary-400 mt-2;
+  @apply text-sm uppercase tracking-widest text-gray-300 mt-2;
 }
 
 /* Scrollbar styling - Premium */
@@ -96,17 +96,17 @@ h3 { @apply text-2xl md:text-3xl; }
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(10, 9, 8, 0.5);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #0ea5e9 0%, #c9a36b 100%);
+  background: linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);
   border-radius: 5px;
-  border: 2px solid rgba(10, 9, 8, 0.5);
+  border: 2px solid rgba(0, 0, 0, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #0284c7 0%, #9b7a4a 100%);
+  background: linear-gradient(180deg, #1d4ed8 0%, #0c2340 100%);
 }
 
 /* Additional utility classes */

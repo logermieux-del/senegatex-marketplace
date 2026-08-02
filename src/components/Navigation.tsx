@@ -33,7 +33,7 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="px-4 py-2 flex items-center gap-2 text-primary-300 hover:text-blue-400 hover:bg-secondary-800 rounded-lg font-medium text-sm transition-all duration-300 uppercase tracking-wide"
+                  className="px-4 py-2 flex items-center gap-2 text-gray-300 hover:text-white hover:bg-secondary-700 rounded-lg font-medium text-sm transition-all duration-300 uppercase tracking-wide"
                 >
                   <Icon className="w-4 h-4" />
                   <span className="hidden lg:inline">{item.label}</span>
@@ -44,10 +44,10 @@ export default function Navigation() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex gap-3">
-            <button className="px-4 py-2 text-primary-400 hover:text-blue-400 transition-colors font-medium text-sm">
+            <button className="px-4 py-2 text-gray-300 hover:text-white transition-colors font-medium text-sm">
               Connexion
             </button>
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium text-sm uppercase tracking-wide">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm uppercase tracking-wide">
               S'inscrire
             </button>
           </div>
@@ -75,7 +75,7 @@ export default function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="px-4 py-3 flex items-center gap-3 text-primary-300 hover:text-blue-400 hover:bg-secondary-700 border-b border-secondary-600 transition-colors"
+                    className="px-4 py-3 flex items-center gap-3 text-gray-300 hover:text-white hover:bg-secondary-700 border-b border-secondary-600 transition-colors"
                     onClick={() => setMobileOpen(false)}
                   >
                     <Icon className="w-5 h-5" />
@@ -83,10 +83,10 @@ export default function Navigation() {
                   </Link>
                 );
               })}
-              <button className="px-4 py-3 text-left text-primary-300 hover:text-blue-400 hover:bg-secondary-700 border-b border-secondary-600">
+              <button className="px-4 py-3 text-left text-gray-300 hover:text-white hover:bg-secondary-700 border-b border-secondary-600">
                 Connexion
               </button>
-              <button className="px-4 py-3 text-left text-white bg-blue-500 hover:bg-blue-600 font-medium uppercase tracking-wide">
+              <button className="px-4 py-3 text-left text-white bg-blue-600 hover:bg-blue-700 font-medium uppercase tracking-wide">
                 S'inscrire
               </button>
             </nav>

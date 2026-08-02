@@ -14,54 +14,54 @@ const config: Config = {
         serif: ['Georgia', 'Garamond', 'serif'],
       },
       colors: {
-        // Option C: Hybrid (Bleu + Bronze + Crème) - Premium Sports Palette
+        // Premium Sports Palette: Navy Blue + White + Black
         primary: {
-          50: '#f9f7f4',
-          100: '#f5f2ec', // Crème - warm ink, primary text
-          200: '#e8dcc9',
-          300: '#d4c1a6',
-          400: '#c9a36b', // Bronze/Brass - secondary accents
-          500: '#b8925c',
-          600: '#9b7a4a',
-          700: '#7d633a',
-          800: '#6e4d29',
-          900: '#5a3d1f',
+          50: '#ffffff',
+          100: '#f8f8f8', // White - primary text
+          200: '#f0f0f0',
+          300: '#e8e8e8',
+          400: '#e0e0e0',
+          500: '#d8d8d8',
+          600: '#c0c0c0',
+          700: '#a8a8a8',
+          800: '#808080',
+          900: '#000000', // Black
         },
         accent: {
-          50: '#faf5f2',
-          100: '#f5ede8',
-          200: '#e8d5ce',
-          300: '#d4a39b',
-          400: '#a97870',
-          500: '#8b5a50', // Deep bronze - strong accents & CTAs
-          600: '#6e1f23', // Burgundy bronze
-          700: '#5a151a',
-          800: '#470d12',
-          900: '#33070a',
+          50: '#f0f7ff',
+          100: '#e0eeff',
+          200: '#c1ddff',
+          300: '#a2ccff',
+          400: '#0d47a1', // Navy blue - strong accents & CTAs
+          500: '#0d3d91',
+          600: '#0a2e73',
+          700: '#081e55',
+          800: '#051437',
+          900: '#030a1f',
         },
         blue: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9', // Sport blue - primary brand blue
-          600: '#0284c7',
-          700: '#0369a1', // Deep sport blue
-          800: '#075985',
-          900: '#0c3d66',
+          50: '#f0f7ff',
+          100: '#e0eeff',
+          200: '#c1ddff',
+          300: '#a2ccff',
+          400: '#6b9eff',
+          500: '#2563eb', // Medium blue - primary brand blue
+          600: '#1d4ed8',
+          700: '#1e40af', // Deep blue
+          800: '#1e3a8a', // Navy blue
+          900: '#0c2340', // Very deep navy
         },
         secondary: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b', // Slate neutral
-          600: '#48516b', // Slate midtone
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0a0908', // Near-black ground
+          50: '#ffffff',
+          100: '#f8f8f8',
+          200: '#f0f0f0',
+          300: '#e8e8e8',
+          400: '#d0d0d0',
+          500: '#b0b0b0',
+          600: '#808080',
+          700: '#505050',
+          800: '#202020',
+          900: '#000000', // Pure black ground
         },
       },
       fontSize: {
