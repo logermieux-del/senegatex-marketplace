@@ -224,7 +224,7 @@ export default function LivraisonTrackingPage() {
                   {livraison.adresseDepart.arrondissement &&
                     `, ${livraison.adresseDepart.arrondissement}`}
                 </p>
-                {livraison.adresseDepart.lat && (
+                {livraison.adresseDepart.lat && livraison.adresseDepart.lng && (
                   <p className="text-xs text-gray-500">
                     {livraison.adresseDepart.lat.toFixed(4)},
                     {livraison.adresseDepart.lng.toFixed(4)}
@@ -238,7 +238,7 @@ export default function LivraisonTrackingPage() {
                   {livraison.adresseArrivee.arrondissement &&
                     `, ${livraison.adresseArrivee.arrondissement}`}
                 </p>
-                {livraison.adresseArrivee.lat && (
+                {livraison.adresseArrivee.lat && livraison.adresseArrivee.lng && (
                   <p className="text-xs text-gray-500">
                     {livraison.adresseArrivee.lat.toFixed(4)},
                     {livraison.adresseArrivee.lng.toFixed(4)}

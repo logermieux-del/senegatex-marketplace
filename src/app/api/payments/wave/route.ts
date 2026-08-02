@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { listingId, amount, currency, buyerName, buyerEmail, buyerPhone } =
+    const { listingId, amount, currency, buyerName, buyerEmail: _buyerEmail, buyerPhone } =
       paymentSchema.parse(body);
 
     // Verify listing exists
