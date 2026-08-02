@@ -59,6 +59,10 @@ export default function Home() {
     }
   };
 
+  const handleStartSelling = () => {
+    window.location.href = '/listings/create';
+  };
+
   const cities = ['Dakar', 'Thiès', 'Kaolack', 'Saint-Louis', 'Ziguinchor', 'Tambacounda'];
   const categories = ['electronics', 'furniture', 'vehicles', 'clothing', 'services'];
 
@@ -89,12 +93,12 @@ export default function Home() {
             Discover amazing deals from neighbors near you
           </p>
           <div className="flex gap-4 justify-center">
-            <Link
-              href="/listings/create"
+            <button
+              onClick={handleStartSelling}
               className="bg-orange-500 text-white px-6 py-3 rounded text-lg hover:bg-orange-600"
             >
               Start Selling
-            </Link>
+            </button>
             <a
               href="#listings"
               className="border-2 border-orange-500 text-orange-500 px-6 py-3 rounded text-lg hover:bg-orange-50"
