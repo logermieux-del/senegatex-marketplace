@@ -6,6 +6,8 @@ export default defineConfig({
     globals: true,
     include: ['tests/unit/**/*.test.ts', 'tests/unit/**/*.test.tsx'],
     exclude: ['tests/e2e/**', 'node_modules/**'],
+    allowOnly: false,
+    passWithNoTests: true,
   },
   resolve: {
     alias: {
