@@ -2,13 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles */
+/* Option C: Hybrid Premium Palette */
 :root {
-  --primary: #f59e0b;
-  --secondary: #6366f1;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
+  --creme: #f5f2ec;
+  --bronze: #c9a36b;
+  --blue-sport: #0ea5e9;
+  --oxblood: #6e1f23;
+  --near-black: #0a0908;
+  --slate: #48516b;
 }
 
 html {
@@ -17,23 +18,101 @@ html {
 
 body {
   overflow-x: hidden;
+  @apply bg-secondary-900 text-primary-100;
 }
 
-/* Scrollbar styling */
+/* Premium Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif font-bold tracking-tight;
+}
+
+h1 { @apply text-5xl md:text-6xl; }
+h2 { @apply text-3xl md:text-4xl; }
+h3 { @apply text-2xl md:text-3xl; }
+
+/* Hero Section Base */
+.hero-section {
+  @apply relative overflow-hidden;
+}
+
+.hero-overlay {
+  @apply absolute inset-0 bg-gradient-to-r from-secondary-900/95 via-secondary-900/90 to-secondary-900/95;
+}
+
+/* Premium Button Styles */
+.btn-premium {
+  @apply px-6 py-3 font-bold rounded-lg transition-all duration-300 uppercase tracking-widest text-sm;
+  @apply hover:shadow-lg hover:scale-105;
+}
+
+.btn-blue {
+  @apply btn-premium bg-blue-500 text-white hover:bg-blue-600;
+}
+
+.btn-bronze {
+  @apply btn-premium bg-primary-400 text-secondary-900 hover:bg-primary-500;
+}
+
+.btn-accent {
+  @apply btn-premium bg-accent-600 text-primary-100 hover:bg-accent-700;
+}
+
+/* Luxury Card Styles */
+.card-premium {
+  @apply bg-secondary-800 border border-secondary-600 rounded-xl p-6 transition-all duration-300;
+}
+
+.card-premium:hover {
+  border-color: rgb(59 130 246 / 0.5);
+  box-shadow: 0 20px 25px -5px rgb(14 165 233 / 0.1);
+}
+
+.card-glass {
+  @apply backdrop-blur-md bg-secondary-800/50 border border-primary-100/10 rounded-xl p-6;
+}
+
+/* Accent Bar */
+.accent-bar {
+  @apply h-1 bg-gradient-to-r from-blue-500 via-primary-400 to-accent-500;
+}
+
+/* Premium Stats */
+.stat-box {
+  @apply text-center p-4;
+}
+
+.stat-number {
+  @apply text-4xl font-bold text-blue-500 font-display;
+}
+
+.stat-label {
+  @apply text-sm uppercase tracking-widest text-primary-400 mt-2;
+}
+
+/* Scrollbar styling - Premium */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: rgba(10, 9, 8, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: linear-gradient(180deg, #0ea5e9 0%, #c9a36b 100%);
+  border-radius: 5px;
+  border: 2px solid rgba(10, 9, 8, 0.5);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: linear-gradient(180deg, #0284c7 0%, #9b7a4a 100%);
+}
+
+/* Additional utility classes */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

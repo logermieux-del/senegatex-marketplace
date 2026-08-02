@@ -1,52 +1,125 @@
-import { Heart } from 'lucide-react';
+import { Heart, Trophy, TrendingUp } from 'lucide-react';
 
-/* Result Card (Trajet) */
-export function ResultCard({
-  from,
-  to,
+/* Match Card - Premium Sports */
+export function MatchCard({
+  sport,
+  teams,
+  score,
+  time,
   status,
-  timestamp,
 }: {
-  from: string;
-  to: string;
-  status: 'livré' | 'en-cours' | 'retard';
-  timestamp: string;
+  sport: string;
+  teams: string;
+  score: string;
+  time: string;
+  status: 'EN DIRECT' | 'TERMINÉ' | 'À VENIR';
 }) {
   const statusConfig = {
-    livré: { bg: 'bg-green-600', text: '✓ LIVRÉ' },
-    'en-cours': { bg: 'bg-orange-600', text: '● EN COURS' },
-    retard: { bg: 'bg-red-600', text: '⚠️ RETARD' },
+    'EN DIRECT': { bg: 'bg-blue-500/20', text: 'text-blue-300', badge: 'EN DIRECT' },
+    'TERMINÉ': { bg: 'bg-primary-400/20', text: 'text-primary-300', badge: 'TERMINÉ' },
+    'À VENIR': { bg: 'bg-secondary-700', text: 'text-primary-400', badge: 'À VENIR' },
   };
 
+  const config = statusConfig[status];
+
   return (
-    <div className="bg-secondary-800 border border-gray-700 rounded-lg p-6 hover:border-primary-600 transition-all">
-      <div className="grid grid-cols-3 gap-4 items-center">
-        {/* From */}
-        <div className="text-center">
-          <div className="text-2xl mb-2">📦</div>
-          <div className="font-bold text-sm">{from}</div>
+    <div className="card-premium group cursor-pointer">
+      <div className="flex justify-between items-start mb-4">
+        <div>
+          <p className="text-blue-400 text-sm font-bold uppercase tracking-widest">{sport}</p>
+          <h3 className="text-xl font-bold mt-2">{teams}</h3>
         </div>
+        <span className={`px-3 py-1 rounded text-xs font-bold uppercase ${config.bg} ${config.text}`}>
+          {config.badge}
+        </span>
+      </div>
+      <div className="border-t border-secondary-600 pt-4">
+        <div className="text-4xl font-bold text-blue-500 font-display mb-2">{score}</div>
+        <p className="text-primary-400 text-sm">{time}</p>
+      </div>
+    </div>
+  );
+}
 
-        {/* Arrow + Status */}
-        <div className="text-center">
-          <div className="text-2xl mb-2">→</div>
-          <div className={`${statusConfig[status].bg} text-white text-xs font-bold px-3 py-1 rounded inline-block`}>
-            {statusConfig[status].text}
+/* Athlete Card - Premium Sports */
+export function AthleteCard({
+  name,
+  sport,
+  rating,
+  matches,
+}: {
+  name: string;
+  sport: string;
+  rating: number;
+  matches: number;
+}) {
+  return (
+    <div className="card-premium">
+      <div className="text-center">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-primary-400 mx-auto mb-4 flex items-center justify-center">
+          <Trophy className="w-8 h-8 text-white" />
+        </div>
+        <h3 className="font-bold text-lg mb-1">{name}</h3>
+        <p className="text-primary-400 text-sm mb-4">{sport}</p>
+        <div className="flex justify-around pt-4 border-t border-secondary-600">
+          <div className="text-center">
+            <p className="text-2xl font-bold text-blue-500">{rating}</p>
+            <p className="text-xs text-primary-400">Rating</p>
           </div>
-          <div className="text-xs text-gray-400 mt-2">{timestamp}</div>
-        </div>
-
-        {/* To */}
-        <div className="text-center">
-          <div className="text-2xl mb-2">🏁</div>
-          <div className="font-bold text-sm">{to}</div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-primary-400">{matches}</p>
+            <p className="text-xs text-primary-400">Matchs</p>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-/* Transporter Card */
+/* Article Card - Premium News */
+export function ArticleCard({
+  title,
+  category,
+  timestamp,
+  reads,
+  onLike,
+  isLiked,
+}: {
+  title: string;
+  category: string;
+  timestamp: string;
+  reads: number;
+  onLike?: () => void;
+  isLiked?: boolean;
+}) {
+  return (
+    <div className="card-premium hover:bg-secondary-700/50">
+      <div className="flex justify-between items-start gap-4">
+        <div className="flex-1">
+          <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">{category}</p>
+          <h3 className="text-xl font-bold mb-3">{title}</h3>
+          <div className="flex items-center gap-4 text-primary-400 text-sm">
+            <span>{timestamp}</span>
+            <span>•</span>
+            <span>{reads.toLocaleString()} lectures</span>
+          </div>
+        </div>
+        <button
+          onClick={onLike}
+          className="flex-shrink-0 w-10 h-10 rounded-full bg-secondary-700 hover:bg-blue-500/20 flex items-center justify-center transition-colors"
+        >
+          <Heart
+            className={`w-5 h-5 ${
+              isLiked ? 'fill-accent-500 text-accent-500' : 'text-primary-400'
+            }`}
+          />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* Transporter Card - Legacy Support */
 export function TransporterCard({
   name,
   rating,
@@ -61,24 +134,24 @@ export function TransporterCard({
   onAction?: () => void;
 }) {
   return (
-    <div className="w-64 bg-secondary-800 border border-gray-700 rounded-lg p-6 hover:border-primary-600 transition-all">
+    <div className="w-64 card-premium">
       <div className="text-center mb-4">
-        <div className="w-20 h-20 bg-primary-600 rounded-full mx-auto flex items-center justify-center text-3xl mb-3">
+        <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-primary-400 rounded-full mx-auto flex items-center justify-center text-3xl mb-3">
           👤
         </div>
         <h3 className="font-bold text-base mb-1">{name}</h3>
-        <div className="text-orange-500 font-bold text-sm mb-2">{rating} ⭐</div>
-        <div className="text-xs text-gray-400">{trips.toLocaleString()} trajets</div>
+        <div className="text-blue-400 font-bold text-sm mb-2">{rating} ⭐</div>
+        <div className="text-xs text-primary-400">{trips.toLocaleString()} trajets</div>
       </div>
 
-      <div className="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded text-center block mb-3">
+      <div className="bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded text-center block mb-3">
         {badge}
       </div>
 
       {onAction && (
         <button
           onClick={onAction}
-          className="w-full bg-primary-600 text-white font-bold py-2 rounded hover:bg-primary-700 transition-colors text-sm"
+          className="w-full bg-blue-500 text-white font-bold py-2 rounded hover:bg-blue-600 transition-colors text-sm"
         >
           Envoyer
         </button>
@@ -87,58 +160,43 @@ export function TransporterCard({
   );
 }
 
-/* Article Card */
-export function ArticleCard({
-  title,
-  category,
-  icon,
+/* Result Card - Legacy Support */
+export function ResultCard({
+  from,
+  to,
+  status,
   timestamp,
-  reads,
-  onLike,
-  isLiked,
 }: {
-  title: string;
-  category: string;
-  icon: string;
+  from: string;
+  to: string;
+  status: 'livré' | 'en-cours' | 'retard';
   timestamp: string;
-  reads: number;
-  onLike?: () => void;
-  isLiked?: boolean;
 }) {
+  const statusConfig = {
+    livré: { bg: 'bg-green-600', text: '✓ LIVRÉ' },
+    'en-cours': { bg: 'bg-blue-600', text: '● EN COURS' },
+    retard: { bg: 'bg-accent-600', text: '⚠️ RETARD' },
+  };
+
   return (
-    <div className="bg-secondary-800 border border-gray-700 rounded-lg overflow-hidden hover:border-primary-600 transition-all p-4">
-      <div className="grid grid-cols-4 gap-4">
-        {/* Icon */}
-        <div className="bg-gradient-to-br from-primary-600 to-orange-500 rounded-lg h-24 flex items-center justify-center text-4xl">
-          {icon}
+    <div className="card-premium">
+      <div className="grid grid-cols-3 gap-4 items-center">
+        <div className="text-center">
+          <div className="text-2xl mb-2">📦</div>
+          <div className="font-bold text-sm">{from}</div>
         </div>
 
-        {/* Content */}
-        <div className="col-span-3 flex flex-col justify-between">
-          <div>
-            <div className="inline-block bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded mb-2">
-              {category}
-            </div>
-            <h3 className="font-bold text-sm line-clamp-2 mb-2">{title}</h3>
+        <div className="text-center">
+          <div className="text-2xl mb-2">→</div>
+          <div className={`${statusConfig[status].bg} text-white text-xs font-bold px-3 py-1 rounded inline-block`}>
+            {statusConfig[status].text}
           </div>
+          <div className="text-xs text-primary-400 mt-2">{timestamp}</div>
+        </div>
 
-          {/* Meta */}
-          <div className="flex items-center justify-between text-xs text-gray-400">
-            <span>{timestamp}</span>
-            <div className="flex items-center gap-2">
-              <span>{reads.toLocaleString()} lectures</span>
-              <button
-                onClick={onLike}
-                className="hover:scale-110 transition-transform"
-              >
-                <Heart
-                  className={`w-4 h-4 ${
-                    isLiked ? 'fill-red-500 text-red-500' : 'text-gray-400'
-                  }`}
-                />
-              </button>
-            </div>
-          </div>
+        <div className="text-center">
+          <div className="text-2xl mb-2">🏁</div>
+          <div className="font-bold text-sm">{to}</div>
         </div>
       </div>
     </div>

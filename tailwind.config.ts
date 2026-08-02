@@ -11,15 +11,16 @@ const config: Config = {
       fontFamily: {
         sans: ['Barlow', 'var(--font-sans)', ...defaultTheme.fontFamily.sans],
         display: ['Barlow Condensed', 'Barlow', ...defaultTheme.fontFamily.sans],
+        serif: ['Georgia', 'Garamond', 'serif'],
       },
       colors: {
-        // Premium Sports Palette: warm ink, oxblood, brass
+        // Option C: Hybrid (Bleu + Bronze + Crème) - Premium Sports Palette
         primary: {
-          50: '#f9f5f1',
-          100: '#f5f2ec', // Warm ink - text & light accents
+          50: '#f9f7f4',
+          100: '#f5f2ec', // Crème - warm ink, primary text
           200: '#e8dcc9',
           300: '#d4c1a6',
-          400: '#c9a36b', // Brass - secondary accents
+          400: '#c9a36b', // Bronze/Brass - secondary accents
           500: '#b8925c',
           600: '#9b7a4a',
           700: '#7d633a',
@@ -32,11 +33,23 @@ const config: Config = {
           200: '#e8d5ce',
           300: '#d4a39b',
           400: '#a97870',
-          500: '#8b5a50', // Oxblood - strong accents & CTAs
-          600: '#6e1f23', // Deep oxblood
+          500: '#8b5a50', // Deep bronze - strong accents & CTAs
+          600: '#6e1f23', // Burgundy bronze
           700: '#5a151a',
           800: '#470d12',
           900: '#33070a',
+        },
+        blue: {
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9', // Sport blue - primary brand blue
+          600: '#0284c7',
+          700: '#0369a1', // Deep sport blue
+          800: '#075985',
+          900: '#0c3d66',
         },
         secondary: {
           50: '#f8fafc',
