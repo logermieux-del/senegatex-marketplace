@@ -68,7 +68,6 @@ test-results/
 # Prisma
 prisma/*.db
 prisma/*.db-journal
-prisma/prisma/
 
 # Redis
 dump.rdb

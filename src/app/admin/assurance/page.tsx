@@ -69,7 +69,22 @@ export default function AdminAssurancePage() {
         return;
       }
 
-      fetchData();
+      // Update state locally instead of refetching
+      setData((prev) => {
+        if (!prev) return prev;
+        const paid = prev.remboursementsEnAttente.find((r) => r.id === id);
+        if (!paid) return prev;
+
+        return {
+          ...prev,
+          fonds: {
+            totalCollecte: prev.fonds.totalCollecte,
+            totalRembourse: prev.fonds.totalRembourse + paid.montant,
+            solde: prev.fonds.solde - paid.montant,
+          },
+          remboursementsEnAttente: prev.remboursementsEnAttente.filter((r) => r.id !== id),
+        };
+      });
     } catch (err) {
       setError('An error occurred');
       console.error(err);
