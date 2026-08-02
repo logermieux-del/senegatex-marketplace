@@ -1,8 +1,8 @@
-import { prisma } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { livraisonRatingSchema } from '@/lib/validators';
+import { rateLivraison } from '@/lib/api/livraisons';
 import { z } from 'zod';
 
 export async function POST(
@@ -19,98 +19,30 @@ export async function POST(
     const body = await req.json();
     const data = livraisonRatingSchema.parse(body);
 
-    // Get livraison
-    const livraison = await prisma.livraison.findUnique({
-      where: { id },
-      include: {
-        transporteur: {
-          include: {
-            user: true,
-          },
-        },
-      },
-    });
-
-    if (!livraison) {
-      return NextResponse.json(
-        { error: 'Livraison not found' },
-        { status: 404 }
-      );
-    }
-
-    if (livraison.statut !== 'DELIVERED') {
-      return NextResponse.json(
-        { error: 'Can only rate delivered livraisons' },
-        { status: 400 }
-      );
-    }
-
-    // Store rating
-    const rating = {
+    const result = await rateLivraison(id, session.user.id, {
       punctualite: data.punctualite,
       etatProduit: data.etatProduit,
       communication: data.communication,
       professionalisme: data.professionalisme,
-      commentaire: data.commentaire || '',
-    };
-
-    const updated = await prisma.livraison.update({
-      where: { id },
-      data: {
-        ratingAcheteur: JSON.stringify(rating),
-      },
+      commentaire: data.commentaire,
     });
 
-    // Update transporteur average rating
-    const allRatings = await prisma.livraison.findMany({
-      where: {
-        transporteurId: livraison.transporteurId,
-        statut: 'DELIVERED',
-        ratingAcheteur: { not: null },
-      },
-      select: {
-        ratingAcheteur: true,
-      },
-    });
-
-    if (allRatings.length > 0) {
-      let totalScore = 0;
-
-      allRatings.forEach((l) => {
-        if (l.ratingAcheteur) {
-          const r = JSON.parse(l.ratingAcheteur);
-          totalScore +=
-            (r.punctualite +
-              r.etatProduit +
-              r.communication +
-              r.professionalisme) /
-            4;
-        }
-      });
-
-      const averageScore = totalScore / allRatings.length;
-
-      await prisma.transporteur.update({
-        where: { id: livraison.transporteurId },
-        data: {
-          notianceGlobale: Math.round(averageScore * 10) / 10, // Round to 1 decimal
-        },
-      });
-    }
-
-    return NextResponse.json({
-      data: {
-        id: updated.id,
-        rating,
-        message: 'Livraison rated successfully',
-      },
-    });
+    return NextResponse.json({ data: result });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Validation error', details: error.errors },
         { status: 400 }
       );
+    }
+
+    if (error instanceof Error) {
+      if (error.message.includes('not found')) {
+        return NextResponse.json({ error: error.message }, { status: 404 });
+      }
+      if (error.message.includes('Can only rate')) {
+        return NextResponse.json({ error: error.message }, { status: 400 });
+      }
     }
 
     console.error('Rate livraison error:', error);

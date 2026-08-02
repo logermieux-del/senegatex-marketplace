@@ -280,6 +280,7 @@ model Livraison {
 
   // Rating (après livraison)
   ratingAcheteur        String?    // JSON: {punctualite, etatProduit, communication, professionalisme, commentaire}
+  ratingScore           Float?     // Aggregated numeric score (0-5) for SQL queries
 
   // Incident tracking
   incident              Boolean    @default(false)

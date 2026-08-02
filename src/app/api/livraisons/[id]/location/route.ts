@@ -1,13 +1,9 @@
-import { prisma } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
+import { locationSchema } from '@/lib/validators';
+import { getLocation, updateLocation } from '@/lib/api/livraisons';
 import { z } from 'zod';
-
-const locationSchema = z.object({
-  lat: z.number(),
-  lng: z.number(),
-});
 
 export async function GET(
   _req: NextRequest,
@@ -15,39 +11,13 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-
-    const livraison = await prisma.livraison.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        statut: true,
-        locationActuelle: true,
-        adresseDepart: true,
-        adresseArrivee: true,
-      },
-    });
-
-    if (!livraison) {
-      return NextResponse.json(
-        { error: 'Livraison not found' },
-        { status: 404 }
-      );
+    const result = await getLocation(id);
+    return NextResponse.json({ data: result });
+  } catch (error) {
+    if (error instanceof Error && error.message.includes('not found')) {
+      return NextResponse.json({ error: error.message }, { status: 404 });
     }
 
-    const locationActuelle = livraison.locationActuelle
-      ? JSON.parse(livraison.locationActuelle)
-      : null;
-
-    return NextResponse.json({
-      data: {
-        id: livraison.id,
-        statut: livraison.statut,
-        location: locationActuelle,
-        adresseDepart: JSON.parse(livraison.adresseDepart || '{}'),
-        adresseArrivee: JSON.parse(livraison.adresseArrivee || '{}'),
-      },
-    });
-  } catch (error) {
     console.error('Get location error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch location' },
@@ -70,58 +40,26 @@ export async function POST(
     const body = await req.json();
     const data = locationSchema.parse(body);
 
-    // Verify ownership
-    const livraison = await prisma.livraison.findUnique({
-      where: { id },
-      include: {
-        transporteur: true,
-      },
-    });
-
-    if (!livraison) {
-      return NextResponse.json(
-        { error: 'Livraison not found' },
-        { status: 404 }
-      );
-    }
-
-    if (livraison.transporteur.userId !== session.user.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
-
-    if (livraison.statut !== 'IN_TRANSIT' && livraison.statut !== 'PICKED_UP') {
-      return NextResponse.json(
-        { error: 'Can only update location for in-transit deliveries' },
-        { status: 400 }
-      );
-    }
-
-    const location = {
-      lat: data.lat,
-      lng: data.lng,
-      timestamp: new Date().toISOString(),
-    };
-
-    const updated = await prisma.livraison.update({
-      where: { id },
-      data: {
-        locationActuelle: JSON.stringify(location),
-      },
-    });
-
-    return NextResponse.json({
-      data: {
-        id: updated.id,
-        location,
-        message: 'Location updated',
-      },
-    });
+    const result = await updateLocation(id, session.user.id, data.lat, data.lng);
+    return NextResponse.json({ data: result });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Validation error', details: error.errors },
         { status: 400 }
       );
+    }
+
+    if (error instanceof Error) {
+      if (error.message.includes('not found')) {
+        return NextResponse.json({ error: error.message }, { status: 404 });
+      }
+      if (error.message.includes('Unauthorized')) {
+        return NextResponse.json({ error: error.message }, { status: 403 });
+      }
+      if (error.message.includes('Can only update')) {
+        return NextResponse.json({ error: error.message }, { status: 400 });
+      }
     }
 
     console.error('Update location error:', error);

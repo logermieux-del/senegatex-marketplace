@@ -115,11 +115,13 @@ export const createLivraisonSchema = z.object({
   adresseDepart: addressSchema,
   adresseArrivee: addressSchema,
   tarifNegocie: z.number().int().min(100),
+  transactionId: z.string().optional(),
   description: z.string().optional(),
 });
 
 export const updateStatusSchema = z.object({
-  statut: z.enum(['PENDING', 'ACCEPTED', 'IN_TRANSIT', 'DELIVERED', 'CANCELLED']),
+  statut: z.enum(['PENDING', 'ACCEPTED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED', 'FAILED']),
+  notes: z.string().optional(),
 });
 
 export type AddressInput = z.infer<typeof addressSchema>;
