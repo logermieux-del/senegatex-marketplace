@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ListingCard } from '@/components/listings/ListingCard';
+import { SearchBar } from '@/components/listings/SearchBar';
 
 interface Listing {
   id: string;
@@ -33,10 +34,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchListings();
-  }, [selectedCity, selectedCategory]);
+  }, [selectedCity, selectedCategory, searchQuery]);
 
   const fetchListings = async () => {
     setLoading(true);
@@ -47,7 +49,11 @@ export default function Home() {
       if (selectedCity) params.append('city', selectedCity);
       if (selectedCategory) params.append('category', selectedCategory);
 
-      const res = await fetch(`/api/listings?${params}`);
+      // Use search endpoint if there's a search query
+      const endpoint = searchQuery ? '/api/search' : '/api/listings';
+      if (searchQuery) params.append('q', searchQuery);
+
+      const res = await fetch(`${endpoint}?${params}`);
       const data = await res.json();
       setListings(data.data || []);
       setPagination(data.pagination);
@@ -92,7 +98,7 @@ export default function Home() {
           <p className="text-lg text-gray-600 mb-8">
             Discover amazing deals from neighbors near you
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center mb-8">
             <button
               onClick={handleStartSelling}
               className="bg-orange-500 text-white px-6 py-3 rounded text-lg hover:bg-orange-600"
@@ -105,6 +111,12 @@ export default function Home() {
             >
               Browse Listings
             </a>
+          </div>
+          <div className="flex gap-2 justify-center">
+            <SearchBar onSearch={setSearchQuery} />
+            <button className="bg-orange-500 text-white px-4 py-2 rounded-r hover:bg-orange-600">
+              Search
+            </button>
           </div>
         </div>
 

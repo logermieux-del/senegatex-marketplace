@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Card, Button, Alert } from '@/components/common';
+import { PhotoUpload } from '@/components/listings/PhotoUpload';
 
 const categories = [
   'electronics',
@@ -36,6 +37,7 @@ export default function CreateListingPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [photos, setPhotos] = useState<string[]>([]);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -104,6 +106,8 @@ export default function CreateListingPage() {
         body: JSON.stringify({
           ...formData,
           price,
+          photos: photos.length > 0 ? photos : undefined,
+          thumbnail: photos.length > 0 ? photos[0] : undefined,
         }),
       });
 
@@ -206,6 +210,9 @@ export default function CreateListingPage() {
               </p>
             </div>
 
+            {/* Photos */}
+            <PhotoUpload onPhotosChange={setPhotos} maxPhotos={5} />
+
             {/* Price */}
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -260,26 +267,22 @@ export default function CreateListingPage() {
               />
             </div>
 
-            {/* Photos Note */}
-            <div className="bg-blue-50 border border-blue-200 rounded p-4">
-              <p className="text-sm text-blue-900">
-                💡 <strong>Photos:</strong> Photo uploads coming soon! For now, your listing will be created without images.
-              </p>
-            </div>
-
             {/* Buttons */}
             <div className="flex gap-4 pt-6">
-              <Button
+              <button
                 type="submit"
                 disabled={loading}
-                className="flex-1"
+                className="flex-1 bg-orange-500 text-white px-6 py-3 rounded font-medium hover:bg-orange-600 disabled:bg-orange-400 disabled:cursor-not-allowed transition"
               >
                 {loading ? 'Publishing...' : 'Publish Listing'}
-              </Button>
+              </button>
               <Link href="/">
-                <Button variant="outline" className="w-full">
+                <button
+                  type="button"
+                  className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded font-medium hover:bg-gray-50 transition"
+                >
                   Cancel
-                </Button>
+                </button>
               </Link>
             </div>
           </form>
