@@ -117,7 +117,7 @@ export default function Accueil() {
   ));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-secondary-900 via-secondary-800 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-900 text-primary-100">
       <Navigation />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">

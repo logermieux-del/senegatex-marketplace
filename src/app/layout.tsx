@@ -16,9 +16,9 @@ const barlowCondensed = Barlow_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: 'Yombal - Buy & Sell Locally in Senegal',
-  description: 'Marketplace for buying and selling locally in Senegal',
-  keywords: ['marketplace', 'senegal', 'buy', 'sell', 'classifieds'],
+  title: 'Afro Sport — Sports africains en direct',
+  description: 'Plateforme premium de suivi sportif africain. Scores en direct, classements, actualités et événements sportifs.',
+  keywords: ['sport', 'africain', 'senegal', 'football', 'basketball', 'volleyball', 'live scores'],
 };
 
 export default function RootLayout({
@@ -27,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${barlow.variable} ${barlowCondensed.variable}`}>
-      <body className="bg-white text-secondary-900 font-sans">
+    <html lang="fr" className={`${barlow.variable} ${barlowCondensed.variable}`}>
+      <body className="bg-secondary-900 text-primary-100 font-sans">
         <Providers>
           {children}
         </Providers>

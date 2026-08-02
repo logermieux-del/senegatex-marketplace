@@ -13,30 +13,30 @@ const config: Config = {
         display: ['Barlow Condensed', 'Barlow', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        // Logistics/Delivery Color Palette (from UI/UX Pro Max)
+        // Premium Sports Palette: warm ink, oxblood, brass
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#2563eb', // Primary blue - Tracking & Trust
-          600: '#1d4ed8',
-          700: '#1e40af',
-          800: '#1e3a8a',
-          900: '#172554',
+          50: '#f9f5f1',
+          100: '#f5f2ec', // Warm ink - text & light accents
+          200: '#e8dcc9',
+          300: '#d4c1a6',
+          400: '#c9a36b', // Brass - secondary accents
+          500: '#b8925c',
+          600: '#9b7a4a',
+          700: '#7d633a',
+          800: '#6e4d29',
+          900: '#5a3d1f',
         },
         accent: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          200: '#fed7aa',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#ea580c', // Accent orange - Delivery & Energy
-          600: '#d97706',
-          700: '#b45309',
-          800: '#92400e',
-          900: '#78350f',
+          50: '#faf5f2',
+          100: '#f5ede8',
+          200: '#e8d5ce',
+          300: '#d4a39b',
+          400: '#a97870',
+          500: '#8b5a50', // Oxblood - strong accents & CTAs
+          600: '#6e1f23', // Deep oxblood
+          700: '#5a151a',
+          800: '#470d12',
+          900: '#33070a',
         },
         secondary: {
           50: '#f8fafc',
@@ -44,11 +44,11 @@ const config: Config = {
           200: '#e2e8f0',
           300: '#cbd5e1',
           400: '#94a3b8',
-          500: '#64748b', // Neutral gray
-          600: '#475569',
+          500: '#64748b', // Slate neutral
+          600: '#48516b', // Slate midtone
           700: '#334155',
           800: '#1e293b',
-          900: '#0f172a',
+          900: '#0a0908', // Near-black ground
         },
       },
       fontSize: {
