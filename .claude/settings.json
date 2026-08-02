@@ -1,0 +1,9 @@
+{
+  "skills": [
+    {
+      "name": "frontend-design",
+      "path": ".claude/skills/frontend-design",
+      "description": "Guidance for distinctive, intentional visual design"
+    }
+  ]
+}
