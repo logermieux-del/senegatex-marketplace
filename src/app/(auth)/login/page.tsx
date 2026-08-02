@@ -1,11 +1,12 @@
 'use client';
 
+import { Suspense } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
@@ -32,7 +33,7 @@ export default function LoginPage() {
       } else if (result?.ok) {
         router.push('/');
       }
-    } catch (err) {
+    } catch {
       setErrorMsg('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
@@ -113,5 +114,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { signupSchema, type SignupInput } from '@/lib/validators';
+import { signupSchema } from '@/lib/validators';
 
 export default function SignupPage() {
   const router = useRouter();
