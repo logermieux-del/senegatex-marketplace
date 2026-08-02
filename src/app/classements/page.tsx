@@ -6,33 +6,33 @@ import { useState } from 'react';
 export default function Classements() {
   const [selectedRegion, setSelectedRegion] = useState('national');
 
-  const regions = ['national', 'dakar', 'nord', 'sud'];
+  const regions = ['national', 'football', 'basketball', 'volley'];
 
   const classements = {
     national: [
-      { rank: 1, name: 'Samba Express', rating: 4.9, trips: 2340, badge: '🏆 TOP' },
-      { rank: 2, name: 'Dakar Logistique', rating: 4.8, trips: 1890, badge: '🚀 Rapide' },
-      { rank: 3, name: 'Senegal Delivery', rating: 4.7, trips: 1654, badge: '✓ Fiable' },
-      { rank: 4, name: 'Express Sénégal', rating: 4.6, trips: 1432, badge: '📍 Locale' },
-      { rank: 5, name: 'Nation Logistics', rating: 4.5, trips: 1210, badge: '💼 Pro' },
-      { rank: 6, name: 'Dakar Speed', rating: 4.4, trips: 987, badge: '⚡ Nouveau' },
-      { rank: 7, name: 'Senegal Express', rating: 4.3, trips: 845, badge: '📦 Cargo' },
-      { rank: 8, name: 'Livraison Plus', rating: 4.2, trips: 654, badge: '🌟 Fiable' },
+      { rank: 1, name: 'Dakar FC', rating: 4.9, trips: 23, badge: '🏆 TOP' },
+      { rank: 2, name: 'Thiès United', rating: 4.8, trips: 20, badge: '🥈 Argent' },
+      { rank: 3, name: 'Saint-Louis Racing', rating: 4.7, trips: 19, badge: '🥉 Bronze' },
+      { rank: 4, name: 'Kaolack Athletic', rating: 4.6, trips: 17, badge: '⚡ Montant' },
+      { rank: 5, name: 'Rufisque Sports', rating: 4.5, trips: 16, badge: '💪 Fort' },
+      { rank: 6, name: 'Ziguinchor Stars', rating: 4.4, trips: 14, badge: '🌟 Talent' },
+      { rank: 7, name: 'Kolda Warriors', rating: 4.3, trips: 12, badge: '🔥 Jeune' },
+      { rank: 8, name: 'Louga Elite', rating: 4.2, trips: 10, badge: '⚽ Vaillant' },
     ],
-    dakar: [
-      { rank: 1, name: 'Samba Express', rating: 4.9, trips: 1230, badge: '🏆 TOP' },
-      { rank: 2, name: 'Express Sénégal', rating: 4.7, trips: 876, badge: '📍 Locale' },
-      { rank: 3, name: 'Dakar Speed', rating: 4.6, trips: 654, badge: '⚡ Nouveau' },
+    football: [
+      { rank: 1, name: 'Dakar FC', rating: 4.9, trips: 25, badge: '🏆 TOP' },
+      { rank: 2, name: 'Thiès United', rating: 4.7, trips: 22, badge: '🥈 Challenger' },
+      { rank: 3, name: 'Saint-Louis FC', rating: 4.6, trips: 20, badge: '⚡ Dynamique' },
     ],
-    nord: [
-      { rank: 1, name: 'Saint-Louis Express', rating: 4.8, trips: 567, badge: '🏆 TOP' },
-      { rank: 2, name: 'Kaolack Transport', rating: 4.6, trips: 432, badge: '📍 Locale' },
-      { rank: 3, name: 'Nation Logistics', rating: 4.5, trips: 345, badge: '💼 Pro' },
+    basketball: [
+      { rank: 1, name: 'Basket Dakar', rating: 4.8, trips: 24, badge: '🏆 TOP' },
+      { rank: 2, name: 'Thiès Basketball', rating: 4.6, trips: 18, badge: '🥈 Fort' },
+      { rank: 3, name: 'Kaolack Sports', rating: 4.5, trips: 16, badge: '🎯 Précis' },
     ],
-    sud: [
-      { rank: 1, name: 'Sud Livraison', rating: 4.7, trips: 456, badge: '🌟 Fiable' },
-      { rank: 2, name: 'Transport Sud', rating: 4.5, trips: 345, badge: '📦 Cargo' },
-      { rank: 3, name: 'Express Casamance', rating: 4.3, trips: 234, badge: '🚀 Rapide' },
+    volley: [
+      { rank: 1, name: 'Volley Dakar', rating: 4.7, trips: 21, badge: '🏆 TOP' },
+      { rank: 2, name: 'ASC Sénégal', rating: 4.5, trips: 18, badge: '🥈 Rival' },
+      { rank: 3, name: 'Volley Thiès', rating: 4.4, trips: 15, badge: '⚡ Remontant' },
     ],
   };
 
@@ -46,10 +46,10 @@ export default function Classements() {
         {/* Title */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2 font-display">Classements</h1>
-          <p className="text-gray-400">Les meilleurs transporteurs du Sénégal</p>
+          <p className="text-gray-400">Les meilleurs équipes et athlètes du Sénégal</p>
         </div>
 
-        {/* Region Tabs */}
+        {/* Sport Tabs */}
         <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
           {regions.map((region) => (
             <button
@@ -62,12 +62,12 @@ export default function Classements() {
               }`}
             >
               {region === 'national'
-                ? '🌍 National'
-                : region === 'dakar'
-                  ? '🏠 Dakar'
-                  : region === 'nord'
-                    ? '🔝 Nord'
-                    : '🔽 Sud'}
+                ? '🌍 All Sports'
+                : region === 'football'
+                  ? '⚽ Football'
+                  : region === 'basketball'
+                    ? '🏀 Basketball'
+                    : '🏐 Volleyball'}
             </button>
           ))}
         </div>
@@ -79,16 +79,16 @@ export default function Classements() {
               <tr className="bg-secondary-700 border-b border-gray-700">
                 <th className="px-6 py-4 text-left font-bold text-primary-300 text-sm">#</th>
                 <th className="px-6 py-4 text-left font-bold text-primary-300 text-sm">
-                  Transporteur
+                  Équipe
                 </th>
                 <th className="px-6 py-4 text-left font-bold text-primary-300 text-sm">
                   Rating
                 </th>
                 <th className="px-6 py-4 text-left font-bold text-primary-300 text-sm">
-                  Trajets
+                  Matchs
                 </th>
                 <th className="px-6 py-4 text-left font-bold text-primary-300 text-sm">
-                  Badge
+                  Status
                 </th>
               </tr>
             </thead>
@@ -138,7 +138,7 @@ export default function Classements() {
             <div className="text-4xl font-bold mb-2">
               {currentClassement.reduce((sum, t) => sum + t.trips, 0).toLocaleString()}
             </div>
-            <div className="text-primary-100">Total trajets</div>
+            <div className="text-primary-100">Matchs joués</div>
           </div>
           <div className="bg-gradient-to-br from-orange-600 to-orange-500 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold mb-2">
@@ -151,7 +151,7 @@ export default function Classements() {
           </div>
           <div className="bg-gradient-to-br from-green-600 to-green-500 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold mb-2">{currentClassement.length}</div>
-            <div className="text-green-100">Transporteurs classés</div>
+            <div className="text-green-100">Équipes classées</div>
           </div>
         </div>
 
@@ -161,23 +161,23 @@ export default function Classements() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <div className="text-3xl mb-2">⭐</div>
-              <h3 className="font-bold mb-2">Rating Client</h3>
+              <h3 className="font-bold mb-2">Performance</h3>
               <p className="text-sm text-gray-400">
-                Basé sur les évaluations des clients après chaque livraison
+                Basé sur les résultats sportifs et victoires enregistrées
               </p>
             </div>
             <div>
-              <div className="text-3xl mb-2">🚀</div>
-              <h3 className="font-bold mb-2">Rapidité</h3>
+              <div className="text-3xl mb-2">🏆</div>
+              <h3 className="font-bold mb-2">Consistency</h3>
               <p className="text-sm text-gray-400">
-                Temps moyen de livraison et respect des délais
+                Régularité des résultats et stabilité tout au long de la saison
               </p>
             </div>
             <div>
-              <div className="text-3xl mb-2">📈</div>
-              <h3 className="font-bold mb-2">Volume Trajets</h3>
+              <div className="text-3xl mb-2">📊</div>
+              <h3 className="font-bold mb-2">Points</h3>
               <p className="text-sm text-gray-400">
-                Nombre total de trajets complétés avec succès
+                Points gagnés: 3 pour victoire, 1 pour match nul, 0 pour défaite
               </p>
             </div>
           </div>

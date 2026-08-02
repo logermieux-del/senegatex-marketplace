@@ -14,24 +14,24 @@ export default function Livraisons() {
     { id: 'sunday', label: 'DIMANCHE', date: '5 août' },
   ];
 
-  const livraisons = {
+  const matches = {
     today: [
-      { from: 'Dakar', to: 'Thiès', status: 'en-cours', timestamp: 'Il y a 2h', transporter: 'Samba Express' },
-      { from: 'Saint-Louis', to: 'Dakar', status: 'livré', timestamp: 'Il y a 4h', transporter: 'Dakar Logistique' },
-      { from: 'Kaolack', to: 'Dakar', status: 'retard', timestamp: 'Il y a 1h', transporter: 'Express Sénégal' },
-      { from: 'Thiès', to: 'Dakar', status: 'en-cours', timestamp: 'Il y a 30min', transporter: 'Senegal Delivery' },
+      { from: 'Dakar FC', to: 'Saint-Louis United', status: 'en-cours', timestamp: '75\'', transporter: 'Football - Ligue 1' },
+      { from: 'Thiès Basketball', to: 'Kaolack Sports', status: 'livré', timestamp: 'Fibal', transporter: 'Basketball - D1' },
+      { from: 'Volley Dakar', to: 'ASC Sénégal', status: 'retard', timestamp: 'Reporté', transporter: 'Volley - National' },
+      { from: 'Tennis Kaolack', to: 'Dakar Tennis Club', status: 'en-cours', timestamp: '2ème set', transporter: 'Tennis - Open' },
     ],
     tomorrow: [
-      { from: 'Dakar', to: 'Thiès', status: 'livré', timestamp: '09:30', transporter: 'Samba Express' },
-      { from: 'Kaolack', to: 'Dakar', status: 'livré', timestamp: '14:15', transporter: 'Dakar Logistique' },
-      { from: 'Saint-Louis', to: 'Dakar', status: 'en-cours', timestamp: '16:45', transporter: 'Senegal Delivery' },
+      { from: 'Dakar FC', to: 'Rufisque Sports', status: 'livré', timestamp: '09:30', transporter: 'Football - Ligue 1' },
+      { from: 'Thiès United', to: 'Saint-Louis', status: 'livré', timestamp: '14:15', transporter: 'Football - Ligue 2' },
+      { from: 'Basket Dakar', to: 'Basket Thiès', status: 'en-cours', timestamp: '16:45', transporter: 'Basketball - D1' },
     ],
     saturday: [
-      { from: 'Dakar', to: 'Saint-Louis', status: 'en-cours', timestamp: '08:00', transporter: 'Samba Express' },
-      { from: 'Thiès', to: 'Kaolack', status: 'en-cours', timestamp: '11:20', transporter: 'Express Sénégal' },
+      { from: 'Dakar FC', to: 'Ziguinchor FC', status: 'en-cours', timestamp: '08:00', transporter: 'Football - Championnat' },
+      { from: 'Volley Thiès', to: 'Volley Kaolack', status: 'en-cours', timestamp: '11:20', transporter: 'Volley - National' },
     ],
     sunday: [
-      { from: 'Dakar', to: 'Thiès', status: 'en-cours', timestamp: '10:00', transporter: 'Dakar Logistique' },
+      { from: 'Marathon Dakar', to: 'All Athletes', status: 'en-cours', timestamp: '10:00', transporter: 'Athlétisme - National' },
     ],
   };
 
@@ -42,8 +42,8 @@ export default function Livraisons() {
     sunday: { total: 1, livred: 0, enCours: 1, retard: 0 },
   };
 
-  const currentLivraisons =
-    livraisons[selectedDate as keyof typeof livraisons] || livraisons.today;
+  const currentMatches =
+    matches[selectedDate as keyof typeof matches] || matches.today;
   const currentStats =
     stats[selectedDate as keyof typeof stats] || stats.today;
 
@@ -55,7 +55,7 @@ export default function Livraisons() {
         {/* Title */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2 font-display">Scores en Direct</h1>
-          <p className="text-gray-400">Suivez tous les trajets de livraison en temps réel</p>
+          <p className="text-gray-400">Suivez tous les matchs et événements sportifs en temps réel</p>
         </div>
 
         {/* Stats Cards */}
@@ -70,19 +70,19 @@ export default function Livraisons() {
             <div className="text-3xl font-bold text-green-500 mb-2">
               {currentStats.livred}
             </div>
-            <div className="text-sm text-gray-400">Livrés</div>
+            <div className="text-sm text-gray-400">Terminés</div>
           </div>
           <div className="bg-secondary-800 border border-gray-700 rounded-lg p-4 text-center">
             <div className="text-3xl font-bold text-orange-500 mb-2">
               {currentStats.enCours}
             </div>
-            <div className="text-sm text-gray-400">En cours</div>
+            <div className="text-sm text-gray-400">En direct</div>
           </div>
           <div className="bg-secondary-800 border border-gray-700 rounded-lg p-4 text-center">
             <div className="text-3xl font-bold text-red-500 mb-2">
               {currentStats.retard}
             </div>
-            <div className="text-sm text-gray-400">Retards</div>
+            <div className="text-sm text-gray-400">Reportés</div>
           </div>
         </div>
 
@@ -107,22 +107,22 @@ export default function Livraisons() {
           </div>
         </div>
 
-        {/* Livraisons List */}
+        {/* Matches List */}
         <div>
           <h2 className="text-lg font-bold text-primary-300 mb-6">
-            Livraisons ({currentLivraisons.length})
+            Matchs ({currentMatches.length})
           </h2>
           <div className="space-y-4">
-            {currentLivraisons.map((livraison, idx) => (
+            {currentMatches.map((match, idx) => (
               <div key={idx} className="group">
                 <ResultCard
-                  from={livraison.from}
-                  to={livraison.to}
-                  status={livraison.status as 'livré' | 'en-cours' | 'retard'}
-                  timestamp={livraison.timestamp}
+                  from={match.from}
+                  to={match.to}
+                  status={match.status as 'livré' | 'en-cours' | 'retard'}
+                  timestamp={match.timestamp}
                 />
                 <div className="text-xs text-gray-500 mt-2 ml-4">
-                  Transporteur: {livraison.transporter}
+                  {match.transporter}
                 </div>
               </div>
             ))}

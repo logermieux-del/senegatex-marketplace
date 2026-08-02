@@ -8,71 +8,71 @@ export default function Actualites() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [likedArticles, setLikedArticles] = useState<Set<number>>(new Set());
 
-  const categories = ['all', 'actualites', 'innovation', 'evenements', 'guides', 'transferts'];
+  const categories = ['all', 'football', 'basketball', 'volley', 'transferts', 'interviews'];
 
   const articles = [
     {
       id: 1,
-      title: 'Afro Sport lance le suivi GPS en temps réel pour toutes les livraisons',
-      category: 'INNOVATION',
-      icon: '⚡',
+      title: 'Dakar FC remporte le championnat national 2024',
+      category: 'FOOTBALL',
+      icon: '⚽',
       timestamp: 'Il y a 1h',
       reads: 5340,
       featured: true,
     },
     {
       id: 2,
-      title: 'Samba Express devient transporteur #1 du Sénégal',
-      category: 'ACTUALITÉS',
-      icon: '📰',
+      title: 'Thiès Basketball sélectionne 5 nouveaux talents pour la saison',
+      category: 'BASKETBALL',
+      icon: '🏀',
       timestamp: 'Il y a 2h',
       reads: 3210,
     },
     {
       id: 3,
-      title: 'Jour du transport gratuit : une journée spéciale Afro Sport',
-      category: 'ÉVÉNEMENTS',
-      icon: '🎉',
+      title: 'Tournoi International de Volley: Dakar accueille les meilleures équipes',
+      category: 'VOLLEY',
+      icon: '🏐',
       timestamp: 'Il y a 4h',
       reads: 2145,
     },
     {
       id: 4,
-      title: '7 conseils pour optimiser vos envois et économiser',
+      title: 'Guide d\'entraînement: Comment préparer votre équipe pour les playoffs',
       category: 'GUIDES',
-      icon: '💡',
+      icon: '📋',
       timestamp: 'Il y a 6h',
       reads: 1876,
     },
     {
       id: 5,
-      title: 'Transferts: 3 nouveaux transporteurs rejoignent la plateforme',
+      title: 'Transferts: Mamadou Ndiaye rejoint Dakar FC depuis Thiès',
       category: 'TRANSFERTS',
-      icon: '📌',
+      icon: '🔄',
       timestamp: 'Il y a 8h',
       reads: 1654,
     },
     {
       id: 6,
-      title: 'Nouveau partenariat avec DHL Express',
-      category: 'ACTUALITÉS',
-      icon: '🤝',
+      title: 'Interview exclusive: Le coach de Dakar FC parle du titre',
+      category: 'INTERVIEWS',
+      icon: '🎤',
       timestamp: 'Il y a 10h',
       reads: 2876,
     },
     {
       id: 7,
-      title: 'Application mobile Afro Sport: les 5 nouvelles fonctionnalités',
-      category: 'INNOVATION',
+      title: 'Nouvelle app Afro Sport: Les 5 fonctionnalités essentielles pour les fans',
+      category: 'GUIDES',
       icon: '📱',
       timestamp: 'Il y a 12h',
       reads: 4123,
     },
     {
       id: 8,
-      title: 'Conférence: "Le futur de la livraison en Afrique"',
-      category: 'ÉVÉNEMENTS',
-      icon: '🎤',
+      title: 'Conférence: L\'avenir du sport africain avec les experts',
+      category: 'INTERVIEWS',
+      icon: '🗣️',
       timestamp: 'Il y a 14h',
       reads: 1432,
     },
@@ -102,8 +102,8 @@ export default function Actualites() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         {/* Title */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 font-display">Actualités</h1>
-          <p className="text-gray-400">Les dernières infos sur Afro Sport et la livraison au Sénégal</p>
+          <h1 className="text-4xl font-bold mb-2 font-display">Actualités Sportives</h1>
+          <p className="text-gray-400">Les dernières infos du sport africain et du Sénégal</p>
         </div>
 
         {/* Featured Article */}
@@ -146,15 +146,15 @@ export default function Actualites() {
               >
                 {category === 'all'
                   ? 'Tous'
-                  : category === 'actualites'
-                    ? 'Actualités'
-                    : category === 'innovation'
-                      ? 'Innovation'
-                      : category === 'evenements'
-                        ? 'Événements'
-                        : category === 'guides'
-                          ? 'Guides'
-                          : 'Transferts'}
+                  : category === 'football'
+                    ? '⚽ Football'
+                    : category === 'basketball'
+                      ? '🏀 Basketball'
+                      : category === 'volley'
+                        ? '🏐 Volleyball'
+                        : category === 'transferts'
+                          ? '🔄 Transferts'
+                          : '🎤 Interviews'}
               </button>
             ))}
           </div>
@@ -183,9 +183,9 @@ export default function Actualites() {
 
         {/* Newsletter Section */}
         <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">📬 Recevez les actualités</h2>
+          <h2 className="text-2xl font-bold mb-4">📬 Restez informé du sport</h2>
           <p className="text-primary-100 mb-6">
-            Abonnez-vous à notre newsletter pour ne rien manquer
+            Abonnez-vous à nos alertes pour suivre vos équipes et athlètes favoris
           </p>
           <div className="flex gap-2 max-w-md mx-auto">
             <input

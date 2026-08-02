@@ -18,65 +18,65 @@ export default function Accueil() {
     setLikedArticles(newLiked);
   };
 
-  // Mock data
-  const trajetsVedettes = [
+  // Mock data - Sports focused
+  const matchesVedettes = [
     {
-      icon: '📦',
-      title: 'Dakar → Thiès',
-      price: '5,000 XOF',
-      status: 'Urgent',
-      time: 'En cours depuis 2h',
+      icon: '⚽',
+      title: 'Dakar vs Saint-Louis',
+      status: 'EN DIRECT',
+      score: '2-1',
+      time: '75\'',
     },
     {
-      icon: '🛍️',
-      title: 'Saint-Louis → Dakar',
-      price: '8,000 XOF',
-      status: 'Disponible',
-      time: 'Départ demain 9h',
+      icon: '🏀',
+      title: 'Thiès Basketball Challenge',
+      status: 'TERMINÉ',
+      score: '98-95',
+      time: 'Fibal',
     },
     {
-      icon: '📲',
-      title: 'Kaolack → Dakar',
-      price: '6,500 XOF',
-      status: 'Rapide',
-      time: '2-3 heures',
+      icon: '🏐',
+      title: 'Championnat Volley Dakar',
+      status: 'À VENIR',
+      score: 'vs',
+      time: 'Demain 19h',
     },
     {
-      icon: '🎁',
-      title: 'Thiès → Dakar',
-      price: '4,500 XOF',
-      status: 'Flexible',
-      time: 'Horaires variables',
+      icon: '🎾',
+      title: 'Tournoi Tennis Kaolack',
+      status: 'EN DIRECT',
+      score: '6-4',
+      time: '2ème set',
     },
   ];
 
-  const topTransporters = [
-    { name: 'Samba Express', rating: 4.9, trips: 2340, badge: '🏆 TOP' },
-    { name: 'Dakar Logistique', rating: 4.8, trips: 1890, badge: '🚀 Rapide' },
-    { name: 'Senegal Delivery', rating: 4.7, trips: 1654, badge: '✓ Fiable' },
-    { name: 'Express Sénégal', rating: 4.6, trips: 1432, badge: '📍 Locale' },
+  const topAthletes = [
+    { name: 'Mamadou Ndiaye', rating: 4.9, trips: 234, badge: '⚽ Attaque' },
+    { name: 'Ousmane Sall', rating: 4.8, trips: 198, badge: '🏀 Star' },
+    { name: 'Aïssatou Diouf', rating: 4.7, trips: 187, badge: '🏐 Leader' },
+    { name: 'Cheikh Fall', rating: 4.6, trips: 176, badge: '🎾 Champion' },
   ];
 
   const articles = [
     {
       id: 1,
-      title: 'Afro Sport lance le suivi GPS en temps réel',
-      category: 'INNOVATION',
-      icon: '⚡',
+      title: 'Dakar Football Club remporte le championnat national',
+      category: 'FOOTBALL',
+      icon: '⚽',
       timestamp: 'Il y a 1h',
       reads: 5340,
     },
     {
       id: 2,
-      title: 'Samba Express devient transporteur #1 du Sénégal',
-      category: 'ACTUALITÉS',
-      icon: '📰',
+      title: 'Thiès Basketball: nouvelle venue aux Jeux Africains',
+      category: 'BASKETBALL',
+      icon: '🏀',
       timestamp: 'Il y a 2h',
       reads: 3210,
     },
     {
       id: 3,
-      title: 'Jour du transport gratuit : une journée spéciale',
+      title: 'Tournoi International de Volley à Dakar cette semaine',
       category: 'ÉVÉNEMENTS',
       icon: '🎉',
       timestamp: 'Il y a 4h',
@@ -84,35 +84,35 @@ export default function Accueil() {
     },
     {
       id: 4,
-      title: '7 conseils pour optimiser vos envois',
-      category: 'GUIDES',
-      icon: '💡',
+      title: '10 conseils pour préparer votre entraînement sportif',
+      category: 'COACHING',
+      icon: '💪',
       timestamp: 'Il y a 6h',
       reads: 1876,
     },
   ];
 
-  const trajetCarouselItems = trajetsVedettes.map((trajet, idx) => (
+  const matchCarouselItems = matchesVedettes.map((match, idx) => (
     <div key={idx} className="w-80 bg-secondary-800 border border-gray-700 rounded-lg p-6 hover:border-primary-600 transition-all">
       <div className="flex justify-between items-start mb-3">
-        <span className="text-3xl">{trajet.icon}</span>
+        <span className="text-3xl">{match.icon}</span>
         <span className="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded">
-          {trajet.status}
+          {match.status}
         </span>
       </div>
-      <h3 className="font-bold mb-2">{trajet.title}</h3>
-      <div className="text-orange-500 font-bold mb-2">{trajet.price}</div>
-      <div className="text-xs text-gray-400">{trajet.time}</div>
+      <h3 className="font-bold mb-2">{match.title}</h3>
+      <div className="text-orange-500 font-bold text-2xl mb-2">{match.score}</div>
+      <div className="text-xs text-gray-400">{match.time}</div>
     </div>
   ));
 
-  const transporterCarouselItems = topTransporters.map((transporter, idx) => (
+  const athleteCarouselItems = topAthletes.map((athlete, idx) => (
     <TransporterCard
       key={idx}
-      name={transporter.name}
-      rating={transporter.rating}
-      trips={transporter.trips}
-      badge={transporter.badge}
+      name={athlete.name}
+      rating={athlete.rating}
+      trips={athlete.trips}
+      badge={athlete.badge}
     />
   ));
 
@@ -125,27 +125,27 @@ export default function Accueil() {
         <section className="mb-12">
           <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg p-12 text-center">
             <h1 className="text-5xl font-bold mb-4 font-display">
-              Suivez vos livraisons en temps réel
+              Suivez le sport en temps réel
             </h1>
             <p className="text-xl text-primary-100 mb-8">
-              La plateforme premium de livraison au Sénégal
+              La plateforme premium du sport africain
             </p>
             <div className="flex gap-4 justify-center">
               <button className="bg-orange-500 text-white px-8 py-3 font-bold rounded hover:bg-orange-600 transition-colors">
-                Commencer
+                Regarder en Direct
               </button>
               <button className="border-2 border-white text-white px-8 py-3 font-bold rounded hover:bg-primary-700 transition-colors">
-                En savoir plus
+                Calendrier
               </button>
             </div>
           </div>
         </section>
 
-        {/* Trajets Vedettes */}
-        <Carousel title="🚚 Trajets Vedettes" items={trajetCarouselItems} />
+        {/* Matches Vedettes */}
+        <Carousel title="🔥 Matchs en Direct" items={matchCarouselItems} />
 
-        {/* Top Transporteurs */}
-        <Carousel title="⭐ Top Transporteurs" items={transporterCarouselItems} />
+        {/* Top Athletes */}
+        <Carousel title="⭐ Top Athlètes" items={athleteCarouselItems} />
 
         {/* Articles */}
         <div className="mb-12">
@@ -168,12 +168,12 @@ export default function Accueil() {
 
         {/* CTA Section */}
         <section className="bg-gradient-to-r from-orange-600 to-orange-500 rounded-lg p-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Prêt à livrer?</h2>
+          <h2 className="text-3xl font-bold mb-4">Prêt à jouer?</h2>
           <p className="text-lg mb-6 text-orange-100">
-            Devenez transporteur et gagnez jusqu'à 50,000 XOF/jour
+            Rejoignez notre communauté de plus de 50 000 athlètes et supporters
           </p>
           <button className="bg-white text-orange-600 px-8 py-3 font-bold rounded hover:bg-gray-100 transition-colors">
-            Rejoindre les transporteurs
+            S'inscrire maintenant
           </button>
         </section>
       </main>
