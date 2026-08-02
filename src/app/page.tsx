@@ -37,7 +37,14 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetchListings();
+    if (loading !== true) {
+      setLoading(true);
+    }
+    const timer = setTimeout(() => {
+      fetchListings();
+    }, 0);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity, selectedCategory, searchQuery]);
 
   const fetchListings = async () => {

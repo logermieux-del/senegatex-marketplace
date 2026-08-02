@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { Card, Button, Alert } from '@/components/common';
+import { Card, Alert } from '@/components/common';
 import { PhotoUpload } from '@/components/listings/PhotoUpload';
 
 const categories = [

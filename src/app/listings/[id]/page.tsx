@@ -45,7 +45,7 @@ export default function ListingDetailPage() {
         }
         const data = await res.json();
         setListing(data.data);
-      } catch (err) {
+      } catch () {
         setError('Failed to load listing');
       } finally {
         setLoading(false);

@@ -42,11 +42,11 @@ export async function GET(request: NextRequest) {
     });
 
     // Parse photos for each result
-    const data = results.hits.map((listing: any) => ({
+    const data = results.hits.map((listing) => ({
       ...listing,
       photos: listing.photos
         ? typeof listing.photos === 'string'
-          ? JSON.parse(listing.photos)
+          ? JSON.parse(listing.photos as string)
           : listing.photos
         : [],
     }));
