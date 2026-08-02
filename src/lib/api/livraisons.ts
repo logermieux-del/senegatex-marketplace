@@ -265,19 +265,11 @@ export async function updateLivraisonStatus(
 
 export async function rateLivraison(
   id: string,
-  userId: string,
   rating: RatingData
 ) {
   // Get livraison
   const livraison = await prisma.livraison.findUnique({
     where: { id },
-    include: {
-      transporteur: {
-        include: {
-          user: true,
-        },
-      },
-    },
   });
 
   if (!livraison) {

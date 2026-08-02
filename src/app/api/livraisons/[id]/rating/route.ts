@@ -19,7 +19,7 @@ export async function POST(
     const body = await req.json();
     const data = livraisonRatingSchema.parse(body);
 
-    const result = await rateLivraison(id, session.user.id, {
+    const result = await rateLivraison(id, {
       punctualite: data.punctualite,
       etatProduit: data.etatProduit,
       communication: data.communication,
