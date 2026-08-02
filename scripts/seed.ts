@@ -1,7 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { MeiliSearch } from 'meilisearch';
 
 const prisma = new PrismaClient();
+
+const meiliClient = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL || 'http://localhost:7700',
+  apiKey: process.env.MEILISEARCH_MASTER_KEY || 'test-key',
+});
 
 async function main() {
   console.log('🌱 Seeding database...');
@@ -169,6 +175,19 @@ async function main() {
       comment: 'Great seller, very professional!',
     },
   });
+
+  // Index listings in Meilisearch
+  try {
+    const allListings = await prisma.listing.findMany({
+      include: { user: { select: { id: true, name: true, avatar: true } } },
+    });
+
+    const index = meiliClient.index('listings');
+    await index.addDocuments(allListings);
+    console.log(`✅ Indexed ${allListings.length} listings in Meilisearch`);
+  } catch (error) {
+    console.warn('⚠️ Meilisearch indexing skipped (service may not be running)');
+  }
 
   console.log('✅ Seeding complete!');
   console.log('Test users:');
