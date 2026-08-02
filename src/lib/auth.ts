@@ -32,34 +32,39 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Missing email or password');
+          return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email.toLowerCase() },
-        });
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email.toLowerCase() },
+          });
 
-        if (!user || !user.password) {
-          throw new Error('Invalid email or password');
+          if (!user || !user.password) {
+            return null;
+          }
+
+          const passwordMatch = await compare(credentials.password, user.password);
+
+          if (!passwordMatch) {
+            return null;
+          }
+
+          if (user.isSuspended) {
+            return null;
+          }
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            image: user.avatar,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error('Auth error:', error);
+          return null;
         }
-
-        const passwordMatch = await compare(credentials.password, user.password);
-
-        if (!passwordMatch) {
-          throw new Error('Invalid email or password');
-        }
-
-        if (user.isSuspended) {
-          throw new Error('Account suspended');
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          image: user.avatar,
-          role: user.role,
-        };
       },
     }),
   ],
