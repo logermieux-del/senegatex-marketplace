@@ -3,7 +3,7 @@ import { getListingById, updateListing, deleteListing, incrementViewCount } from
 import { getAuthSession } from '@/lib/auth';
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -57,7 +57,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

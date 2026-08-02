@@ -126,23 +126,25 @@ export default function CreateListingPage() {
             <p className="text-gray-600 mb-6">Share what you're selling with the Yombal community</p>
 
             {error && (
-              <Alert
-                type="error"
-                title="Error"
-                message={error}
-                onClose={() => setError(null)}
-                className="mb-6"
-              />
+              <div className="mb-6">
+                <Alert
+                  type="error"
+                  title="Error"
+                  message={error}
+                  onClose={() => setError(null)}
+                />
+              </div>
             )}
 
             {success && (
-              <Alert
-                type="success"
-                title="Success!"
-                message="Your listing has been published. Redirecting..."
-                dismissible={false}
-                className="mb-6"
-              />
+              <div className="mb-6">
+                <Alert
+                  type="success"
+                  title="Success!"
+                  message="Your listing has been published. Redirecting..."
+                  dismissible={false}
+                />
+              </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
