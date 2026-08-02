@@ -94,3 +94,35 @@ export type TransporterRegisterInput = z.infer<typeof transporterRegisterSchema>
 export type TransporterUpdateInput = z.infer<typeof transporterUpdateSchema>;
 export type LivraisonRatingInput = z.infer<typeof livraisonRatingSchema>;
 export type DisputeInput = z.infer<typeof disputeSchema>;
+
+// Livraison validators
+export const addressSchema = z.object({
+  region: z.string().min(1),
+  arrondissement: z.string().optional(),
+  rue: z.string().optional(),
+  lat: z.number().optional(),
+  lng: z.number().optional(),
+});
+
+export const locationSchema = z.object({
+  lat: z.number(),
+  lng: z.number(),
+  timestamp: z.string(),
+});
+
+export const createLivraisonSchema = z.object({
+  transporteurId: z.string().cuid(),
+  adresseDepart: addressSchema,
+  adresseArrivee: addressSchema,
+  tarifNegocie: z.number().int().min(100),
+  description: z.string().optional(),
+});
+
+export const updateStatusSchema = z.object({
+  statut: z.enum(['PENDING', 'ACCEPTED', 'IN_TRANSIT', 'DELIVERED', 'CANCELLED']),
+});
+
+export type AddressInput = z.infer<typeof addressSchema>;
+export type LocationInput = z.infer<typeof locationSchema>;
+export type CreateLivraisonInput = z.infer<typeof createLivraisonSchema>;
+export type UpdateStatusInput = z.infer<typeof updateStatusSchema>;

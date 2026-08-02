@@ -102,3 +102,12 @@ export async function getAuthSession(): Promise<Session | null> {
   const { getServerSession } = await import('next-auth/next');
   return getServerSession(authOptions);
 }
+
+// Helper function for API route authentication
+export async function requireAuth(): Promise<Session> {
+  const session = await getAuthSession();
+  if (!session?.user?.id) {
+    throw new Error('Unauthorized: No active session');
+  }
+  return session;
+}
