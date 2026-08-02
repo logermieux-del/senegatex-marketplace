@@ -15,6 +15,7 @@ import {
   X,
 } from 'lucide-react';
 import { useState } from 'react';
+import Logo from '@/components/Logo';
 
 export default function SportsHub() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -138,10 +139,7 @@ export default function SportsHub() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <Trophy className="w-8 h-8 text-blue-600" />
-              <span className="text-2xl font-bold text-black">Afro Sport</span>
-            </div>
+            <Logo variant="full" size="sm" />
 
             {/* Desktop Menu */}
             <nav className="hidden md:flex gap-8">

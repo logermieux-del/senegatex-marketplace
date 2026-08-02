@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Logo from '@/components/Logo';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -10,9 +11,7 @@ export default function Home() {
       {/* Navigation */}
       <header className="bg-white border-b border-secondary-200">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          <div className="font-display text-3xl font-bold text-primary-600">
-            Afro Sport
-          </div>
+          <Logo variant="full" size="md" />
           <div className="flex gap-3 sm:gap-4">
             <a
               href="/login"
