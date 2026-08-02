@@ -123,7 +123,7 @@ export default function CreateListingPage() {
         <Card>
           <CardBody>
             <h1 className="text-3xl font-bold mb-2">Create New Listing</h1>
-            <p className="text-gray-600 mb-6">Share what you're selling with the Yombal community</p>
+            <p className="text-gray-600 mb-6">Share what you&apos;re selling with the Yombal community</p>
 
             {error && (
               <div className="mb-6">

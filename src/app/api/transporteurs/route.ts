@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,7 +11,7 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '20');
 
     // Build where clause
-    const where: any = {
+    const where: Prisma.TransporteurWhereInput = {
       statut: 'VERIFIED', // Only show verified transporters
     };
 

@@ -4,7 +4,15 @@ import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-function OrderConfirmationContent() {
+export default function OrderConfirmationPage() {
+  return (
+    <Suspense fallback={null}>
+      <OrderConfirmation />
+    </Suspense>
+  );
+}
+
+function OrderConfirmation() {
   const searchParams = useSearchParams();
   const transactionId = searchParams.get('transactionId');
 
@@ -56,13 +64,5 @@ function OrderConfirmationContent() {
         </div>
       </div>
     </main>
-  );
-}
-
-export default function OrderConfirmationPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <OrderConfirmationContent />
-    </Suspense>
   );
 }

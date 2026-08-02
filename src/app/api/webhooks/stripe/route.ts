@@ -22,8 +22,9 @@ export async function POST(request: NextRequest) {
   try {
     // Verify webhook signature
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-  } catch (error: any) {
-    console.error(`Webhook signature verification failed: ${error.message}`);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'unknown error';
+    console.error(`Webhook signature verification failed: ${message}`);
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
@@ -167,8 +168,9 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ received: true });
-  } catch (error: any) {
-    console.error(`Webhook processing error: ${error.message}`);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'unknown error';
+    console.error(`Webhook processing error: ${message}`);
     return NextResponse.json(
       { error: 'Webhook processing failed' },
       { status: 500 }

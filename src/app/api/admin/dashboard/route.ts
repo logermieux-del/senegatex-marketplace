@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getAuthSession } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const session = await getAuthSession();
 
@@ -77,11 +77,9 @@ export async function GET(_request: NextRequest) {
         createdAt: r.createdAt,
       })),
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Admin dashboard error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to load dashboard' },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : 'Failed to load dashboard';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

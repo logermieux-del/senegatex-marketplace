@@ -1,8 +1,7 @@
 'use client';
 
-import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 
 interface CheckoutListing {
@@ -16,7 +15,15 @@ interface CheckoutListing {
   };
 }
 
-function CheckoutContent() {
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={null}>
+      <CheckoutForm />
+    </Suspense>
+  );
+}
+
+function CheckoutForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const listingId = searchParams.get('listingId');
@@ -290,13 +297,5 @@ function CheckoutContent() {
         </div>
       </div>
     </main>
-  );
-}
-
-export default function CheckoutPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CheckoutContent />
-    </Suspense>
   );
 }

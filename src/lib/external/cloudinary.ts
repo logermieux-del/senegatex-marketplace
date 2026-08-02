@@ -25,17 +25,14 @@ export async function uploadImage(file: Buffer, folder: string = 'yombal'): Prom
         ],
       },
       (error, result) => {
-        if (error) reject(error);
-        else if (result) {
+        if (error || !result) reject(error || new Error('Cloudinary upload failed'));
+        else
           resolve({
-            url: result.secure_url || '',
-            publicId: result.public_id || '',
-            width: result.width || 0,
-            height: result.height || 0,
+            url: result.secure_url,
+            publicId: result.public_id,
+            width: result.width,
+            height: result.height,
           });
-        } else {
-          reject(new Error('Upload failed: no result returned'));
-        }
       }
     );
 

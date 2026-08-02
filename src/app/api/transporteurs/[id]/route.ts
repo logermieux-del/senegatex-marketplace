@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { z } from 'zod';
+import { Prisma } from '@prisma/client';
 import { transporterUpdateSchema } from '@/lib/validators';
 
 export async function GET(
@@ -112,7 +113,7 @@ export async function PATCH(
     }
 
     // Update transporter
-    const updateData: any = {};
+    const updateData: Prisma.TransporteurUpdateInput = {};
 
     if (data.tarifParZone) {
       updateData.tarifParZone = JSON.stringify(data.tarifParZone);

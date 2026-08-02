@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -36,6 +36,7 @@ model User {
   // Transporter data
   transporteur  Transporteur?
   disputesSignaled Dispute[] @relation("signalePar")
+  remboursementsAssurance RemboursementAssurance[] @relation("assuranceBeneficiaire")
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -238,7 +239,12 @@ model Transporteur {
   tauxDisputes          Float      @default(0.0) // 0-100 percent
   lastActivityAt        DateTime?
 
+  // Terms acceptance (simple digital acknowledgement, no e-signature provider)
+  conditionsAccepteesAt DateTime?
+  conditionsVersion     String?
+
   livraisons            Livraison[]
+  paiements             PaiementTransporteur[]
 
   createdAt             DateTime   @default(now())
   updatedAt             DateTime   @updatedAt
@@ -269,6 +275,7 @@ model Livraison {
   // Pricing
   tarifNegocie          Int        // XOF
   commissionYombal      Int        // XOF (5-10% of tarif)
+  assuranceMontant      Int        @default(0) // XOF, surcharge funding the insurance pool
 
   // Timeline
   datePrise             DateTime?
@@ -285,6 +292,8 @@ model Livraison {
   incident              Boolean    @default(false)
 
   disputes              Dispute[]
+  paiement              PaiementTransporteur?
+  remboursementsAssurance RemboursementAssurance[]
 
   createdAt             DateTime   @default(now())
   updatedAt             DateTime   @updatedAt
@@ -313,10 +322,69 @@ model Dispute {
   reviewedByAdmin       String?
   dateResolution        DateTime?
 
+  remboursement         RemboursementAssurance?
+
   createdAt             DateTime   @default(now())
   updatedAt             DateTime   @updatedAt
 
   @@index([livraisonId])
+  @@index([statut])
+  @@index([createdAt])
+}
+
+// Remboursement Assurance (paid out of the pooled insurance surcharge when
+// a dispute is validated — MVP: manual reconciliation, same pattern as
+// PaiementTransporteur, since no automated refund API is realistically
+// available to a solo operator).
+model RemboursementAssurance {
+  id                    String     @id @default(cuid())
+
+  disputeId             String     @unique
+  dispute               Dispute    @relation(fields: [disputeId], references: [id], onDelete: Cascade)
+
+  livraisonId           String
+  livraison             Livraison  @relation(fields: [livraisonId], references: [id], onDelete: Cascade)
+
+  beneficiaireUserId    String
+  beneficiaire          User       @relation("assuranceBeneficiaire", fields: [beneficiaireUserId], references: [id], onDelete: Cascade)
+
+  montant               Int        // XOF
+  statut                String     @default("PENDING") // PENDING, PAID
+
+  methode               String?    // "wave", "orange_money", "cash", "virement"
+  reference             String?
+  paidByAdminId         String?
+  paidAt                DateTime?
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([statut])
+  @@index([createdAt])
+}
+
+// Paiement Transporteur (payout tracking — MVP: manual reconciliation, no automated payout API)
+model PaiementTransporteur {
+  id                    String     @id @default(cuid())
+
+  livraisonId           String     @unique
+  livraison             Livraison  @relation(fields: [livraisonId], references: [id], onDelete: Cascade)
+
+  transporteurId        String
+  transporteur          Transporteur @relation(fields: [transporteurId], references: [id], onDelete: Cascade)
+
+  montant               Int        // XOF, = tarifNegocie - commissionYombal
+  statut                String     @default("PENDING") // PENDING, PAID, FAILED
+
+  methode               String?    // "wave", "orange_money", "cash", "virement"
+  reference             String?    // Manual transaction reference (Wave/OM confirmation code)
+  paidByAdminId         String?
+  paidAt                DateTime?
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([transporteurId])
   @@index([statut])
   @@index([createdAt])
 }

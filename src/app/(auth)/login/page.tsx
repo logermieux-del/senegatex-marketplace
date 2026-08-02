@@ -1,12 +1,19 @@
 'use client';
 
-import { Suspense } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 
-function LoginContent() {
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
@@ -29,7 +36,7 @@ function LoginContent() {
       });
 
       if (result?.error) {
-        setErrorMsg(result.error);
+        setErrorMsg('Invalid credentials');
       } else if (result?.ok) {
         router.push('/');
       }
@@ -99,7 +106,7 @@ function LoginContent() {
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/signup" className="text-orange-500 hover:text-orange-600 font-medium">
                 Sign up
               </Link>
@@ -108,19 +115,11 @@ function LoginContent() {
 
           <div className="mt-6 pt-6 border-t border-gray-200">
             <p className="text-xs text-gray-500 text-center">
-              Test account: seller@example.com / password123
+              Test account: seller@example.com / Password123
             </p>
           </div>
         </div>
       </div>
     </div>
-  );
-}
-
-export default function LoginPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <LoginContent />
-    </Suspense>
   );
 }

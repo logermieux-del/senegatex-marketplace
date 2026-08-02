@@ -169,8 +169,9 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    console.error(`Wave webhook error: ${error.message}`);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'unknown error';
+    console.error(`Wave webhook error: ${message}`);
     return NextResponse.json(
       { error: 'Webhook processing failed' },
       { status: 500 }

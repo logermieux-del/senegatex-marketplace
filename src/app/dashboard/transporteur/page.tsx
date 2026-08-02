@@ -24,17 +24,40 @@ interface TransporterProfile {
   };
 }
 
+interface Earnings {
+  resume: { totalEnAttente: number; totalPaye: number; devise: string };
+}
+
+interface DisputeItem {
+  id: string;
+  raison: string;
+  statut: string;
+  createdAt: string;
+}
+
 export default function TransporteurDashboardPage() {
   const { status } = useSession();
   const [profile, setProfile] = useState<TransporterProfile | null>(null);
+  const [earnings, setEarnings] = useState<Earnings | null>(null);
+  const [disputes, setDisputes] = useState<DisputeItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (status === 'authenticated') {
       fetchProfile();
+      fetchEarnings();
     }
   }, [status]);
+
+  useEffect(() => {
+    if (profile?.id) {
+      fetch(`/api/transporteurs/${profile.id}/disputes`)
+        .then((res) => (res.ok ? res.json() : { data: [] }))
+        .then((res) => setDisputes(res.data || []))
+        .catch(() => setDisputes([]));
+    }
+  }, [profile?.id]);
 
   const fetchProfile = async () => {
     try {
@@ -56,6 +79,17 @@ export default function TransporteurDashboardPage() {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchEarnings = async () => {
+    try {
+      const res = await fetch('/api/transporteurs/me/paiements');
+      if (!res.ok) return;
+      const data = await res.json();
+      setEarnings(data.data);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -186,11 +220,67 @@ export default function TransporteurDashboardPage() {
                 Edit Profile
               </Button>
             </Link>
-            <Button variant="outline" className="w-full">
-              View Earnings
-            </Button>
+            <Link href="/dashboard/transporteur/paiements">
+              <Button variant="outline" className="w-full">
+                View Earnings
+              </Button>
+            </Link>
           </Card.Body>
         </Card>
+
+        {/* Earnings summary */}
+        {earnings && (
+          <Card>
+            <Card.Header>
+              <h2 className="text-xl font-bold">Earnings</h2>
+            </Card.Header>
+            <Card.Body>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-600">Pending payout</p>
+                  <p className="text-2xl font-bold text-orange-500">
+                    {earnings.resume.totalEnAttente.toLocaleString()}{' '}
+                    {earnings.resume.devise}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Total paid</p>
+                  <p className="text-2xl font-bold text-green-600">
+                    {earnings.resume.totalPaye.toLocaleString()}{' '}
+                    {earnings.resume.devise}
+                  </p>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        )}
+
+        {/* Disputes */}
+        {disputes.length > 0 && (
+          <Card>
+            <Card.Header>
+              <h2 className="text-xl font-bold">Recent Disputes</h2>
+            </Card.Header>
+            <Card.Body className="space-y-3">
+              {disputes.slice(0, 5).map((d) => (
+                <div
+                  key={d.id}
+                  className="flex items-center justify-between border-b border-gray-100 pb-2 last:border-0"
+                >
+                  <div>
+                    <p className="font-medium capitalize">{d.raison.replace('_', ' ')}</p>
+                    <p className="text-xs text-gray-500">
+                      {new Date(d.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+                    {d.statut}
+                  </span>
+                </div>
+              ))}
+            </Card.Body>
+          </Card>
+        )}
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4">

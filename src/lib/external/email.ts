@@ -1,6 +1,12 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend: Resend | null = null;
+function getResendClient(): Resend | null {
+  if (!process.env.RESEND_API_KEY) return null;
+  if (!resend) resend = new Resend(process.env.RESEND_API_KEY);
+  return resend;
+}
+
 const FROM_EMAIL = 'notifications@yombal.sn';
 
 interface EmailParams {
@@ -10,6 +16,12 @@ interface EmailParams {
 }
 
 async function sendEmail({ to, subject, html }: EmailParams) {
+  const resend = getResendClient();
+  if (!resend) {
+    console.error('Email service error: RESEND_API_KEY is not configured');
+    return null;
+  }
+
   try {
     const result = await resend.emails.send({
       from: FROM_EMAIL,
@@ -251,4 +263,142 @@ export async function sendWelcomeEmail(params: {
     subject: `🎉 Welcome to Yombal, ${name}!`,
     html,
   });
+}
+
+// ============ Transporteur / Livraison Templates ============
+
+const STATUT_LABELS: Record<string, string> = {
+  PENDING: 'En attente',
+  ACCEPTED: 'Acceptée par le transporteur',
+  PICKED_UP: 'Colis récupéré',
+  IN_TRANSIT: 'En cours de livraison',
+  DELIVERED: 'Livré',
+  FAILED: 'Échec de la livraison',
+};
+
+export async function sendDeliveryStatusEmail(params: {
+  toEmail: string;
+  toName: string;
+  statut: string;
+  livraisonId: string;
+}) {
+  const { toEmail, toName, statut, livraisonId } = params;
+  const label = STATUT_LABELS[statut] || statut;
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h1 style="color: #f97316; margin: 0 0 10px 0;">📦 Mise à jour de votre livraison</h1>
+        <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
+        <p style="color: #666; line-height: 1.6;">Statut actuel : <strong>${label}</strong></p>
+        <a href="http://localhost:3000/livraisons/${livraisonId}/tracking" style="display: inline-block; background: #f97316; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
+          Suivre ma livraison
+        </a>
+      </div>
+    </div>
+  `;
+
+  return sendEmail({ to: toEmail, subject: `📦 Livraison: ${label}`, html });
+}
+
+export async function sendDisputeCreatedEmail(params: {
+  transporteurEmail: string;
+  transporteurName: string;
+  raison: string;
+  livraisonId: string;
+}) {
+  const { transporteurEmail, transporteurName, raison, livraisonId } = params;
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 4px solid #ef4444;">
+        <h1 style="color: #ef4444; margin: 0 0 10px 0;">⚠️ Un problème a été signalé</h1>
+        <p style="color: #666;">Bonjour <strong>${transporteurName}</strong>,</p>
+        <p style="color: #666; line-height: 1.6;">
+          Un client a signalé un problème (<strong>${raison}</strong>) concernant la livraison
+          <code>${livraisonId}</code>. Notre équipe va l'examiner.
+        </p>
+      </div>
+    </div>
+  `;
+
+  return sendEmail({ to: transporteurEmail, subject: '⚠️ Litige signalé sur une livraison', html });
+}
+
+export async function sendDisputeResolvedEmail(params: {
+  toEmail: string;
+  toName: string;
+  resolutionType: string;
+  montant?: number;
+}) {
+  const { toEmail, toName, resolutionType, montant } = params;
+
+  const resolutionLabels: Record<string, string> = {
+    remboursement: 'Remboursement accordé',
+    compensation: 'Compensation accordée',
+    rejete: 'Litige rejeté',
+  };
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h1 style="color: #f97316; margin: 0 0 10px 0;">✅ Litige résolu</h1>
+        <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
+        <p style="color: #666; line-height: 1.6;">
+          ${resolutionLabels[resolutionType] || resolutionType}
+          ${montant ? ` — ${(montant / 1).toLocaleString()} XOF` : ''}
+        </p>
+      </div>
+    </div>
+  `;
+
+  return sendEmail({ to: toEmail, subject: '✅ Votre litige a été traité', html });
+}
+
+export async function sendRefundSentEmail(params: {
+  toEmail: string;
+  toName: string;
+  montant: number;
+  methode: string;
+}) {
+  const { toEmail, toName, montant, methode } = params;
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h1 style="color: #22c55e; margin: 0 0 10px 0;">💰 Remboursement envoyé</h1>
+        <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
+        <p style="color: #666; line-height: 1.6;">
+          Suite à votre litige, un remboursement de <strong>${montant.toLocaleString()} XOF</strong>
+          vous a été envoyé via <strong>${methode}</strong>.
+        </p>
+      </div>
+    </div>
+  `;
+
+  return sendEmail({ to: toEmail, subject: '💰 Remboursement envoyé', html });
+}
+
+export async function sendPaymentSentEmail(params: {
+  toEmail: string;
+  toName: string;
+  montant: number;
+  methode: string;
+}) {
+  const { toEmail, toName, montant, methode } = params;
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h1 style="color: #22c55e; margin: 0 0 10px 0;">💰 Paiement envoyé</h1>
+        <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
+        <p style="color: #666; line-height: 1.6;">
+          Un paiement de <strong>${montant.toLocaleString()} XOF</strong> vous a été envoyé via
+          <strong>${methode}</strong>.
+        </p>
+      </div>
+    </div>
+  `;
+
+  return sendEmail({ to: toEmail, subject: '💰 Paiement de livraison envoyé', html });
 }

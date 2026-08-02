@@ -1,8 +1,16 @@
 import { prisma } from '@/lib/db';
-import { createListingSchema, updateListingSchema } from '@/lib/validators';
+import { createListingSchema, updateListingSchema, type CreateListingInput } from '@/lib/validators';
 import { Prisma } from '@prisma/client';
+import type { z } from 'zod';
 
-export async function getListings(page: number = 1, limit: number = 10, filters?: any) {
+interface ListingFilters {
+  city?: string;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+}
+
+export async function getListings(page: number = 1, limit: number = 10, filters?: ListingFilters) {
   const skip = (page - 1) * limit;
 
   const where: Prisma.ListingWhereInput = {
@@ -48,7 +56,7 @@ export async function getListingById(id: string) {
   });
 }
 
-export async function createListing(userId: string, data: any) {
+export async function createListing(userId: string, data: CreateListingInput & { photos?: string[] }) {
   const validated = createListingSchema.parse(data);
 
   return prisma.listing.create({
@@ -61,7 +69,11 @@ export async function createListing(userId: string, data: any) {
   });
 }
 
-export async function updateListing(id: string, userId: string, data: any) {
+export async function updateListing(
+  id: string,
+  userId: string,
+  data: z.infer<typeof updateListingSchema>
+) {
   // Verify ownership
   const listing = await prisma.listing.findUnique({
     where: { id },
@@ -72,13 +84,13 @@ export async function updateListing(id: string, userId: string, data: any) {
     throw new Error('Unauthorized');
   }
 
-  const validated = updateListingSchema.parse(data);
+  const { photos, ...validated } = updateListingSchema.parse(data);
 
   return prisma.listing.update({
     where: { id },
     data: {
       ...validated,
-      ...(data.photos && { photos: JSON.stringify(data.photos) }),
+      ...(photos && { photos: JSON.stringify(photos) }),
     },
   });
 }

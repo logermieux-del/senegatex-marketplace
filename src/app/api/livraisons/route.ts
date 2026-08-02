@@ -2,6 +2,7 @@ import { prisma } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
+import { computeAssuranceMontant } from '@/lib/assurance-fund';
 import { z } from 'zod';
 
 const createLivraisonSchema = z.object({
@@ -141,6 +142,7 @@ export async function POST(req: NextRequest) {
 
     // Calculate commission (5-10% of tarif)
     const commissionYombal = Math.ceil(data.tarifNegocie * 0.05); // 5% commission
+    const assuranceMontant = computeAssuranceMontant(data.tarifNegocie);
 
     const livraison = await prisma.livraison.create({
       data: {
@@ -149,6 +151,7 @@ export async function POST(req: NextRequest) {
         adresseArrivee: JSON.stringify(data.adresseArrivee),
         tarifNegocie: data.tarifNegocie,
         commissionYombal,
+        assuranceMontant,
         statut: 'PENDING',
         transactionId: data.transactionId,
       },
@@ -160,6 +163,8 @@ export async function POST(req: NextRequest) {
           id: livraison.id,
           statut: livraison.statut,
           tarifNegocie: livraison.tarifNegocie,
+          assuranceMontant: livraison.assuranceMontant,
+          totalAPayer: livraison.tarifNegocie + livraison.assuranceMontant,
         },
       },
       { status: 201 }

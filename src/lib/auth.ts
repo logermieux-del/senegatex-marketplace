@@ -13,10 +13,10 @@ declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
+      role?: string;
       email?: string | null;
       name?: string | null;
       image?: string | null;
-      role?: string;
     };
   }
 }
@@ -32,34 +32,39 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Missing email or password');
+          return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email.toLowerCase() },
-        });
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email.toLowerCase() },
+          });
 
-        if (!user || !user.password) {
-          throw new Error('Invalid email or password');
+          if (!user || !user.password) {
+            return null;
+          }
+
+          const passwordMatch = await compare(credentials.password, user.password);
+
+          if (!passwordMatch) {
+            return null;
+          }
+
+          if (user.isSuspended) {
+            return null;
+          }
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            image: user.avatar,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error('Auth error:', error);
+          return null;
         }
-
-        const passwordMatch = await compare(credentials.password, user.password);
-
-        if (!passwordMatch) {
-          throw new Error('Invalid email or password');
-        }
-
-        if (user.isSuspended) {
-          throw new Error('Account suspended');
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          image: user.avatar,
-          role: user.role,
-        };
       },
     }),
   ],
@@ -81,7 +86,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as string | undefined;
+        session.user.role = token.role as string;
       }
       return session;
     },

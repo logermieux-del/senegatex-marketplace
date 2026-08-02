@@ -78,16 +78,14 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error('Stripe payment error:', error);
 
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors[0].message }, { status: 400 });
+      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
     }
 
-    return NextResponse.json(
-      { error: error.message || 'Payment initialization failed' },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : 'Payment initialization failed';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

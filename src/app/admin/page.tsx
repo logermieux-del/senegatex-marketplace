@@ -110,14 +110,13 @@ export default function AdminPage() {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         {error && (
-          <div className="mb-6">
-            <Alert
-              type="error"
-              title="Error"
-              message={error}
-              onClose={() => setError(null)}
-            />
-          </div>
+          <Alert
+            type="error"
+            title="Error"
+            message={error}
+            onClose={() => setError(null)}
+            className="mb-6"
+          />
         )}
 
         {loading ? (
@@ -149,10 +148,12 @@ export default function AdminPage() {
             </div>
 
             {/* Pending Reports */}
-            <Card>
+            <Card className="mb-8">
               <CardHeader>
-                <h2 className="text-2xl font-bold">Pending Reports</h2>
-                <p className="text-gray-600">{stats.pendingReports} items flagged for review</p>
+                <h2 className="text-lg font-bold text-gray-900">Pending Reports</h2>
+                <p className="text-sm text-gray-600">
+                  {stats.pendingReports} items flagged for review
+                </p>
               </CardHeader>
               <CardBody>
                 {reports.length === 0 ? (
@@ -242,10 +243,10 @@ export default function AdminPage() {
             </div>
 
             {/* Activity Log */}
-            <Card>
+            <Card className="mt-8">
               <CardHeader>
-                <h2 className="text-2xl font-bold">Activity Log</h2>
-                <p className="text-gray-600">Recent admin actions</p>
+                <h2 className="text-lg font-bold text-gray-900">Activity Log</h2>
+                <p className="text-sm text-gray-600">Recent admin actions</p>
               </CardHeader>
               <CardBody>
                 <p className="text-gray-600 text-center py-8">

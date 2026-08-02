@@ -27,9 +27,10 @@ export async function GET(
         photos: Array.isArray(photos) ? photos : [photos],
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('GET /api/listings/[id] error:', error);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    const message = error instanceof Error ? error.message : 'Failed to fetch listing';
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
 
@@ -47,12 +48,13 @@ export async function PATCH(
     const listing = await updateListing(params.id, session.user.id, body);
 
     return NextResponse.json(listing);
-  } catch (error: any) {
+  } catch (error) {
     console.error('PATCH /api/listings/[id] error:', error);
-    if (error.message === 'Unauthorized') {
+    const message = error instanceof Error ? error.message : 'Failed to update listing';
+    if (message === 'Unauthorized') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
 
@@ -69,11 +71,12 @@ export async function DELETE(
     await deleteListing(params.id, session.user.id);
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error) {
     console.error('DELETE /api/listings/[id] error:', error);
-    if (error.message === 'Unauthorized') {
+    const message = error instanceof Error ? error.message : 'Failed to delete listing';
+    if (message === 'Unauthorized') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }

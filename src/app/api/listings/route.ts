@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     const result = await getListings(page, Math.min(limit, 50), filters);
 
     // Parse photos in each listing
-    const data = result.data.map((listing: any) => ({
+    const data = result.data.map((listing) => ({
       ...listing,
       photos: listing.photos
         ? (typeof listing.photos === 'string' ? JSON.parse(listing.photos) : listing.photos)
@@ -26,9 +26,10 @@ export async function GET(request: NextRequest) {
     }));
 
     return NextResponse.json({ ...result, data });
-  } catch (error: any) {
+  } catch (error) {
     console.error('GET /api/listings error:', error);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    const message = error instanceof Error ? error.message : 'Failed to fetch listings';
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
 
@@ -43,8 +44,9 @@ export async function POST(request: NextRequest) {
     const listing = await createListing(session.user.id, body);
 
     return NextResponse.json(listing, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     console.error('POST /api/listings error:', error);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    const message = error instanceof Error ? error.message : 'Failed to create listing';
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
