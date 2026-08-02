@@ -45,7 +45,7 @@ export default function ListingDetailPage() {
         }
         const data = await res.json();
         setListing(data.data);
-      } catch () {
+      } catch (_) { // eslint-disable-line @typescript-eslint/no-unused-vars
         setError('Failed to load listing');
       } finally {
         setLoading(false);
