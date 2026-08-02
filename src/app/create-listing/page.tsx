@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Button, Input, Textarea, Select, Alert, Card, CardBody, CardFooter } from '@/components/common';
+import { Button, Input, Textarea, Select, Alert, Card, CardBody } from '@/components/common';
 
 const CATEGORIES = [
   { value: '', label: 'Select a category' },
