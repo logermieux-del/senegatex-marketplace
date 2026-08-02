@@ -32,7 +32,7 @@ export default function LoginPage() {
       } else if (result?.ok) {
         router.push('/');
       }
-    } catch (err) {
+    } catch (_err) {
       setErrorMsg('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
