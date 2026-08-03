@@ -29,6 +29,7 @@ export function ListingCard({
   seller,
 }: ListingCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const formattedPrice = (price / 100000).toLocaleString('fr-SN');
 
   return (
@@ -36,10 +37,11 @@ export function ListingCard({
       <div className="group bg-white rounded-xl border border-accent-200 overflow-hidden hover:border-primary-300 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
         {/* Image Container */}
         <div className="relative bg-neutral-100 overflow-hidden h-56">
-          {thumbnail ? (
+          {thumbnail && !imageError ? (
             <img
               src={thumbnail}
               alt={title}
+              onError={() => setImageError(true)}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
           ) : (
