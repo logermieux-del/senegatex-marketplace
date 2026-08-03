@@ -43,8 +43,8 @@ export function Sidebar({ selectedCategory, onCategoryChange }: SidebarProps) {
                   : 'text-accent-600 hover:bg-white hover:text-primary-500'
               }`}
             >
-              <div className={`w-5 h-5 flex-shrink-0 flex items-center justify-center ${isActive ? 'text-primary-700' : 'text-accent-600'}`}>
-                <Icon />
+              <div className={`flex-shrink-0 flex items-center justify-center ${isActive ? 'text-primary-700' : 'text-accent-600'}`}>
+                <Icon className="w-5 h-5" />
               </div>
               <span>{category.label}</span>
             </button>
