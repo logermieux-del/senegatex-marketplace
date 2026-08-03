@@ -11,6 +11,9 @@ RUN npm ci
 # Copy source
 COPY . .
 
+# Generate Prisma client (needs schema.prisma, copied above)
+RUN npx prisma generate
+
 # Build frontend (if needed during dev)
 # RUN npm run build
 
