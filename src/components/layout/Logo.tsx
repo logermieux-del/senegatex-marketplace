@@ -1,5 +1,5 @@
-// Y mark: straight left arm, hooked/wave right arm, tapered drop stem.
-const Y_ARMS = 'M60,40 L190,280 M350,55 Q270,75 300,150 L190,280';
+// Y mark: straight left arm, right arm with top hook, tapered drop stem.
+const Y_ARMS = 'M60,40 L190,280 M360,40 Q375,20 355,70 L190,280';
 const Y_STEM = 'M190,280 L178,400';
 
 interface LogoProps {

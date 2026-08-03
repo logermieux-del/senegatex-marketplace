@@ -20,7 +20,7 @@ export default function OpengraphImage() {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <svg width="90" height="99" viewBox="0 0 380 420">
             <g stroke="#0F8B6D" strokeWidth={46} strokeLinecap="round" strokeLinejoin="round" fill="none">
-              <path d="M60,40 L190,280 M350,55 Q270,75 300,150 L190,280" />
+              <path d="M60,40 L190,280 M360,40 Q375,20 355,70 L190,280" />
               <path d="M190,280 L178,400" />
             </g>
           </svg>
