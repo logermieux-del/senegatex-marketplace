@@ -8,6 +8,7 @@ interface ListingFilters {
   category?: string;
   minPrice?: number;
   maxPrice?: number;
+  q?: string;
 }
 
 export async function getListings(page: number = 1, limit: number = 10, filters?: ListingFilters) {
@@ -19,6 +20,12 @@ export async function getListings(page: number = 1, limit: number = 10, filters?
     ...(filters?.category && { category: filters.category }),
     ...(filters?.minPrice && { price: { gte: filters.minPrice } }),
     ...(filters?.maxPrice && { price: { lte: filters.maxPrice } }),
+    ...(filters?.q && {
+      OR: [
+        { title: { contains: filters.q, mode: 'insensitive' } },
+        { description: { contains: filters.q, mode: 'insensitive' } },
+      ],
+    }),
   };
 
   const [listings, total] = await Promise.all([

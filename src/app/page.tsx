@@ -56,11 +56,9 @@ export default function Home() {
       params.append('limit', '12');
       if (selectedCategory) params.append('category', selectedCategory);
       if (selectedCity) params.append('city', selectedCity);
-
-      const endpoint = searchQuery ? '/api/search' : '/api/listings';
       if (searchQuery) params.append('q', searchQuery);
 
-      const res = await fetch(`${endpoint}?${params}`);
+      const res = await fetch(`/api/listings?${params}`);
       const data = await res.json();
       setListings(data.data || []);
       setPagination(data.pagination);
