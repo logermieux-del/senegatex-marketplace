@@ -14,54 +14,54 @@ const config: Config = {
         serif: ['Georgia', 'Garamond', 'serif'],
       },
       colors: {
-        // Premium Sports Palette: Navy Blue + White + Black
+        // Marketplace Local Senegal: Green + Ocean Blue + Warm Orange
         primary: {
-          50: '#ffffff',
-          100: '#f8f8f8', // White - primary text
-          200: '#f0f0f0',
-          300: '#e8e8e8',
-          400: '#e0e0e0',
-          500: '#d8d8d8',
-          600: '#c0c0c0',
-          700: '#a8a8a8',
-          800: '#808080',
-          900: '#000000', // Black
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+          900: '#145231',
         },
         accent: {
-          50: '#f0f7ff',
-          100: '#e0eeff',
-          200: '#c1ddff',
-          300: '#a2ccff',
-          400: '#0d47a1', // Navy blue - strong accents & CTAs
-          500: '#0d3d91',
-          600: '#0a2e73',
-          700: '#081e55',
-          800: '#051437',
-          900: '#030a1f',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9', // Ocean blue
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c2d6b',
         },
-        blue: {
-          50: '#f0f7ff',
-          100: '#e0eeff',
-          200: '#c1ddff',
-          300: '#a2ccff',
-          400: '#6b9eff',
-          500: '#2563eb', // Medium blue - primary brand blue
-          600: '#1d4ed8',
-          700: '#1e40af', // Deep blue
-          800: '#1e3a8a', // Navy blue
-          900: '#0c2340', // Very deep navy
+        orange: {
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316', // Warm orange accent
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
         },
-        secondary: {
-          50: '#ffffff',
-          100: '#f8f8f8',
-          200: '#f0f0f0',
-          300: '#e8e8e8',
-          400: '#d0d0d0',
-          500: '#b0b0b0',
-          600: '#808080',
-          700: '#505050',
-          800: '#202020',
-          900: '#000000', // Pure black ground
+        neutral: {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
         },
       },
       fontSize: {

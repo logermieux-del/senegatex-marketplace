@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Card } from '@/components/common';
+import { Eye, Heart } from 'lucide-react';
+import { useState } from 'react';
 
 interface ListingCardProps {
   id: string;
@@ -25,60 +26,95 @@ export function ListingCard({
   viewCount = 0,
   seller,
 }: ListingCardProps) {
+  const [isFavorite, setIsFavorite] = useState(false);
   const formattedPrice = (price / 100000).toLocaleString('fr-SN');
 
   return (
     <Link href={`/listings/${id}`}>
-      <Card hoverable className="h-full flex flex-col">
-        {/* Image */}
-        {thumbnail ? (
-          <div className="w-full h-48 bg-gray-100 rounded mb-4 overflow-hidden">
+      <div className="group bg-white rounded-xl border border-neutral-200 overflow-hidden hover:border-primary-300 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+        {/* Image Container */}
+        <div className="relative bg-neutral-100 overflow-hidden h-56">
+          {thumbnail ? (
             <img
               src={thumbnail}
               alt={title}
-              className="w-full h-full object-cover hover:scale-105 transition-transform"
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
-          </div>
-        ) : (
-          <div className="w-full h-48 bg-gradient-to-br from-orange-100 to-orange-50 rounded mb-4 flex items-center justify-center">
-            <span className="text-4xl">📦</span>
-          </div>
-        )}
-
-        {/* Content */}
-        <div className="flex-1">
-          <h3 className="font-semibold text-lg line-clamp-2 mb-2">{title}</h3>
-          <p className="text-sm text-gray-500 mb-3">{city}</p>
-
-          {/* Price */}
-          <p className="text-xl font-bold text-orange-500 mb-4">
-            {formattedPrice}k XOF
-          </p>
-
-          {/* Seller */}
-          {seller && (
-            <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
-              {seller.avatar ? (
-                <img
-                  src={seller.avatar}
-                  alt={seller.name}
-                  className="w-6 h-6 rounded-full"
-                />
-              ) : (
-                <div className="w-6 h-6 rounded-full bg-orange-200 flex items-center justify-center text-xs">
-                  {seller.name[0]}
-                </div>
-              )}
-              <span>{seller.name}</span>
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-100 flex items-center justify-center">
+              <span className="text-5xl">📦</span>
             </div>
           )}
 
-          {/* View count */}
-          {viewCount > 0 && (
-            <p className="text-xs text-gray-400">👁️ {viewCount} views</p>
-          )}
+          {/* Overlay Actions */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setIsFavorite(!isFavorite);
+              }}
+              className={`p-3 rounded-full transition-all ${
+                isFavorite
+                  ? 'bg-orange-500 text-white'
+                  : 'bg-white text-neutral-600 hover:text-orange-500'
+              }`}
+            >
+              <Heart className="w-5 h-5" fill={isFavorite ? 'currentColor' : 'none'} />
+            </button>
+          </div>
+
+          {/* New Badge */}
+          <div className="absolute top-3 right-3 bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+            NOUVEAU
+          </div>
         </div>
-      </Card>
+
+        {/* Content */}
+        <div className="flex-1 p-4 flex flex-col">
+          <h3 className="font-bold text-neutral-900 line-clamp-2 mb-3 text-sm group-hover:text-primary-600 transition-colors">
+            {title}
+          </h3>
+
+          {/* Price - Highlight */}
+          <p className="text-2xl font-bold text-primary-600 mb-3">
+            {formattedPrice}k <span className="text-xs text-neutral-500 font-normal">XOF</span>
+          </p>
+
+          {/* Location */}
+          <div className="flex items-center gap-2 text-xs text-neutral-600 mb-4">
+            <span>📍</span>
+            <span>{city}</span>
+          </div>
+
+          {/* Seller Info */}
+          <div className="pt-3 border-t border-neutral-200">
+            {seller && (
+              <div className="flex items-center gap-2 text-xs">
+                {seller.avatar ? (
+                  <img
+                    src={seller.avatar}
+                    alt={seller.name}
+                    className="w-7 h-7 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-primary-200 flex items-center justify-center text-xs font-bold text-primary-700">
+                    {seller.name[0]}
+                  </div>
+                )}
+                <span className="text-neutral-700 font-medium">{seller.name}</span>
+              </div>
+            )}
+
+            {/* View Count */}
+            {viewCount > 0 && (
+              <div className="flex items-center gap-1 text-xs text-neutral-500 mt-2">
+                <Eye className="w-3 h-3" />
+                <span>{viewCount}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </Link>
   );
 }
