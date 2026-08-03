@@ -1,15 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, MapPin, Plus } from 'lucide-react';
-import { useState } from 'react';
+import { Search, Plus } from 'lucide-react';
 
-export function Header() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+const cities = ['Dakar', 'Thiès', 'Kaolack', 'Saint-Louis', 'Ziguinchor', 'Tambacounda'];
 
-  const cities = ['Dakar', 'Thiès', 'Kaolack', 'Saint-Louis', 'Ziguinchor', 'Tambacounda'];
+interface HeaderProps {
+  searchQuery: string;
+  onSearchQueryChange: (value: string) => void;
+  selectedCity: string;
+  onSelectedCityChange: (value: string) => void;
+}
 
+export function Header({ searchQuery, onSearchQueryChange, selectedCity, onSelectedCityChange }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-accent-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
@@ -33,13 +36,13 @@ export function Header() {
                   type="text"
                   placeholder="Rechercher..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => onSearchQueryChange(e.target.value)}
                   className="bg-transparent flex-1 px-3 py-1 outline-none text-neutral-900 placeholder-accent-400 font-sans"
                 />
               </div>
               <select
                 value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
+                onChange={(e) => onSelectedCityChange(e.target.value)}
                 className="px-4 py-2 bg-neutral-50 border border-accent-300 rounded-lg text-neutral-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all hidden sm:block font-sans"
               >
                 <option value="">Toutes villes</option>

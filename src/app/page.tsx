@@ -37,6 +37,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -45,7 +46,7 @@ export default function Home() {
     }, 300);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, selectedCity]);
 
   const fetchListings = async () => {
     setLoading(true);
@@ -54,6 +55,7 @@ export default function Home() {
       params.append('page', '1');
       params.append('limit', '12');
       if (selectedCategory) params.append('category', selectedCategory);
+      if (selectedCity) params.append('city', selectedCity);
 
       const endpoint = searchQuery ? '/api/search' : '/api/listings';
       if (searchQuery) params.append('q', searchQuery);
@@ -72,7 +74,12 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Header
+        searchQuery={searchQuery}
+        onSearchQueryChange={setSearchQuery}
+        selectedCity={selectedCity}
+        onSelectedCityChange={setSelectedCity}
+      />
 
       <div className="min-h-screen bg-neutral-50">
         <div className="flex max-w-7xl mx-auto gap-6 px-4 py-8">
