@@ -13,6 +13,13 @@ interface ListingFilters {
   propertyType?: string;
 }
 
+// price is stored as BigInt (real estate prices exceed INT4 range) but every
+// listing price fits comfortably under Number.MAX_SAFE_INTEGER, so callers
+// (API routes, frontend) work with plain numbers.
+function toPlainListing<T extends { price: bigint }>(listing: T) {
+  return { ...listing, price: Number(listing.price) };
+}
+
 export async function getListings(page: number = 1, limit: number = 10, filters?: ListingFilters) {
   const skip = (page - 1) * limit;
 
@@ -20,8 +27,8 @@ export async function getListings(page: number = 1, limit: number = 10, filters?
     status: 'ACTIVE',
     ...(filters?.city && { city: filters.city }),
     ...(filters?.category && { category: filters.category }),
-    ...(filters?.minPrice && { price: { gte: filters.minPrice } }),
-    ...(filters?.maxPrice && { price: { lte: filters.maxPrice } }),
+    ...(filters?.minPrice && { price: { gte: BigInt(filters.minPrice) } }),
+    ...(filters?.maxPrice && { price: { lte: BigInt(filters.maxPrice) } }),
     ...(filters?.transactionType && { transactionType: filters.transactionType }),
     ...(filters?.propertyType && { propertyType: filters.propertyType }),
     ...(filters?.q && {
@@ -44,7 +51,7 @@ export async function getListings(page: number = 1, limit: number = 10, filters?
   ]);
 
   return {
-    data: listings,
+    data: listings.map(toPlainListing),
     pagination: {
       total,
       page,
@@ -55,7 +62,7 @@ export async function getListings(page: number = 1, limit: number = 10, filters?
 }
 
 export async function getListingById(id: string) {
-  return prisma.listing.findUnique({
+  const listing = await prisma.listing.findUnique({
     where: { id },
     include: {
       user: {
@@ -65,19 +72,24 @@ export async function getListingById(id: string) {
       transactions: { where: { paymentStatus: 'COMPLETED' } },
     },
   });
+
+  return listing ? toPlainListing(listing) : null;
 }
 
 export async function createListing(userId: string, data: CreateListingInput & { photos?: string[] }) {
   const validated = createListingSchema.parse(data);
 
-  return prisma.listing.create({
+  const listing = await prisma.listing.create({
     data: {
       ...validated,
+      price: BigInt(validated.price),
       userId,
       photos: data.photos ? JSON.stringify(data.photos) : null,
     },
     include: { user: { select: { id: true, name: true } } },
   });
+
+  return toPlainListing(listing);
 }
 
 export async function updateListing(
@@ -95,15 +107,18 @@ export async function updateListing(
     throw new Error('Unauthorized');
   }
 
-  const { photos, ...validated } = updateListingSchema.parse(data);
+  const { photos, price, ...validated } = updateListingSchema.parse(data);
 
-  return prisma.listing.update({
+  const updated = await prisma.listing.update({
     where: { id },
     data: {
       ...validated,
+      ...(price !== undefined && { price: BigInt(price) }),
       ...(photos && { photos: JSON.stringify(photos) }),
     },
   });
+
+  return toPlainListing(updated);
 }
 
 export async function deleteListing(id: string, userId: string) {

@@ -16,7 +16,19 @@ const categories = [
   'books',
   'sports',
   'services',
+  'immobilier',
   'other',
+];
+
+const transactionTypes = [
+  { value: 'location', label: 'Location' },
+  { value: 'achat', label: 'Achat' },
+  { value: 'vente', label: 'Vente' },
+];
+
+const propertyTypes = [
+  { value: 'bati', label: 'Bâti' },
+  { value: 'non_bati', label: 'Non bâti' },
 ];
 
 const cities = [
@@ -46,6 +58,9 @@ export default function CreateListingPage() {
     price: '',
     city: 'Dakar',
     region: '',
+    transactionType: 'location',
+    propertyType: 'bati',
+    surfaceM2: '',
   });
 
   useEffect(() => {
@@ -86,7 +101,8 @@ export default function CreateListingPage() {
     setLoading(true);
 
     try {
-      const price = Math.floor(parseFloat(formData.price) * 100000);
+      const price = Math.floor(parseFloat(formData.price) * 100);
+      const isImmobilier = formData.category === 'immobilier';
 
       if (!formData.title || !formData.description || !formData.price) {
         setError('Please fill in all required fields');
@@ -100,12 +116,19 @@ export default function CreateListingPage() {
         return;
       }
 
+      const { transactionType, propertyType, surfaceM2, ...rest } = formData;
+
       const res = await fetch('/api/listings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
+          ...rest,
           price,
+          ...(isImmobilier && {
+            transactionType,
+            propertyType,
+            surfaceM2: surfaceM2 ? parseFloat(surfaceM2) : undefined,
+          }),
           photos: photos.length > 0 ? photos : undefined,
           thumbnail: photos.length > 0 ? photos[0] : undefined,
         }),
@@ -189,6 +212,52 @@ export default function CreateListingPage() {
                 ))}
               </select>
             </div>
+
+            {/* Immobilier: transaction type, property type, surface */}
+            {formData.category === 'immobilier' && (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Type de transaction *</label>
+                  <select
+                    name="transactionType"
+                    value={formData.transactionType}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                  >
+                    {transactionTypes.map((type) => (
+                      <option key={type.value} value={type.value}>{type.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Type de bien *</label>
+                  <select
+                    name="propertyType"
+                    value={formData.propertyType}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                  >
+                    {propertyTypes.map((type) => (
+                      <option key={type.value} value={type.value}>{type.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-sm font-medium mb-2">Surface (m²)</label>
+                  <input
+                    type="number"
+                    name="surfaceM2"
+                    value={formData.surfaceM2}
+                    onChange={handleChange}
+                    placeholder="e.g., 250"
+                    min="0"
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Description */}
             <div>

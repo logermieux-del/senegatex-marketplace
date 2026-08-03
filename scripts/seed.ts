@@ -50,7 +50,7 @@ async function main() {
       title: 'iPhone 13 Pro',
       description: 'Barely used iPhone 13 Pro in excellent condition. No scratches, all accessories included.',
       category: 'electronics',
-      price: 80000000, // 800,000 XOF
+      price: 80000000n, // 800,000 XOF
       city: 'Dakar',
       region: 'Plateau',
       photos: JSON.stringify(['https://res.cloudinary.com/example/image1.jpg']),
@@ -64,7 +64,7 @@ async function main() {
       title: 'Wooden Dining Table',
       description: 'Beautiful handcrafted dining table, seats 6 people. Made from solid wood.',
       category: 'furniture',
-      price: 25000000, // 250,000 XOF
+      price: 25000000n, // 250,000 XOF
       city: 'Thiès',
       region: 'Thiès Centre',
       photos: JSON.stringify(['https://res.cloudinary.com/example/image2.jpg']),
@@ -78,7 +78,7 @@ async function main() {
       title: 'MacBook Pro 2023',
       description: 'Barely used, mint condition. 16GB RAM, 512GB SSD. Perfect for work and development.',
       category: 'electronics',
-      price: 120000000, // 1,200,000 XOF
+      price: 120000000n, // 1,200,000 XOF
       city: 'Dakar',
       region: 'Mariste',
       photos: JSON.stringify(['https://res.cloudinary.com/example/image3.jpg']),
@@ -92,7 +92,7 @@ async function main() {
       title: 'Honda Motorcycle',
       description: 'Well-maintained motorcycle, good condition. Regularly serviced.',
       category: 'vehicles',
-      price: 35000000, // 350,000 XOF
+      price: 35000000n, // 350,000 XOF
       city: 'Dakar',
       region: 'Fass',
       photos: JSON.stringify(['https://res.cloudinary.com/example/image4.jpg']),
@@ -106,7 +106,7 @@ async function main() {
       title: 'Designer Sofa',
       description: 'Modern designer sofa in excellent condition. Comfortable and stylish.',
       category: 'furniture',
-      price: 45000000, // 450,000 XOF
+      price: 45000000n, // 450,000 XOF
       city: 'Thiès',
       region: 'Thiès Gare',
       photos: JSON.stringify(['https://res.cloudinary.com/example/image5.jpg']),
@@ -120,7 +120,7 @@ async function main() {
       title: 'Samsung Galaxy S23',
       description: 'Latest Samsung phone, barely used. Includes original box and accessories.',
       category: 'electronics',
-      price: 65000000, // 650,000 XOF
+      price: 65000000n, // 650,000 XOF
       city: 'Kaolack',
       region: 'Kaolack Centre',
       photos: JSON.stringify(['https://res.cloudinary.com/example/image6.jpg']),
@@ -134,7 +134,7 @@ async function main() {
       title: 'Vintage Bookshelf',
       description: 'Antique wooden bookshelf, perfect for collectors. Some wear but structurally sound.',
       category: 'furniture',
-      price: 15000000, // 150,000 XOF
+      price: 15000000n, // 150,000 XOF
       city: 'Saint-Louis',
       region: 'Saint-Louis Centre',
       photos: JSON.stringify(['https://res.cloudinary.com/example/image7.jpg']),
@@ -148,7 +148,7 @@ async function main() {
       title: 'Home Tutoring Services',
       description: 'Experienced tutor offering French and English lessons for students. Flexible schedules.',
       category: 'services',
-      price: 50000000, // 500,000 XOF per month
+      price: 50000000n, // 500,000 XOF per month
       city: 'Dakar',
       region: 'Almadies',
       photos: JSON.stringify(['https://res.cloudinary.com/example/image8.jpg']),
@@ -166,7 +166,7 @@ async function main() {
       transactionType: 'location',
       propertyType: 'bati',
       surfaceM2: 85,
-      price: 35000000, // 350,000 XOF / mois
+      price: 35000000n, // 350,000 XOF / mois
       city: 'Dakar',
       region: 'Almadies',
       photos: JSON.stringify(['https://res.cloudinary.com/example/immo1.jpg']),
@@ -183,7 +183,7 @@ async function main() {
       transactionType: 'vente',
       propertyType: 'bati',
       surfaceM2: 320,
-      price: 2000000000, // 20,000,000 XOF
+      price: 15000000000n, // 150,000,000 XOF
       city: 'Dakar',
       region: 'Ngor',
       photos: JSON.stringify(['https://res.cloudinary.com/example/immo2.jpg']),
@@ -200,7 +200,7 @@ async function main() {
       transactionType: 'achat',
       propertyType: 'non_bati',
       surfaceM2: 500,
-      price: 800000000, // 8,000,000 XOF
+      price: 4000000000n, // 40,000,000 XOF
       city: 'Thiès',
       region: 'Thiès Nord',
       photos: JSON.stringify(['https://res.cloudinary.com/example/immo3.jpg']),
@@ -217,7 +217,7 @@ async function main() {
       transactionType: 'location',
       propertyType: 'bati',
       surfaceM2: 28,
-      price: 8000000, // 80,000 XOF / mois
+      price: 8000000n, // 80,000 XOF / mois
       city: 'Saint-Louis',
       region: 'Sor',
       photos: JSON.stringify(['https://res.cloudinary.com/example/immo4.jpg']),
@@ -252,7 +252,7 @@ async function main() {
     });
 
     const index = meiliClient.index('listings');
-    await index.addDocuments(allListings);
+    await index.addDocuments(allListings.map((l) => ({ ...l, price: Number(l.price) })));
     console.log(`✅ Indexed ${allListings.length} listings in Meilisearch`);
   } catch (error) {
     console.warn('⚠️ Meilisearch indexing skipped (service may not be running)');

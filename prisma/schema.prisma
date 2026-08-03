@@ -59,7 +59,7 @@ model Listing {
   title         String
   description   String
   category      String
-  price         Int
+  price         BigInt // stored as XOF * 100; real estate prices exceed INT4 range
   currency      String     @default("XOF")
   status        String     @default("ACTIVE") // ACTIVE, SOLD, DELETED
 

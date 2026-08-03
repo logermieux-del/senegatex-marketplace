@@ -48,7 +48,7 @@ export async function indexListing(listing: Listing) {
         description: listing.description,
         city: listing.city,
         category: listing.category,
-        price: listing.price,
+        price: Number(listing.price),
         status: listing.status,
         createdAt: new Date(listing.createdAt).getTime() / 1000, // Unix timestamp
       },

@@ -26,6 +26,10 @@ export const createListingSchema = z.object({
   region: z.string().optional(),
   latitude: z.number().optional(),
   longitude: z.number().optional(),
+  // Real estate only (category = "immobilier")
+  transactionType: z.enum(['location', 'achat', 'vente']).optional(),
+  propertyType: z.enum(['bati', 'non_bati']).optional(),
+  surfaceM2: z.number().positive().optional(),
 });
 
 export const updateListingSchema = createListingSchema.partial().extend({
