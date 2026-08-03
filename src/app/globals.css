@@ -17,7 +17,7 @@ html {
 
 body {
   overflow-x: hidden;
-  @apply bg-secondary-900 text-white;
+  @apply bg-white text-neutral-900;
 }
 
 /* Premium Typography - Black and White */
@@ -35,7 +35,7 @@ h3 { @apply text-2xl md:text-3xl; }
 }
 
 .hero-overlay {
-  @apply absolute inset-0 bg-gradient-to-r from-secondary-900/95 via-secondary-900/90 to-secondary-900/95;
+  @apply absolute inset-0 bg-gradient-to-r from-primary-500/95 via-primary-500/90 to-primary-500/95;
 }
 
 /* Premium Button Styles */
@@ -53,22 +53,22 @@ h3 { @apply text-2xl md:text-3xl; }
 }
 
 .btn-white {
-  @apply btn-premium bg-white text-secondary-900 hover:bg-gray-100;
+  @apply btn-premium bg-white text-primary-500 hover:bg-gray-100;
 }
 
 /* Luxury Card Styles */
 .card-premium {
-  @apply bg-secondary-800 border border-secondary-700 rounded-xl p-6 transition-all duration-300;
+  @apply bg-neutral-50 border border-accent-200 rounded-xl p-6 transition-all duration-300;
 }
 
 .card-premium:hover {
-  border-color: rgb(37 99 235 / 0.5);
-  box-shadow: 0 20px 25px -5px rgb(37 99 235 / 0.15);
-  background-color: rgb(30 41 59 / 0.8);
+  border-color: rgb(25 25 112 / 0.5);
+  box-shadow: 0 20px 25px -5px rgb(25 25 112 / 0.15);
+  background-color: rgb(248 249 250 / 0.8);
 }
 
 .card-glass {
-  @apply backdrop-blur-md bg-secondary-800/50 border border-white/10 rounded-xl p-6;
+  @apply backdrop-blur-md bg-white/50 border border-accent-200 rounded-xl p-6;
 }
 
 /* Accent Bar */
