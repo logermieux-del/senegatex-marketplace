@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { Card, Button, Alert } from '@/components/common';
+import { Card, Button, Alert, Textarea } from '@/components/common';
 
 interface Listing {
   id: string;
@@ -28,11 +29,19 @@ interface Listing {
 export default function ListingDetailPage() {
   const params = useParams();
   const id = params.id as string;
+  const router = useRouter();
+  const { data: session, status } = useSession();
 
   const [listing, setListing] = useState<Listing | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
+  const [contactOpen, setContactOpen] = useState(false);
+  const [messageBody, setMessageBody] = useState('');
+  const [sendingMessage, setSendingMessage] = useState(false);
+  const [messageError, setMessageError] = useState('');
+  const [messageSent, setMessageSent] = useState(false);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -81,6 +90,52 @@ export default function ListingDetailPage() {
   const formattedPrice = (listing.price / 100000).toLocaleString('fr-SN');
   const displayPhotos = listing.photos && listing.photos.length > 0 ? listing.photos : [];
   const currentPhoto = displayPhotos[currentPhotoIndex];
+  const isOwner = session?.user?.id === listing.user.id;
+
+  const handleBuyClick = () => {
+    if (status === 'unauthenticated') {
+      router.push(`/login?callbackUrl=${encodeURIComponent(`/checkout?listingId=${listing.id}`)}`);
+      return;
+    }
+    router.push(`/checkout?listingId=${listing.id}`);
+  };
+
+  const handleContactClick = () => {
+    if (status === 'unauthenticated') {
+      router.push(`/login?callbackUrl=${encodeURIComponent(`/listings/${listing.id}`)}`);
+      return;
+    }
+    setContactOpen(true);
+  };
+
+  const handleSendMessage = async () => {
+    setSendingMessage(true);
+    setMessageError('');
+    try {
+      const res = await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          toUserId: listing.user.id,
+          listingId: listing.id,
+          body: messageBody,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setMessageError(data.error || 'Failed to send message');
+        return;
+      }
+
+      setMessageSent(true);
+      setMessageBody('');
+    } catch (_) { // eslint-disable-line @typescript-eslint/no-unused-vars
+      setMessageError('Failed to send message');
+    } finally {
+      setSendingMessage(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
@@ -145,6 +200,11 @@ export default function ListingDetailPage() {
               <p className="text-3xl font-bold text-orange-500 mb-6">
                 {formattedPrice}k XOF
               </p>
+              {!isOwner && (
+                <Button className="w-full" onClick={handleBuyClick}>
+                  Acheter
+                </Button>
+              )}
             </div>
 
             {/* Description */}
@@ -176,9 +236,40 @@ export default function ListingDetailPage() {
                   )}
                 </div>
               </div>
-              <Button className="w-full" variant="outline">
-                💬 Contact Seller
-              </Button>
+              {isOwner ? (
+                <p className="text-sm text-gray-500 italic">C'est votre annonce</p>
+              ) : (
+                <>
+                  <Button className="w-full" variant="outline" onClick={handleContactClick}>
+                    💬 Contact Seller
+                  </Button>
+                  {contactOpen && (
+                    <div className="mt-4 space-y-3">
+                      {messageSent ? (
+                        <p className="text-sm text-green-600 font-medium">Message envoyé !</p>
+                      ) : (
+                        <>
+                          <Textarea
+                            value={messageBody}
+                            onChange={(e) => setMessageBody(e.target.value)}
+                            placeholder="Votre message au vendeur..."
+                            rows={4}
+                            error={messageError}
+                          />
+                          <Button
+                            className="w-full"
+                            onClick={handleSendMessage}
+                            isLoading={sendingMessage}
+                            disabled={!messageBody.trim()}
+                          >
+                            Envoyer
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
             </Card>
 
             {/* Stats */}

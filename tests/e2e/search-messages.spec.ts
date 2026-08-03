@@ -48,7 +48,9 @@ test.describe('Messages', () => {
 
   test('should display message list', async ({ page }) => {
     // The seed data creates one message from buyer@example.com to
-    // seller@example.com, so log in as the seller to see it.
+    // seller@example.com, so log in as the seller to see it. Other tests
+    // running in parallel may add further messages from the same buyer,
+    // hence .first() rather than a strict single-match locator.
     await page.goto(`${BASE_URL}/login`);
     await page.fill('input[type="email"]', 'seller@example.com');
     await page.fill('input[type="password"]', 'Password123');
@@ -57,23 +59,26 @@ test.describe('Messages', () => {
 
     await page.goto(`${BASE_URL}/messages`);
 
-    await expect(page.locator('text=From: Fatima Ba')).toBeVisible();
+    await expect(page.locator('text=From: Fatima Ba').first()).toBeVisible();
   });
 
-  // There is currently no compose/reply UI anywhere in the app: the
-  // "Contact Seller" button on the listing detail page has no onClick
-  // handler, and /messages is read-only. This is a real functional gap,
-  // not a selector issue — skipped until a compose flow is built.
-  test.skip('should send message from listing detail', async ({ page }) => {
+  test('should send message from listing detail', async ({ page, request }) => {
     await page.goto(`${BASE_URL}/login`);
     await page.fill('input[type="email"]', 'buyer@example.com');
     await page.fill('input[type="password"]', 'Password123');
     await page.click('button:has-text("Sign In")');
     await page.waitForURL(BASE_URL + '/');
 
-    await page.click('[data-testid="listing-card"]');
-    await page.click('button:has-text("Contact Seller")');
+    // Pick a listing not owned by the buyer (can't message yourself)
+    const res = await request.get(`${BASE_URL}/api/listings?limit=20`);
+    const data = await res.json();
+    const listing = data.data.find((l: { user: { name: string } }) => l.user.name !== 'Fatima Ba');
 
-    await expect(page.locator('text=message|contact|send')).toBeVisible();
+    await page.goto(`${BASE_URL}/listings/${listing.id}`);
+    await page.click('button:has-text("Contact Seller")');
+    await page.fill('textarea', 'Bonjour, est-ce toujours disponible ?');
+    await page.click('button:has-text("Envoyer")');
+
+    await expect(page.locator('text=Message envoyé')).toBeVisible();
   });
 });

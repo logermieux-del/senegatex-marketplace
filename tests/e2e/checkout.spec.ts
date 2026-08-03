@@ -2,10 +2,6 @@ import { test, expect } from '@playwright/test';
 
 const BASE_URL = 'http://localhost:3000';
 
-// NOTE: There is currently no "Buy Now" entry point anywhere in the UI
-// (the listing detail page only has a non-functional "Contact Seller" button).
-// The checkout page itself is real and reachable directly via
-// /checkout?listingId=<id>, so these tests exercise it that way.
 async function getFirstListingId(request: import('@playwright/test').APIRequestContext) {
   const res = await request.get(`${BASE_URL}/api/listings?limit=1`);
   const data = await res.json();
@@ -13,6 +9,22 @@ async function getFirstListingId(request: import('@playwright/test').APIRequestC
 }
 
 test.describe('Checkout & Payments', () => {
+  test('should navigate to checkout via the "Acheter" button', async ({ page, request }) => {
+    const listingId = await getFirstListingId(request);
+
+    await page.goto(`${BASE_URL}/login`);
+    await page.fill('input[type="email"]', 'buyer@example.com');
+    await page.fill('input[type="password"]', 'Password123');
+    await page.click('button:has-text("Sign In")');
+    await page.waitForURL(BASE_URL + '/');
+
+    await page.goto(`${BASE_URL}/listings/${listingId}`);
+    await page.click('button:has-text("Acheter")');
+
+    await expect(page).toHaveURL(new RegExp(`/checkout\\?listingId=${listingId}`));
+    await expect(page.locator('h2:has-text("Checkout")')).toBeVisible();
+  });
+
   test('should display checkout page with price breakdown', async ({ page, request }) => {
     const listingId = await getFirstListingId(request);
     await page.goto(`${BASE_URL}/checkout?listingId=${listingId}`);

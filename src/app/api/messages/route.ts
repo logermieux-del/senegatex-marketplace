@@ -78,13 +78,27 @@ export async function POST(request: NextRequest) {
         body: messageBody,
       },
       include: {
-        from: true,
-        to: true,
-        listing: true,
+        from: {
+          select: { id: true, name: true, avatar: true },
+        },
+        to: {
+          select: { id: true, name: true, avatar: true },
+        },
+        listing: {
+          select: { id: true, title: true },
+        },
       },
     });
 
-    return NextResponse.json(message, { status: 201 });
+    return NextResponse.json({
+      id: message.id,
+      body: message.body,
+      fromUser: message.from,
+      toUser: message.to,
+      listing: message.listing,
+      isRead: message.isRead,
+      createdAt: message.createdAt,
+    }, { status: 201 });
   } catch (error) {
     console.error('Create message error:', error);
 
