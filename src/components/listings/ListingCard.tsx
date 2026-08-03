@@ -33,7 +33,7 @@ export function ListingCard({
   const formattedPrice = (price / 100000).toLocaleString('fr-SN');
 
   return (
-    <Link href={`/listings/${id}`}>
+    <Link href={`/listings/${id}`} data-testid="listing-card">
       <div className="group bg-white rounded-xl border border-accent-200 overflow-hidden hover:border-primary-300 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
         {/* Image Container */}
         <div className="relative bg-neutral-100 overflow-hidden h-56">

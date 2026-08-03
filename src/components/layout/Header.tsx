@@ -39,12 +39,14 @@ export function Header({ searchQuery, onSearchQueryChange, selectedCity, onSelec
                   placeholder="Rechercher..."
                   value={searchQuery}
                   onChange={(e) => onSearchQueryChange(e.target.value)}
+                  data-testid="search-input"
                   className="bg-transparent flex-1 px-3 py-1 outline-none text-neutral-900 placeholder-accent-400 font-sans"
                 />
               </div>
               <select
                 value={selectedCity}
                 onChange={(e) => onSelectedCityChange(e.target.value)}
+                data-testid="city-select"
                 className="px-4 py-2 bg-neutral-50 border border-accent-300 rounded-lg text-neutral-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all hidden sm:block font-sans"
               >
                 <option value="">Toutes villes</option>
