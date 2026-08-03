@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Search, Plus } from 'lucide-react';
 import { HouseIcon } from '@/components/icons/CategoryIcons';
+import { Logo, LogoIcon } from '@/components/layout/Logo';
 
 const cities = ['Dakar', 'Thiès', 'Kaolack', 'Saint-Louis', 'Ziguinchor', 'Tambacounda'];
 
@@ -23,13 +24,9 @@ export function Header({ searchQuery, onSearchQueryChange, selectedCity, onSelec
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg font-display">Y</span>
-              </div>
-              <span className="text-xl font-bold text-primary-500 hidden sm:inline font-display">Yombal</span>
-            </div>
+          <Link href="/" className="flex-shrink-0 flex items-center">
+            <LogoIcon className="h-10 w-auto sm:hidden" />
+            <Logo className="h-11 w-auto hidden sm:block" />
           </Link>
 
           {/* Search Bar */}
