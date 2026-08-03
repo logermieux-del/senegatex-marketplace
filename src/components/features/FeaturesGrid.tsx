@@ -2,14 +2,14 @@
 
 import { IconBadge } from '@/components/icons/IconBadge';
 import {
-  AstronautIcon,
-  SpaceshipIcon,
-  TelescopeIcon,
-  RocketIcon,
-  UFOIcon,
-  PlanetIcon,
-  AlienIcon,
-  SatelliteDishIcon,
+  ShieldCheckIcon,
+  DeliveryBoxIcon,
+  QualityCheckIcon,
+  LiveBellIcon,
+  LightningIcon,
+  SmartphoneAppIcon,
+  MapPinIcon,
+  HeadsetIcon,
 } from '@/components/icons/CategoryIcons';
 
 interface Feature {
@@ -22,53 +22,53 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    id: 'astronaut',
+    id: 'trust',
     label: 'Vendeurs de Confiance',
     description: 'Des vendeurs vérifiés et fiables',
-    icon: AstronautIcon,
+    icon: ShieldCheckIcon,
   },
   {
-    id: 'spaceship',
+    id: 'delivery',
     label: 'Livraison Rapide',
     description: 'Partout au Sénégal',
-    icon: SpaceshipIcon,
+    icon: DeliveryBoxIcon,
   },
   {
-    id: 'telescope',
+    id: 'quality',
     label: 'Produits Vérifiés',
     description: 'Qualité garantie',
-    icon: TelescopeIcon,
+    icon: QualityCheckIcon,
   },
   {
-    id: 'satellite-dish',
+    id: 'live',
     label: 'En Direct',
     description: 'Annonces mises à jour en temps réel',
-    icon: SatelliteDishIcon,
+    icon: LiveBellIcon,
     variant: 'accent',
   },
   {
-    id: 'rocket',
+    id: 'speed',
     label: 'Service Rapide',
     description: 'Réponse instantanée',
-    icon: RocketIcon,
+    icon: LightningIcon,
   },
   {
-    id: 'ufo',
+    id: 'app',
     label: 'Technologie Innovante',
     description: 'Plateforme moderne',
-    icon: UFOIcon,
+    icon: SmartphoneAppIcon,
   },
   {
-    id: 'planet',
+    id: 'local',
     label: 'Communauté Locale',
     description: 'Connectez-vous localement',
-    icon: PlanetIcon,
+    icon: MapPinIcon,
   },
   {
-    id: 'alien',
+    id: 'support',
     label: 'Support Unique',
     description: 'Assistance 24/7',
-    icon: AlienIcon,
+    icon: HeadsetIcon,
   },
 ];
 
