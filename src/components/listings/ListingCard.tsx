@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { Eye, Heart } from 'lucide-react';
 import { useState } from 'react';
+import { IconBadge } from '@/components/icons/IconBadge';
+import { PinIcon, PhotoIcon } from '@/components/icons/CategoryIcons';
 
 interface ListingCardProps {
   id: string;
@@ -42,7 +44,9 @@ export function ListingCard({
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-accent-100 to-neutral-100 flex items-center justify-center">
-              <span className="text-5xl">📦</span>
+              <IconBadge size={64}>
+                <PhotoIcon className="w-8 h-8" />
+              </IconBadge>
             </div>
           )}
 
@@ -53,10 +57,8 @@ export function ListingCard({
                 e.preventDefault();
                 setIsFavorite(!isFavorite);
               }}
-              className={`p-3 rounded-full transition-all ${
-                isFavorite
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-white text-accent-600 hover:text-orange-500'
+              className={`rounded-full transition-all ${
+                isFavorite ? 'bg-orange-500 text-white p-3' : 'icon-badge text-accent-600 hover:text-orange-500 p-3'
               }`}
             >
               <Heart className="w-5 h-5" fill={isFavorite ? 'currentColor' : 'none'} />
@@ -81,8 +83,8 @@ export function ListingCard({
           </p>
 
           {/* Location */}
-          <div className="flex items-center gap-2 text-xs text-accent-600 mb-4 font-sans">
-            <span>📍</span>
+          <div className="flex items-center gap-1.5 text-xs text-accent-600 mb-4 font-sans">
+            <PinIcon className="w-3.5 h-3.5 flex-shrink-0" />
             <span>{city}</span>
           </div>
 

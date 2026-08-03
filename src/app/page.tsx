@@ -5,6 +5,8 @@ import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { ListingCard } from '@/components/listings/ListingCard';
 import { FeaturesGrid } from '@/components/features/FeaturesGrid';
+import { IconBadge } from '@/components/icons/IconBadge';
+import { EmptyBoxIcon } from '@/components/icons/CategoryIcons';
 
 interface Listing {
   id: string;
@@ -121,7 +123,9 @@ export default function Home() {
             ) : listings.length === 0 ? (
               <div className="flex items-center justify-center py-24">
                 <div className="text-center">
-                  <p className="text-3xl mb-4">📭</p>
+                  <IconBadge size={72} className="mx-auto mb-4">
+                    <EmptyBoxIcon className="w-9 h-9" />
+                  </IconBadge>
                   <p className="text-xl text-accent-600 font-medium font-sans">Aucune annonce trouvée</p>
                   <p className="text-accent-500 mt-2 font-sans">Essayez d'autres filtres ou catégories</p>
                 </div>

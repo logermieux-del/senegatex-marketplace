@@ -1,5 +1,6 @@
 'use client';
 
+import { IconBadge } from '@/components/icons/IconBadge';
 import {
   AllCategoriesIcon,
   ElectronicsIcon,
@@ -43,9 +44,9 @@ export function Sidebar({ selectedCategory, onCategoryChange }: SidebarProps) {
                   : 'text-accent-600 hover:bg-white hover:text-primary-500'
               }`}
             >
-              <div className={`flex-shrink-0 flex items-center justify-center ${isActive ? 'text-primary-700' : 'text-accent-600'}`}>
+              <IconBadge size={40}>
                 <Icon className="w-5 h-5" />
-              </div>
+              </IconBadge>
               <span>{category.label}</span>
             </button>
           );

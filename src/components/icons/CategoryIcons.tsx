@@ -143,3 +143,28 @@ export const HeadsetIcon = ({ className = 'w-9 h-9' }: IconProps) => (
     <path d="M51 46v2a6 6 0 0 1-6 6h-5" />
   </svg>
 );
+
+/* ---------- Small inline icons ---------- */
+
+export const PinIcon = ({ className = 'w-4 h-4' }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M32 8c-9 0-16 7-16 16 0 12 16 32 16 32s16-20 16-32c0-9-7-16-16-16z" />
+    <circle cx="32" cy="24" r="6" />
+  </svg>
+);
+
+export const PhotoIcon = ({ className = 'w-9 h-9' }: IconProps) => (
+  <svg {...base} className={className}>
+    <rect x="10" y="14" width="44" height="36" rx="3" />
+    <circle cx="23" cy="26" r="4.5" />
+    <path d="M10 42l13-13 10 10 8-8 13 13" />
+  </svg>
+);
+
+export const EmptyBoxIcon = ({ className = 'w-9 h-9' }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M10 24l22-10 22 10-22 10z" />
+    <path d="M10 24v18l22 10 22-10V24" />
+    <path d="M32 34v18" />
+  </svg>
+);
