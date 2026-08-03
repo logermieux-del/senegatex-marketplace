@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { ListingCard } from '@/components/listings/ListingCard';
+import { FeaturesGrid } from '@/components/features/FeaturesGrid';
 
 interface Listing {
   id: string;
@@ -163,6 +164,9 @@ export default function Home() {
             )}
           </main>
         </div>
+
+        {/* Features Section */}
+        <FeaturesGrid />
       </div>
     </>
   );

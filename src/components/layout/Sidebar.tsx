@@ -1,6 +1,13 @@
 'use client';
 
-import { Smartphone, Armchair, Car, Shirt, Briefcase, MoreHorizontal } from 'lucide-react';
+import {
+  AllCategoriesIcon,
+  ElectronicsIcon,
+  FurnitureIcon,
+  VehiclesIcon,
+  ClothingIcon,
+  ServicesIcon,
+} from '@/components/icons/CategoryIcons';
 
 interface SidebarProps {
   selectedCategory: string;
@@ -8,12 +15,12 @@ interface SidebarProps {
 }
 
 const categories = [
-  { id: '', label: 'Toutes les catégories', icon: MoreHorizontal },
-  { id: 'electronics', label: 'Électronique', icon: Smartphone },
-  { id: 'furniture', label: 'Meubles', icon: Armchair },
-  { id: 'vehicles', label: 'Véhicules', icon: Car },
-  { id: 'clothing', label: 'Vêtements', icon: Shirt },
-  { id: 'services', label: 'Services', icon: Briefcase },
+  { id: '', label: 'Toutes les catégories', icon: AllCategoriesIcon },
+  { id: 'electronics', label: 'Électronique', icon: ElectronicsIcon },
+  { id: 'furniture', label: 'Meubles', icon: FurnitureIcon },
+  { id: 'vehicles', label: 'Véhicules', icon: VehiclesIcon },
+  { id: 'clothing', label: 'Vêtements', icon: ClothingIcon },
+  { id: 'services', label: 'Services', icon: ServicesIcon },
 ];
 
 export function Sidebar({ selectedCategory, onCategoryChange }: SidebarProps) {
@@ -36,7 +43,9 @@ export function Sidebar({ selectedCategory, onCategoryChange }: SidebarProps) {
                   : 'text-accent-600 hover:bg-white hover:text-primary-500'
               }`}
             >
-              <Icon className="w-5 h-5 flex-shrink-0" />
+              <div className={`w-5 h-5 flex-shrink-0 flex items-center justify-center ${isActive ? 'text-primary-700' : 'text-accent-600'}`}>
+                <Icon />
+              </div>
               <span>{category.label}</span>
             </button>
           );
