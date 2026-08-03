@@ -68,6 +68,11 @@ model Listing {
   latitude      Float?
   longitude     Float?
 
+  // Real estate only (category = "immobilier")
+  transactionType String?  // LOCATION, ACHAT, VENTE
+  propertyType    String?  // BATI, NON_BATI
+  surfaceM2       Float?
+
   photos        String? // JSON array as string
   thumbnail     String?
 

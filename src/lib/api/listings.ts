@@ -9,6 +9,8 @@ interface ListingFilters {
   minPrice?: number;
   maxPrice?: number;
   q?: string;
+  transactionType?: string;
+  propertyType?: string;
 }
 
 export async function getListings(page: number = 1, limit: number = 10, filters?: ListingFilters) {
@@ -20,6 +22,8 @@ export async function getListings(page: number = 1, limit: number = 10, filters?
     ...(filters?.category && { category: filters.category }),
     ...(filters?.minPrice && { price: { gte: filters.minPrice } }),
     ...(filters?.maxPrice && { price: { lte: filters.maxPrice } }),
+    ...(filters?.transactionType && { transactionType: filters.transactionType }),
+    ...(filters?.propertyType && { propertyType: filters.propertyType }),
     ...(filters?.q && {
       OR: [
         { title: { contains: filters.q, mode: 'insensitive' } },

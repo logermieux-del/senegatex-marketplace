@@ -156,6 +156,75 @@ async function main() {
     },
   });
 
+  // Immobilier listings
+  await prisma.listing.create({
+    data: {
+      userId: seller.id,
+      title: 'Appartement 3 pièces meublé',
+      description: 'Bel appartement meublé, proche des commodités, idéal pour famille ou expatrié.',
+      category: 'immobilier',
+      transactionType: 'location',
+      propertyType: 'bati',
+      surfaceM2: 85,
+      price: 35000000, // 350,000 XOF / mois
+      city: 'Dakar',
+      region: 'Almadies',
+      photos: JSON.stringify(['https://res.cloudinary.com/example/immo1.jpg']),
+      thumbnail: 'https://res.cloudinary.com/example/immo1.jpg',
+    },
+  });
+
+  await prisma.listing.create({
+    data: {
+      userId: seller.id,
+      title: 'Villa 5 chambres avec piscine',
+      description: 'Belle villa moderne avec piscine et jardin, quartier résidentiel calme.',
+      category: 'immobilier',
+      transactionType: 'vente',
+      propertyType: 'bati',
+      surfaceM2: 320,
+      price: 2000000000, // 20,000,000 XOF
+      city: 'Dakar',
+      region: 'Ngor',
+      photos: JSON.stringify(['https://res.cloudinary.com/example/immo2.jpg']),
+      thumbnail: 'https://res.cloudinary.com/example/immo2.jpg',
+    },
+  });
+
+  await prisma.listing.create({
+    data: {
+      userId: buyer.id,
+      title: 'Terrain nu 500m² titré',
+      description: 'Terrain non bâti, titre foncier disponible, viabilisé, proche route nationale.',
+      category: 'immobilier',
+      transactionType: 'achat',
+      propertyType: 'non_bati',
+      surfaceM2: 500,
+      price: 800000000, // 8,000,000 XOF
+      city: 'Thiès',
+      region: 'Thiès Nord',
+      photos: JSON.stringify(['https://res.cloudinary.com/example/immo3.jpg']),
+      thumbnail: 'https://res.cloudinary.com/example/immo3.jpg',
+    },
+  });
+
+  await prisma.listing.create({
+    data: {
+      userId: seller.id,
+      title: 'Studio à louer proche université',
+      description: 'Petit studio calme et lumineux, idéal étudiant, à 5 min de l\'université.',
+      category: 'immobilier',
+      transactionType: 'location',
+      propertyType: 'bati',
+      surfaceM2: 28,
+      price: 8000000, // 80,000 XOF / mois
+      city: 'Saint-Louis',
+      region: 'Sor',
+      photos: JSON.stringify(['https://res.cloudinary.com/example/immo4.jpg']),
+      thumbnail: 'https://res.cloudinary.com/example/immo4.jpg',
+    },
+  });
+
   // Create a message
   await prisma.message.create({
     data: {

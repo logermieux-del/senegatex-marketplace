@@ -1,7 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Search, Plus } from 'lucide-react';
+import { HouseIcon } from '@/components/icons/CategoryIcons';
 
 const cities = ['Dakar', 'Thiès', 'Kaolack', 'Saint-Louis', 'Ziguinchor', 'Tambacounda'];
 
@@ -13,6 +15,9 @@ interface HeaderProps {
 }
 
 export function Header({ searchQuery, onSearchQueryChange, selectedCity, onSelectedCityChange }: HeaderProps) {
+  const pathname = usePathname();
+  const isImmobilier = pathname?.startsWith('/immobilier');
+
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-accent-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
@@ -72,6 +77,25 @@ export function Header({ searchQuery, onSearchQueryChange, selectedCity, onSelec
               S'inscrire
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* Secondary nav tabs */}
+      <div className="border-t border-accent-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <nav className="flex gap-1">
+            <Link
+              href="/immobilier"
+              className={`flex items-center gap-2 px-3 py-2 text-sm font-medium font-sans border-b-2 transition-colors ${
+                isImmobilier
+                  ? 'border-primary-500 text-primary-500'
+                  : 'border-transparent text-accent-600 hover:text-primary-500'
+              }`}
+            >
+              <HouseIcon className="w-4 h-4" />
+              Immobilier
+            </Link>
+          </nav>
         </div>
       </div>
     </header>

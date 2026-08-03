@@ -14,6 +14,8 @@ export async function GET(request: NextRequest) {
       minPrice: searchParams.get('minPrice') ? parseInt(searchParams.get('minPrice')!) : undefined,
       maxPrice: searchParams.get('maxPrice') ? parseInt(searchParams.get('maxPrice')!) : undefined,
       q: searchParams.get('q') || undefined,
+      transactionType: searchParams.get('transactionType') || undefined,
+      propertyType: searchParams.get('propertyType') || undefined,
     };
 
     const result = await getListings(page, Math.min(limit, 50), filters);

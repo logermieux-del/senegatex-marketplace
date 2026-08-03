@@ -73,6 +73,23 @@ export const AllCategoriesIcon = ({ className = 'w-7 h-7' }: IconProps) => (
   </svg>
 );
 
+export const HouseIcon = ({ className = 'w-7 h-7' }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M12 30L32 13l20 17" />
+    <path d="M17 26v22h30V26" />
+    <rect x="27" y="35" width="10" height="13" />
+    <line x1="22" y1="34" x2="22" y2="34" />
+  </svg>
+);
+
+export const LandPlotIcon = ({ className = 'w-7 h-7' }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M10 20l14-6 12 6 18-7v30l-18 7-12-6-14 6z" />
+    <path d="M24 14v30" />
+    <path d="M36 20v30" />
+  </svg>
+);
+
 /* ---------- Marketplace trust & service icons ---------- */
 
 export const ShieldCheckIcon = ({ className = 'w-9 h-9' }: IconProps) => (
