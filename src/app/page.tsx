@@ -80,15 +80,15 @@ export default function Home() {
           <main className="flex-1">
             {/* Category Tabs */}
             <div className="mb-8">
-              <div className="flex gap-2 overflow-x-auto pb-4 border-b border-neutral-200">
+              <div className="flex gap-2 overflow-x-auto pb-4 border-b border-accent-200">
                 {['', 'electronics', 'furniture', 'vehicles', 'clothing', 'services'].map((cat) => (
                   <button
                     key={cat || 'all'}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all ${
+                    className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all font-sans ${
                       selectedCategory === cat
                         ? 'bg-primary-500 text-white'
-                        : 'bg-white text-neutral-700 border border-neutral-200 hover:border-primary-300'
+                        : 'bg-white text-accent-600 border border-accent-200 hover:border-primary-300 hover:text-primary-500'
                     }`}
                   >
                     {cat === '' ? 'Toutes' : cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -99,11 +99,11 @@ export default function Home() {
 
             {/* Results Header */}
             <div className="mb-6">
-              <h1 className="text-3xl font-bold text-neutral-900">
+              <h1 className="text-3xl font-bold text-primary-500 font-display">
                 {selectedCategory ? selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) : 'Toutes les annonces'}
               </h1>
               {pagination && (
-                <p className="text-neutral-600 mt-2">
+                <p className="text-accent-600 mt-2 font-sans">
                   {pagination.total} annonce{pagination.total > 1 ? 's' : ''} trouvée{pagination.total > 1 ? 's' : ''}
                 </p>
               )}
@@ -113,16 +113,16 @@ export default function Home() {
             {loading ? (
               <div className="flex items-center justify-center py-24">
                 <div className="text-center">
-                  <div className="w-12 h-12 rounded-full border-4 border-neutral-200 border-t-primary-500 animate-spin mx-auto mb-4"></div>
-                  <p className="text-neutral-600">Chargement des annonces...</p>
+                  <div className="w-12 h-12 rounded-full border-4 border-accent-200 border-t-primary-500 animate-spin mx-auto mb-4"></div>
+                  <p className="text-accent-600 font-sans">Chargement des annonces...</p>
                 </div>
               </div>
             ) : listings.length === 0 ? (
               <div className="flex items-center justify-center py-24">
                 <div className="text-center">
                   <p className="text-3xl mb-4">📭</p>
-                  <p className="text-xl text-neutral-600 font-medium">Aucune annonce trouvée</p>
-                  <p className="text-neutral-500 mt-2">Essayez d'autres filtres ou catégories</p>
+                  <p className="text-xl text-accent-600 font-medium font-sans">Aucune annonce trouvée</p>
+                  <p className="text-accent-500 mt-2 font-sans">Essayez d'autres filtres ou catégories</p>
                 </div>
               </div>
             ) : (
@@ -148,10 +148,10 @@ export default function Home() {
                     {Array.from({ length: pagination.pages }).map((_, i) => (
                       <button
                         key={i + 1}
-                        className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                        className={`px-4 py-2 rounded-lg font-medium transition-all font-sans ${
                           pagination.page === i + 1
                             ? 'bg-primary-500 text-white'
-                            : 'bg-white text-neutral-700 border border-neutral-200 hover:border-primary-300'
+                            : 'bg-white text-accent-600 border border-accent-200 hover:border-primary-300 hover:text-primary-500'
                         }`}
                       >
                         {i + 1}

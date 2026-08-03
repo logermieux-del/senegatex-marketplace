@@ -9,59 +9,59 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Barlow', 'var(--font-sans)', ...defaultTheme.fontFamily.sans],
-        display: ['Barlow Condensed', 'Barlow', ...defaultTheme.fontFamily.sans],
+        sans: ['Open Sans', 'var(--font-sans)', ...defaultTheme.fontFamily.sans],
+        display: ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         serif: ['Georgia', 'Garamond', 'serif'],
       },
       colors: {
-        // Marketplace Local Senegal: Green + Ocean Blue + Warm Orange
+        // Midnight Blue + Slategray Professional Palette
         primary: {
+          50: '#f5f7fb',
+          100: '#e8ecf5',
+          200: '#c9d5e8',
+          300: '#a9bdd8',
+          400: '#5a7fa8',
+          500: '#191970', // Midnight Blue
+          600: '#151562',
+          700: '#11104d',
+          800: '#0d0c39',
+          900: '#09082a',
+        },
+        accent: {
+          50: '#f6f9fc',
+          100: '#eef5f8',
+          200: '#d4e5ee',
+          300: '#b9d5e3',
+          400: '#8ab5ce',
+          500: '#708090', // Slategray
+          600: '#64747b',
+          700: '#525860',
+          800: '#414549',
+          900: '#2d3032',
+        },
+        success: {
           50: '#f0fdf4',
           100: '#dcfce7',
           200: '#bbf7d0',
           300: '#86efac',
           400: '#4ade80',
-          500: '#22c55e',
+          500: '#22c55e', // Keep green for "Vendre" CTA
           600: '#16a34a',
           700: '#15803d',
           800: '#166534',
           900: '#145231',
         },
-        accent: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9', // Ocean blue
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c2d6b',
-        },
-        orange: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          200: '#fed7aa',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#f97316', // Warm orange accent
-          600: '#ea580c',
-          700: '#c2410c',
-          800: '#9a3412',
-          900: '#7c2d12',
-        },
         neutral: {
-          50: '#fafafa',
-          100: '#f5f5f5',
-          200: '#e5e5e5',
-          300: '#d4d4d4',
-          400: '#a3a3a3',
-          500: '#737373',
-          600: '#525252',
-          700: '#404040',
-          800: '#262626',
-          900: '#171717',
+          50: '#f8f9fa',
+          100: '#f0f2f5',
+          200: '#e1e5eb',
+          300: '#d1d8e0',
+          400: '#8c95a0',
+          500: '#65717c',
+          600: '#525866',
+          700: '#3d4452',
+          800: '#2d3139',
+          900: '#1a1d23',
         },
       },
       fontSize: {

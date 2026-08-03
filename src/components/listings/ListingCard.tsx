@@ -31,7 +31,7 @@ export function ListingCard({
 
   return (
     <Link href={`/listings/${id}`}>
-      <div className="group bg-white rounded-xl border border-neutral-200 overflow-hidden hover:border-primary-300 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+      <div className="group bg-white rounded-xl border border-accent-200 overflow-hidden hover:border-primary-300 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
         {/* Image Container */}
         <div className="relative bg-neutral-100 overflow-hidden h-56">
           {thumbnail ? (
@@ -41,7 +41,7 @@ export function ListingCard({
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-100 flex items-center justify-center">
+            <div className="w-full h-full bg-gradient-to-br from-accent-100 to-neutral-100 flex items-center justify-center">
               <span className="text-5xl">📦</span>
             </div>
           )}
@@ -56,7 +56,7 @@ export function ListingCard({
               className={`p-3 rounded-full transition-all ${
                 isFavorite
                   ? 'bg-orange-500 text-white'
-                  : 'bg-white text-neutral-600 hover:text-orange-500'
+                  : 'bg-white text-accent-600 hover:text-orange-500'
               }`}
             >
               <Heart className="w-5 h-5" fill={isFavorite ? 'currentColor' : 'none'} />
@@ -64,32 +64,32 @@ export function ListingCard({
           </div>
 
           {/* New Badge */}
-          <div className="absolute top-3 right-3 bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+          <div className="absolute top-3 right-3 bg-success-500 text-white px-3 py-1 rounded-full text-xs font-bold font-sans">
             NOUVEAU
           </div>
         </div>
 
         {/* Content */}
         <div className="flex-1 p-4 flex flex-col">
-          <h3 className="font-bold text-neutral-900 line-clamp-2 mb-3 text-sm group-hover:text-primary-600 transition-colors">
+          <h3 className="font-bold text-neutral-900 line-clamp-2 mb-3 text-sm group-hover:text-primary-600 transition-colors font-sans">
             {title}
           </h3>
 
           {/* Price - Highlight */}
-          <p className="text-2xl font-bold text-primary-600 mb-3">
-            {formattedPrice}k <span className="text-xs text-neutral-500 font-normal">XOF</span>
+          <p className="text-2xl font-bold text-success-500 mb-3 font-sans">
+            {formattedPrice}k <span className="text-xs text-accent-500 font-normal">XOF</span>
           </p>
 
           {/* Location */}
-          <div className="flex items-center gap-2 text-xs text-neutral-600 mb-4">
+          <div className="flex items-center gap-2 text-xs text-accent-600 mb-4 font-sans">
             <span>📍</span>
             <span>{city}</span>
           </div>
 
           {/* Seller Info */}
-          <div className="pt-3 border-t border-neutral-200">
+          <div className="pt-3 border-t border-accent-200">
             {seller && (
-              <div className="flex items-center gap-2 text-xs">
+              <div className="flex items-center gap-2 text-xs font-sans">
                 {seller.avatar ? (
                   <img
                     src={seller.avatar}
@@ -97,7 +97,7 @@ export function ListingCard({
                     className="w-7 h-7 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="w-7 h-7 rounded-full bg-primary-200 flex items-center justify-center text-xs font-bold text-primary-700">
+                  <div className="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center text-xs font-bold text-primary-700">
                     {seller.name[0]}
                   </div>
                 )}
@@ -107,7 +107,7 @@ export function ListingCard({
 
             {/* View Count */}
             {viewCount > 0 && (
-              <div className="flex items-center gap-1 text-xs text-neutral-500 mt-2">
+              <div className="flex items-center gap-1 text-xs text-accent-500 mt-2 font-sans">
                 <Eye className="w-3 h-3" />
                 <span>{viewCount}</span>
               </div>
