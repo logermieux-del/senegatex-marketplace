@@ -43,7 +43,7 @@ test.describe('Messages', () => {
     await page.waitForURL(BASE_URL + '/');
 
     await page.goto(`${BASE_URL}/messages`);
-    await expect(page.locator('h1:has-text("Your Messages")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Vos messages")')).toBeVisible();
   });
 
   test('should display message list', async ({ page }) => {
@@ -59,7 +59,7 @@ test.describe('Messages', () => {
 
     await page.goto(`${BASE_URL}/messages`);
 
-    await expect(page.locator('text=From: Fatima Ba').first()).toBeVisible();
+    await expect(page.locator('text=De : Fatima Ba').first()).toBeVisible();
   });
 
   test('should send message from listing detail', async ({ page, request }) => {
@@ -75,7 +75,7 @@ test.describe('Messages', () => {
     const listing = data.data.find((l: { user: { name: string } }) => l.user.name !== 'Fatima Ba');
 
     await page.goto(`${BASE_URL}/listings/${listing.id}`);
-    await page.click('button:has-text("Contact Seller")');
+    await page.click('button:has-text("Contacter le vendeur")');
     await page.fill('textarea', 'Bonjour, est-ce toujours disponible ?');
     await page.click('button:has-text("Envoyer")');
 

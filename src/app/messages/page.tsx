@@ -1,94 +1,114 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { Header } from '@/components/layout/Header';
+import { IconBadge } from '@/components/icons/IconBadge';
+import { EmptyBoxIcon } from '@/components/icons/CategoryIcons';
 
-interface Message {
+interface MessageItem {
   id: string;
   body: string;
-  fromUser: { name: string };
-  toUser: { name: string };
-  listing?: { title: string };
+  fromUser: { id: string; name: string; avatar?: string };
+  toUser: { id: string; name: string };
+  listing?: { id: string; title: string };
   isRead: boolean;
   createdAt: string;
 }
 
 export default function MessagesPage() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const router = useRouter();
+  const { status } = useSession();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [messages, setMessages] = useState<MessageItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchMessages() {
-      try {
-        const res = await fetch('/api/messages');
-        if (!res.ok) throw new Error('Failed to fetch messages');
-        const data = await res.json();
-        setMessages(data.data || []);
-      } catch (err) {
-        console.error('Error fetching messages:', err);
-      } finally {
-        setLoading(false);
-      }
+    if (status === 'unauthenticated') {
+      router.push('/login?callbackUrl=/messages');
     }
+  }, [status, router]);
 
-    fetchMessages();
-  }, []);
+  useEffect(() => {
+    if (status !== 'authenticated') return;
+    fetch('/api/messages')
+      .then((res) => res.json())
+      .then((data) => setMessages(data.data || []))
+      .catch(() => setMessages([]))
+      .finally(() => setLoading(false));
+  }, [status]);
 
-  if (loading) {
+  if (status === 'loading' || status === 'unauthenticated') {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div>Loading messages...</div>
+      <div className="min-h-screen flex items-center justify-center bg-neutral-50">
+        <div className="w-10 h-10 rounded-full border-4 border-accent-200 border-t-primary-500 animate-spin" />
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b">
-        <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-orange-500">
-            Yombal
-          </Link>
-          <div className="flex gap-4">
-            <Link href="/login" className="text-gray-700">Login</Link>
-            <Link href="/signup" className="bg-orange-500 text-white px-4 py-2 rounded">Sign Up</Link>
+    <>
+      <Header
+        searchQuery={searchQuery}
+        onSearchQueryChange={setSearchQuery}
+        selectedCity={selectedCity}
+        onSelectedCityChange={setSelectedCity}
+      />
+      <div className="min-h-screen bg-neutral-50">
+        <main className="max-w-3xl mx-auto px-4 py-8">
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-primary-500 font-display">Vos messages</h1>
+            <p className="text-accent-600 mt-2 font-sans">Vos échanges avec les acheteurs et vendeurs</p>
           </div>
-        </nav>
-      </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Your Messages</h1>
-
-        {messages.length === 0 ? (
-          <div className="bg-white rounded-lg p-8 text-center">
-            <p className="text-gray-600 mb-4">No messages yet</p>
-            <Link href="/" className="text-orange-500 hover:underline">
-              Browse listings
-            </Link>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {messages.map((msg) => (
-              <div key={msg.id} className="bg-white p-4 rounded-lg border hover:border-orange-300">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <p className="font-semibold">
-                      {msg.isRead ? '✓' : '●'} From: {msg.fromUser.name}
-                    </p>
-                    {msg.listing && (
-                      <p className="text-sm text-gray-600">About: {msg.listing.title}</p>
-                    )}
+          {loading ? (
+            <div className="flex items-center justify-center py-24">
+              <div className="w-10 h-10 rounded-full border-4 border-accent-200 border-t-primary-500 animate-spin" />
+            </div>
+          ) : messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-24 text-center">
+              <IconBadge size={72} className="mb-4">
+                <EmptyBoxIcon className="w-9 h-9" />
+              </IconBadge>
+              <p className="text-xl text-accent-600 font-medium font-sans">Aucun message</p>
+              <p className="text-accent-500 mt-2 font-sans">
+                Vos échanges avec acheteurs et vendeurs apparaîtront ici
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className="bg-white rounded-xl border border-accent-200 p-5 hover:border-primary-300 hover:shadow-md transition-all"
+                >
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                          msg.isRead ? 'bg-accent-300' : 'bg-success-500'
+                        }`}
+                      />
+                      <p className="font-semibold text-neutral-900 font-sans">De : {msg.fromUser.name}</p>
+                    </div>
+                    <span className="text-xs text-accent-500 font-sans flex-shrink-0">
+                      {new Date(msg.createdAt).toLocaleDateString('fr-SN')}
+                    </span>
                   </div>
-                  <span className="text-xs text-gray-500">
-                    {new Date(msg.createdAt).toLocaleDateString()}
-                  </span>
+                  {msg.listing && (
+                    <p className="text-sm text-accent-600 mb-2 font-sans">
+                      À propos de : {msg.listing.title}
+                    </p>
+                  )}
+                  <p className="text-neutral-700 font-sans">{msg.body}</p>
                 </div>
-                <p className="text-gray-700">{msg.body}</p>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </main>
       </div>
-    </main>
+    </>
   );
 }
