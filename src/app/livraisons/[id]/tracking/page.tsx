@@ -78,7 +78,7 @@ const STATUT_LABELS: Record<string, string> = {
 };
 
 const STATUT_COLORS: Record<string, string> = {
-  PENDING: 'bg-gray-100 text-gray-800',
+  PENDING: 'bg-accent-100 text-accent-800',
   ACCEPTED: 'bg-blue-100 text-blue-800',
   PICKED_UP: 'bg-blue-100 text-blue-800',
   IN_TRANSIT: 'bg-yellow-100 text-yellow-800',
@@ -134,7 +134,7 @@ export default function LivraisonTrackingPage() {
 
   if (!livraison) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-neutral-50 py-12 px-4">
         <div className="max-w-4xl mx-auto">
           <Alert type="error">
             Delivery not found. Please check the link and try again.
@@ -145,7 +145,7 @@ export default function LivraisonTrackingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <div className="max-w-4xl mx-auto space-y-6">
         {error && <Alert type="error">{error}</Alert>}
 
@@ -156,7 +156,7 @@ export default function LivraisonTrackingPage() {
               <h1 className="text-3xl font-bold">Delivery Tracking</h1>
               <div
                 className={`px-4 py-2 rounded-full font-semibold ${
-                  STATUT_COLORS[livraison.statut] || 'bg-gray-100'
+                  STATUT_COLORS[livraison.statut] || 'bg-accent-100'
                 }`}
               >
                 {STATUT_LABELS[livraison.statut] || livraison.statut}
@@ -171,10 +171,10 @@ export default function LivraisonTrackingPage() {
               <div className="space-y-3">
                 {livraison.timeline.createdAt && (
                   <div className="flex gap-4">
-                    <div className="text-sm font-medium text-gray-600 w-24">
+                    <div className="text-sm font-medium text-accent-600 w-24">
                       Created
                     </div>
-                    <div className="text-sm text-gray-800">
+                    <div className="text-sm text-accent-800">
                       {new Date(livraison.timeline.createdAt).toLocaleString()}
                     </div>
                   </div>
@@ -182,10 +182,10 @@ export default function LivraisonTrackingPage() {
 
                 {livraison.timeline.datePrise && (
                   <div className="flex gap-4">
-                    <div className="text-sm font-medium text-gray-600 w-24">
+                    <div className="text-sm font-medium text-accent-600 w-24">
                       Picked Up
                     </div>
-                    <div className="text-sm text-gray-800">
+                    <div className="text-sm text-accent-800">
                       {new Date(livraison.timeline.datePrise).toLocaleString()}
                     </div>
                   </div>
@@ -193,10 +193,10 @@ export default function LivraisonTrackingPage() {
 
                 {livraison.timeline.dateEstimeeArrivee && (
                   <div className="flex gap-4">
-                    <div className="text-sm font-medium text-gray-600 w-24">
+                    <div className="text-sm font-medium text-accent-600 w-24">
                       Est. Arrival
                     </div>
-                    <div className="text-sm text-gray-800">
+                    <div className="text-sm text-accent-800">
                       {new Date(
                         livraison.timeline.dateEstimeeArrivee
                       ).toLocaleString()}
@@ -206,10 +206,10 @@ export default function LivraisonTrackingPage() {
 
                 {livraison.timeline.dateArriveeReelle && (
                   <div className="flex gap-4">
-                    <div className="text-sm font-medium text-gray-600 w-24">
+                    <div className="text-sm font-medium text-accent-600 w-24">
                       Delivered
                     </div>
-                    <div className="text-sm text-gray-800">
+                    <div className="text-sm text-accent-800">
                       {new Date(
                         livraison.timeline.dateArriveeReelle
                       ).toLocaleString()}
@@ -223,13 +223,13 @@ export default function LivraisonTrackingPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <h3 className="font-semibold mb-2">From</h3>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-accent-700">
                   {livraison.adresseDepart.region}
                   {livraison.adresseDepart.arrondissement &&
                     `, ${livraison.adresseDepart.arrondissement}`}
                 </p>
                 {livraison.adresseDepart.lat && livraison.adresseDepart.lng && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-accent-500">
                     {livraison.adresseDepart.lat.toFixed(4)},
                     {livraison.adresseDepart.lng.toFixed(4)}
                   </p>
@@ -237,13 +237,13 @@ export default function LivraisonTrackingPage() {
               </div>
               <div>
                 <h3 className="font-semibold mb-2">To</h3>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-accent-700">
                   {livraison.adresseArrivee.region}
                   {livraison.adresseArrivee.arrondissement &&
                     `, ${livraison.adresseArrivee.arrondissement}`}
                 </p>
                 {livraison.adresseArrivee.lat && livraison.adresseArrivee.lng && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-accent-500">
                     {livraison.adresseArrivee.lat.toFixed(4)},
                     {livraison.adresseArrivee.lng.toFixed(4)}
                   </p>
@@ -255,10 +255,10 @@ export default function LivraisonTrackingPage() {
             {livraison.gps && (
               <div className="bg-blue-50 border border-blue-200 rounded p-4">
                 <h3 className="font-semibold mb-2">Current Location</h3>
-                <p className="text-sm text-gray-800">
+                <p className="text-sm text-accent-800">
                   {livraison.gps.lat.toFixed(4)}, {livraison.gps.lng.toFixed(4)}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-accent-500 mt-1">
                   Last update:{' '}
                   {new Date(livraison.gps.timestamp).toLocaleTimeString()}
                 </p>
@@ -283,14 +283,14 @@ export default function LivraisonTrackingPage() {
               )}
               <div className="flex-1">
                 <h3 className="font-semibold">{livraison.transporteur.name}</h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-accent-600">
                   {livraison.transporteur.vehicleType} •{' '}
                   {livraison.transporteur.licensePlate}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-accent-600">
                   ⭐ {livraison.transporteur.rating.toFixed(1)}/5
                 </p>
-                <p className="text-sm text-gray-600 mt-2">
+                <p className="text-sm text-accent-600 mt-2">
                   📞 {livraison.transporteur.phone}
                 </p>
               </div>
@@ -311,7 +311,7 @@ export default function LivraisonTrackingPage() {
                   {livraison.tarifs.negocie.toLocaleString()} XOF
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-accent-600">
                 <span>Delivery Insurance</span>
                 <span>+{livraison.tarifs.assurance.toLocaleString()} XOF</span>
               </div>
@@ -319,8 +319,8 @@ export default function LivraisonTrackingPage() {
                 <span>Total to Pay</span>
                 <span>{livraison.tarifs.total.toLocaleString()} XOF</span>
               </div>
-              <div className="flex justify-between text-gray-600 pt-2">
-                <span>Yombal Commission (5%)</span>
+              <div className="flex justify-between text-accent-600 pt-2">
+                <span>Yembal Commission (5%)</span>
                 <span>-{livraison.tarifs.commission.toLocaleString()} XOF</span>
               </div>
               <div className="flex justify-between font-semibold">
@@ -358,8 +358,8 @@ export default function LivraisonTrackingPage() {
                   <span>⭐ {livraison.proof.rating.professionalisme}/5</span>
                 </div>
                 {livraison.proof.rating.commentaire && (
-                  <div className="mt-4 p-3 bg-gray-50 rounded">
-                    <p className="text-sm text-gray-700">
+                  <div className="mt-4 p-3 bg-neutral-50 rounded">
+                    <p className="text-sm text-accent-700">
                       {livraison.proof.rating.commentaire}
                     </p>
                   </div>

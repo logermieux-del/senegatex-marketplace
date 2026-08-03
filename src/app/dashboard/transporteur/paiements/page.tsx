@@ -59,7 +59,7 @@ export default function TransporteurPaiementsPage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-neutral-50 py-12 px-4">
         <div className="max-w-3xl mx-auto">
           <Card>
             <Card.Body>
@@ -75,20 +75,20 @@ export default function TransporteurPaiementsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <div className="max-w-3xl mx-auto space-y-6">
         <div className="grid grid-cols-2 gap-4">
           <Card>
             <Card.Body className="text-center">
-              <p className="text-sm text-gray-600">En attente</p>
-              <p className="text-2xl font-bold text-orange-500">
+              <p className="text-sm text-accent-600">En attente</p>
+              <p className="text-2xl font-bold text-primary-500">
                 {data.resume.totalEnAttente.toLocaleString()} {data.resume.devise}
               </p>
             </Card.Body>
           </Card>
           <Card>
             <Card.Body className="text-center">
-              <p className="text-sm text-gray-600">Total payé</p>
+              <p className="text-sm text-accent-600">Total payé</p>
               <p className="text-2xl font-bold text-green-600">
                 {data.resume.totalPaye.toLocaleString()} {data.resume.devise}
               </p>
@@ -102,31 +102,31 @@ export default function TransporteurPaiementsPage() {
           </Card.Header>
           <Card.Body>
             {data.paiements.length === 0 ? (
-              <p className="text-gray-600 text-sm">Aucun paiement pour le moment.</p>
+              <p className="text-accent-600 text-sm">Aucun paiement pour le moment.</p>
             ) : (
               <div className="space-y-3">
                 {data.paiements.map((p) => (
                   <div
                     key={p.id}
-                    className="flex items-center justify-between border-b border-gray-100 pb-3 last:border-0"
+                    className="flex items-center justify-between border-b border-accent-100 pb-3 last:border-0"
                   >
                     <div>
                       <p className="font-medium">
                         {p.montant.toLocaleString()} XOF
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-accent-500">
                         Livraison #{p.livraisonId.slice(0, 8)} •{' '}
                         {new Date(p.createdAt).toLocaleDateString()}
                       </p>
                       {p.methode && (
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-accent-500">
                           via {p.methode} {p.reference && `(${p.reference})`}
                         </p>
                       )}
                     </div>
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        STATUT_COLORS[p.statut] || 'bg-gray-100'
+                        STATUT_COLORS[p.statut] || 'bg-accent-100'
                       }`}
                     >
                       {STATUT_LABELS[p.statut] || p.statut}

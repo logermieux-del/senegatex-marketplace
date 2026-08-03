@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { Header } from '@/components/layout/Header';
 
 interface CheckoutListing {
   id: string;
@@ -38,6 +39,9 @@ function CheckoutForm() {
   const [buyerName, setBuyerName] = useState('');
   const [buyerEmail, setBuyerEmail] = useState('');
   const [buyerPhone, setBuyerPhone] = useState('');
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
 
   useEffect(() => {
     if (!listingId) {
@@ -114,46 +118,55 @@ function CheckoutForm() {
     }
   }
 
+  const header = (
+    <Header
+      searchQuery={searchQuery}
+      onSearchQueryChange={setSearchQuery}
+      selectedCity={selectedCity}
+      onSelectedCityChange={setSelectedCity}
+    />
+  );
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div>Loading...</div>
-      </div>
+      <>
+        {header}
+        <div className="min-h-screen flex items-center justify-center bg-neutral-50">
+          <div className="w-10 h-10 rounded-full border-4 border-accent-200 border-t-primary-500 animate-spin" />
+        </div>
+      </>
     );
   }
 
   if (!listing) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-500 mb-4">{error || 'Listing not found'}</p>
-          <Link href="/" className="text-orange-500">
-            Back to home
-          </Link>
+      <>
+        {header}
+        <div className="min-h-screen flex items-center justify-center bg-neutral-50">
+          <div className="text-center">
+            <p className="text-red-500 mb-4 font-sans">{error || 'Listing not found'}</p>
+            <Link href="/" className="text-primary-500 font-sans">
+              Back to home
+            </Link>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <header className="border-b bg-white">
-        <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-orange-500">
-            Yombal
-          </Link>
-        </nav>
-      </header>
+    <main className="min-h-screen bg-neutral-50">
+      {header}
 
       <div className="max-w-3xl mx-auto px-4 py-8">
-        <Link href={`/listings/${listing.id}`} className="text-orange-500 hover:underline mb-6 inline-block">
+        <Link href={`/listings/${listing.id}`} className="text-primary-500 hover:underline mb-6 inline-block font-sans">
           ← Back to listing
         </Link>
 
         <div className="grid md:grid-cols-3 gap-8">
           {/* Order Summary */}
           <div className="md:col-span-2">
-            <div className="bg-white rounded-lg p-6 mb-6">
+            <div className="bg-white rounded-xl border border-accent-200 p-6 mb-6">
               <h2 className="text-2xl font-bold mb-6">Checkout</h2>
 
               {/* Product Summary */}
@@ -169,7 +182,7 @@ function CheckoutForm() {
                   )}
                   <div className="flex-1">
                     <p className="font-semibold">{listing.title}</p>
-                    <p className="text-gray-600 text-sm">Seller: {listing.user.name}</p>
+                    <p className="text-accent-600 text-sm">Seller: {listing.user.name}</p>
                     <p className="font-bold text-lg mt-2">
                       {(listing.price / 1000).toLocaleString()}k {listing.currency}
                     </p>
@@ -218,7 +231,7 @@ function CheckoutForm() {
               <div className="mb-6">
                 <h3 className="font-bold mb-4">Payment Method</h3>
                 <div className="space-y-3">
-                  <label className="flex items-center border rounded p-4 cursor-pointer hover:bg-gray-50" style={{ borderColor: paymentMethod === 'stripe' ? '#f97316' : '#e5e7eb' }}>
+                  <label className="flex items-center border rounded p-4 cursor-pointer hover:bg-accent-50" style={{ borderColor: paymentMethod === 'stripe' ? '#0F8B6D' : '#e5e7eb' }}>
                     <input
                       type="radio"
                       name="payment"
@@ -229,11 +242,11 @@ function CheckoutForm() {
                     />
                     <div>
                       <p className="font-semibold">💳 Card Payment (Stripe)</p>
-                      <p className="text-sm text-gray-600">Visa, Mastercard, etc.</p>
+                      <p className="text-sm text-accent-600">Visa, Mastercard, etc.</p>
                     </div>
                   </label>
 
-                  <label className="flex items-center border rounded p-4 cursor-pointer hover:bg-gray-50" style={{ borderColor: paymentMethod === 'wave' ? '#f97316' : '#e5e7eb' }}>
+                  <label className="flex items-center border rounded p-4 cursor-pointer hover:bg-accent-50" style={{ borderColor: paymentMethod === 'wave' ? '#0F8B6D' : '#e5e7eb' }}>
                     <input
                       type="radio"
                       name="payment"
@@ -244,7 +257,7 @@ function CheckoutForm() {
                     />
                     <div>
                       <p className="font-semibold">📱 Wave Money</p>
-                      <p className="text-sm text-gray-600">Senegal mobile money</p>
+                      <p className="text-sm text-accent-600">Senegal mobile money</p>
                     </div>
                   </label>
                 </div>
@@ -259,7 +272,7 @@ function CheckoutForm() {
               <button
                 onClick={handleCheckout}
                 disabled={processing}
-                className="w-full bg-orange-500 text-white py-3 rounded-lg font-bold hover:bg-orange-600 disabled:opacity-50"
+                className="w-full bg-primary-500 text-white py-3 rounded-lg font-bold hover:bg-primary-600 disabled:opacity-50"
               >
                 {processing ? 'Processing...' : 'Complete Purchase'}
               </button>
@@ -268,7 +281,7 @@ function CheckoutForm() {
 
           {/* Price Breakdown */}
           <div>
-            <div className="bg-white rounded-lg p-6 sticky top-4">
+            <div className="bg-white rounded-xl border border-accent-200 p-6 sticky top-4">
               <h3 className="font-bold mb-4">Price Breakdown</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
@@ -289,7 +302,7 @@ function CheckoutForm() {
                 </div>
               </div>
 
-              <p className="text-xs text-gray-600 mt-4 leading-relaxed">
+              <p className="text-xs text-accent-600 mt-4 leading-relaxed">
                 By completing this purchase, you agree to our terms and conditions. The seller will be notified to arrange delivery or pickup.
               </p>
             </div>

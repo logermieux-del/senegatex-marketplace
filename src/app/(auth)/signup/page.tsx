@@ -61,14 +61,14 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold text-center mb-2 text-gray-900">
+        <div className="bg-white rounded-2xl shadow-sm p-8">
+          <h1 className="text-3xl font-bold text-center mb-2 text-neutral-900">
             Get Started
           </h1>
-          <p className="text-center text-gray-600 mb-8">
-            Create your Yombal account
+          <p className="text-center text-accent-600 mb-8">
+            Create your Yembal account
           </p>
 
           {errors.general && (
@@ -79,7 +79,7 @@ export default function SignupPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-accent-700 mb-2">
                 Full Name
               </label>
               <input
@@ -89,15 +89,15 @@ export default function SignupPage() {
                 placeholder="Amadou Diallo"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
-                  errors.name ? 'border-red-500' : 'border-gray-300'
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                  errors.name ? 'border-red-500' : 'border-accent-300'
                 }`}
               />
               {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-accent-700 mb-2">
                 Email
               </label>
               <input
@@ -107,15 +107,15 @@ export default function SignupPage() {
                 placeholder="you@example.com"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                  errors.email ? 'border-red-500' : 'border-accent-300'
                 }`}
               />
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-accent-700 mb-2">
                 Password
               </label>
               <input
@@ -125,8 +125,8 @@ export default function SignupPage() {
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
-                  errors.password ? 'border-red-500' : 'border-gray-300'
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                  errors.password ? 'border-red-500' : 'border-accent-300'
                 }`}
               />
               {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
@@ -135,7 +135,7 @@ export default function SignupPage() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-accent-700 mb-2"
               >
                 Confirm Password
               </label>
@@ -146,8 +146,8 @@ export default function SignupPage() {
                 placeholder="••••••••"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
-                  errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                  errors.confirmPassword ? 'border-red-500' : 'border-accent-300'
                 }`}
               />
               {errors.confirmPassword && (
@@ -158,16 +158,16 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-medium py-2 rounded-lg transition"
+              className="w-full bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300 text-white font-medium py-2 rounded-lg transition"
             >
               {isLoading ? 'Creating account...' : 'Create Account'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-accent-600">
               Already have an account?{' '}
-              <Link href="/login" className="text-orange-500 hover:text-orange-600 font-medium">
+              <Link href="/login" className="text-primary-500 hover:text-primary-600 font-medium">
                 Sign in
               </Link>
             </p>

@@ -58,7 +58,7 @@ export async function sendOrderConfirmationEmail(params: {
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px; background: #fff7ed; border-radius: 8px;">
       <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h1 style="color: #f97316; margin: 0 0 10px 0;">✅ Order Confirmed!</h1>
+        <h1 style="color: #0F8B6D; margin: 0 0 10px 0;">✅ Order Confirmed!</h1>
         <p style="color: #666; margin: 0 0 20px 0;">Hi <strong>${buyerName}</strong>,</p>
 
         <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
@@ -86,7 +86,7 @@ export async function sendOrderConfirmationEmail(params: {
           <li>Confirm receipt and leave a review</li>
         </ol>
 
-        <a href="http://localhost:3000/messages" style="display: inline-block; background: #f97316; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
+        <a href="http://localhost:3000/messages" style="display: inline-block; background: #0F8B6D; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
           View Messages
         </a>
 
@@ -119,7 +119,7 @@ export async function sendSaleNotificationEmail(params: {
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px; background: #fff7ed; border-radius: 8px;">
       <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h1 style="color: #f97316; margin: 0 0 10px 0;">🎉 You Made a Sale!</h1>
+        <h1 style="color: #0F8B6D; margin: 0 0 10px 0;">🎉 You Made a Sale!</h1>
         <p style="color: #666; margin: 0 0 20px 0;">Hi <strong>${sellerName}</strong>,</p>
 
         <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
@@ -148,7 +148,7 @@ export async function sendSaleNotificationEmail(params: {
           <li>Leave a review for the buyer</li>
         </ol>
 
-        <a href="http://localhost:3000/messages" style="display: inline-block; background: #f97316; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
+        <a href="http://localhost:3000/messages" style="display: inline-block; background: #0F8B6D; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
           Contact Buyer
         </a>
 
@@ -199,7 +199,7 @@ export async function sendPaymentFailureEmail(params: {
           <li>Verify billing information</li>
         </ul>
 
-        <a href="http://localhost:3000" style="display: inline-block; background: #f97316; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
+        <a href="http://localhost:3000" style="display: inline-block; background: #0F8B6D; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
           Try Again
         </a>
 
@@ -228,11 +228,11 @@ export async function sendWelcomeEmail(params: {
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px; background: #fff7ed; border-radius: 8px;">
       <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h1 style="color: #f97316; margin: 0 0 10px 0;">🎉 Welcome to Yombal!</h1>
+        <h1 style="color: #0F8B6D; margin: 0 0 10px 0;">🎉 Welcome to Yembal!</h1>
         <p style="color: #666; margin: 0 0 20px 0;">Hello <strong>${name}</strong>,</p>
 
         <p style="color: #666; line-height: 1.6;">
-          Thank you for joining Yombal, the #1 marketplace for buying and selling locally in Senegal.
+          Thank you for joining Yembal, the #1 marketplace for buying and selling locally in Senegal.
         </p>
 
         <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -245,7 +245,7 @@ export async function sendWelcomeEmail(params: {
           </ul>
         </div>
 
-        <a href="http://localhost:3000" style="display: inline-block; background: #f97316; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
+        <a href="http://localhost:3000" style="display: inline-block; background: #0F8B6D; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
           Start Browsing
         </a>
 
@@ -260,7 +260,7 @@ export async function sendWelcomeEmail(params: {
 
   return sendEmail({
     to: email,
-    subject: `🎉 Welcome to Yombal, ${name}!`,
+    subject: `🎉 Welcome to Yembal, ${name}!`,
     html,
   });
 }
@@ -288,10 +288,10 @@ export async function sendDeliveryStatusEmail(params: {
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h1 style="color: #f97316; margin: 0 0 10px 0;">📦 Mise à jour de votre livraison</h1>
+        <h1 style="color: #0F8B6D; margin: 0 0 10px 0;">📦 Mise à jour de votre livraison</h1>
         <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
         <p style="color: #666; line-height: 1.6;">Statut actuel : <strong>${label}</strong></p>
-        <a href="http://localhost:3000/livraisons/${livraisonId}/tracking" style="display: inline-block; background: #f97316; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
+        <a href="http://localhost:3000/livraisons/${livraisonId}/tracking" style="display: inline-block; background: #0F8B6D; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 20px;">
           Suivre ma livraison
         </a>
       </div>
@@ -342,7 +342,7 @@ export async function sendDisputeResolvedEmail(params: {
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h1 style="color: #f97316; margin: 0 0 10px 0;">✅ Litige résolu</h1>
+        <h1 style="color: #0F8B6D; margin: 0 0 10px 0;">✅ Litige résolu</h1>
         <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
         <p style="color: #666; line-height: 1.6;">
           ${resolutionLabels[resolutionType] || resolutionType}
@@ -366,7 +366,7 @@ export async function sendRefundSentEmail(params: {
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h1 style="color: #22c55e; margin: 0 0 10px 0;">💰 Remboursement envoyé</h1>
+        <h1 style="color: #0F8B6D; margin: 0 0 10px 0;">💰 Remboursement envoyé</h1>
         <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
         <p style="color: #666; line-height: 1.6;">
           Suite à votre litige, un remboursement de <strong>${montant.toLocaleString()} XOF</strong>
@@ -390,7 +390,7 @@ export async function sendPaymentSentEmail(params: {
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h1 style="color: #22c55e; margin: 0 0 10px 0;">💰 Paiement envoyé</h1>
+        <h1 style="color: #0F8B6D; margin: 0 0 10px 0;">💰 Paiement envoyé</h1>
         <p style="color: #666;">Bonjour <strong>${toName}</strong>,</p>
         <p style="color: #666; line-height: 1.6;">
           Un paiement de <strong>${montant.toLocaleString()} XOF</strong> vous a été envoyé via

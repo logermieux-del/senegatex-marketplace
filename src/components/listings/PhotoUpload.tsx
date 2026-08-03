@@ -69,11 +69,11 @@ export function PhotoUpload({ onPhotosChange, maxPhotos = 5 }: PhotoUploadProps)
       </label>
 
       {/* Upload area */}
-      <label className="block border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-orange-500 hover:bg-orange-50 transition">
-        <div className="text-gray-600">
+      <label className="block border-2 border-dashed border-accent-300 rounded-lg p-6 text-center cursor-pointer hover:border-primary-500 hover:bg-primary-50 transition">
+        <div className="text-accent-600">
           <div className="text-2xl mb-2">📸</div>
           <p className="font-medium">Click to upload photos</p>
-          <p className="text-xs text-gray-500 mt-1">PNG, JPG, GIF up to 10MB each</p>
+          <p className="text-xs text-accent-500 mt-1">PNG, JPG, GIF up to 10MB each</p>
         </div>
         <input
           type="file"
@@ -90,7 +90,7 @@ export function PhotoUpload({ onPhotosChange, maxPhotos = 5 }: PhotoUploadProps)
 
       {/* Loading state */}
       {uploading && (
-        <p className="text-sm text-blue-600 mt-2">⏳ Uploading...</p>
+        <p className="text-sm text-primary-600 mt-2">⏳ Uploading...</p>
       )}
 
       {/* Photo preview grid */}
@@ -103,7 +103,7 @@ export function PhotoUpload({ onPhotosChange, maxPhotos = 5 }: PhotoUploadProps)
                 <img
                   src={photo}
                   alt={`Photo ${idx + 1}`}
-                  className="w-full h-32 object-cover rounded border border-gray-200"
+                  className="w-full h-32 object-cover rounded border border-accent-200"
                 />
                 <button
                   type="button"
@@ -113,14 +113,14 @@ export function PhotoUpload({ onPhotosChange, maxPhotos = 5 }: PhotoUploadProps)
                   ✕
                 </button>
                 {idx === 0 && (
-                  <div className="absolute bottom-1 left-1 bg-orange-500 text-white text-xs px-2 py-1 rounded">
+                  <div className="absolute bottom-1 left-1 bg-primary-500 text-white text-xs px-2 py-1 rounded">
                     Main
                   </div>
                 )}
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-accent-500 mt-2">
             First photo will be used as thumbnail
           </p>
         </div>

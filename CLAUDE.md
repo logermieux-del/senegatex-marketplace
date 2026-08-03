@@ -1,4 +1,4 @@
-# CLAUDE.md — Yombal Marketplace Architecture
+# CLAUDE.md — Yembal Marketplace Architecture
 
 ## 🎯 Objectif
 Marketplace pour acheter/vendre localement au Sénégal (style Leboncoin/Vinted).

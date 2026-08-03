@@ -78,7 +78,7 @@ export function FeaturesGrid() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-primary-500 mb-4 font-display">
-            Pourquoi Yombal?
+            Pourquoi Yembal?
           </h2>
           <p className="text-accent-600 max-w-2xl mx-auto font-sans">
             Une plateforme moderne pour acheter et vendre localement au Sénégal

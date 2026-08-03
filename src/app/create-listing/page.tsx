@@ -96,18 +96,18 @@ export default function CreateListingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-orange-50 to-white">
+    <main className="min-h-screen bg-gradient-to-br from-primary-50 to-white">
       {/* Header */}
-      <header className="border-b border-gray-200">
+      <header className="border-b border-accent-200">
         <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-orange-500">
-            Yombal
+          <Link href="/" className="text-2xl font-bold text-primary-500">
+            Yembal
           </Link>
           <div className="flex gap-4">
-            <Link href="/login" className="text-gray-700 hover:text-orange-500">
+            <Link href="/login" className="text-accent-700 hover:text-primary-500">
               Login
             </Link>
-            <Link href="/signup" className="bg-orange-500 text-white px-4 py-2 rounded">
+            <Link href="/signup" className="bg-primary-500 text-white px-4 py-2 rounded">
               Sign Up
             </Link>
           </div>
@@ -116,14 +116,14 @@ export default function CreateListingPage() {
 
       {/* Content */}
       <div className="max-w-2xl mx-auto px-4 py-12">
-        <Link href="/" className="text-orange-500 hover:underline mb-6 inline-block">
+        <Link href="/" className="text-primary-500 hover:underline mb-6 inline-block">
           ← Back
         </Link>
 
         <Card>
           <CardBody>
             <h1 className="text-3xl font-bold mb-2">Create New Listing</h1>
-            <p className="text-gray-600 mb-6">Share what you&apos;re selling with the Yombal community</p>
+            <p className="text-accent-600 mb-6">Share what you&apos;re selling with the Yembal community</p>
 
             {error && (
               <div className="mb-6">
@@ -227,7 +227,7 @@ export default function CreateListingPage() {
             <Card key={i} className="text-center">
               <div className="text-3xl mb-2">{tip.icon}</div>
               <h3 className="font-bold mb-1">{tip.title}</h3>
-              <p className="text-sm text-gray-600">{tip.desc}</p>
+              <p className="text-sm text-accent-600">{tip.desc}</p>
             </Card>
           ))}
         </div>

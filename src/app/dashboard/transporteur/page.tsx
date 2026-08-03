@@ -114,7 +114,7 @@ export default function TransporteurDashboardPage() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-neutral-50 py-12 px-4">
         <div className="max-w-4xl mx-auto">
           <Card>
             <Card.Header>
@@ -135,7 +135,7 @@ export default function TransporteurDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <div className="max-w-4xl mx-auto space-y-6">
         {error && <Alert type="error">{error}</Alert>}
 
@@ -145,16 +145,16 @@ export default function TransporteurDashboardPage() {
             <div className="flex items-start justify-between">
               <div>
                 <h1 className="text-3xl font-bold">{profile.name}</h1>
-                <p className="text-gray-600 mt-1">
+                <p className="text-accent-600 mt-1">
                   {profile.typeVehicule.toUpperCase()} •{' '}
                   {profile.plaqueImmatriculation}
                 </p>
               </div>
               <div className="text-right">
-                <div className="text-3xl font-bold text-orange-500">
+                <div className="text-3xl font-bold text-primary-500">
                   {profile.rating.average.toFixed(1)}/5
                 </div>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-accent-600">
                   {profile.rating.totalDeliveries} deliveries
                 </p>
               </div>
@@ -164,21 +164,21 @@ export default function TransporteurDashboardPage() {
           <Card.Body>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm text-gray-600">Status</p>
+                <p className="text-sm text-accent-600">Status</p>
                 <p className="font-semibold capitalize">{profile.statut}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Reliability</p>
+                <p className="text-sm text-accent-600">Reliability</p>
                 <p className="font-semibold">{profile.rating.reliability}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Capacity</p>
+                <p className="text-sm text-accent-600">Capacity</p>
                 <p className="font-semibold capitalize">
                   {profile.capaciteVolume}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Dispute Rate</p>
+                <p className="text-sm text-accent-600">Dispute Rate</p>
                 <p className="font-semibold">{profile.rating.disputeRate}%</p>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default function TransporteurDashboardPage() {
               {profile.regionsCouvertes.map((region) => (
                 <span
                   key={region}
-                  className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm"
+                  className="px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-sm"
                 >
                   {region}
                 </span>
@@ -237,14 +237,14 @@ export default function TransporteurDashboardPage() {
             <Card.Body>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-gray-600">Pending payout</p>
-                  <p className="text-2xl font-bold text-orange-500">
+                  <p className="text-sm text-accent-600">Pending payout</p>
+                  <p className="text-2xl font-bold text-primary-500">
                     {earnings.resume.totalEnAttente.toLocaleString()}{' '}
                     {earnings.resume.devise}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Total paid</p>
+                  <p className="text-sm text-accent-600">Total paid</p>
                   <p className="text-2xl font-bold text-green-600">
                     {earnings.resume.totalPaye.toLocaleString()}{' '}
                     {earnings.resume.devise}
@@ -265,15 +265,15 @@ export default function TransporteurDashboardPage() {
               {disputes.slice(0, 5).map((d) => (
                 <div
                   key={d.id}
-                  className="flex items-center justify-between border-b border-gray-100 pb-2 last:border-0"
+                  className="flex items-center justify-between border-b border-accent-100 pb-2 last:border-0"
                 >
                   <div>
                     <p className="font-medium capitalize">{d.raison.replace('_', ' ')}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-accent-500">
                       {new Date(d.createdAt).toLocaleDateString()}
                     </p>
                   </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-accent-100 text-accent-800">
                     {d.statut}
                   </span>
                 </div>
@@ -286,10 +286,10 @@ export default function TransporteurDashboardPage() {
         <div className="grid grid-cols-3 gap-4">
           <Card>
             <Card.Body className="text-center">
-              <p className="text-3xl font-bold text-orange-500">
+              <p className="text-3xl font-bold text-primary-500">
                 {profile.rating.totalDeliveries}
               </p>
-              <p className="text-sm text-gray-600">Total Deliveries</p>
+              <p className="text-sm text-accent-600">Total Deliveries</p>
             </Card.Body>
           </Card>
 
@@ -298,7 +298,7 @@ export default function TransporteurDashboardPage() {
               <p className="text-3xl font-bold text-green-500">
                 {profile.rating.reliability}
               </p>
-              <p className="text-sm text-gray-600">Reliability Score</p>
+              <p className="text-sm text-accent-600">Reliability Score</p>
             </Card.Body>
           </Card>
 
@@ -307,7 +307,7 @@ export default function TransporteurDashboardPage() {
               <p className="text-3xl font-bold text-red-500">
                 {profile.rating.disputeRate}%
               </p>
-              <p className="text-sm text-gray-600">Dispute Rate</p>
+              <p className="text-sm text-accent-600">Dispute Rate</p>
             </Card.Body>
           </Card>
         </div>

@@ -39,11 +39,11 @@ export default function TransporterRegisterPage() {
 
   if (status === 'unauthenticated') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-50">
         <Card>
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Sign in required</h1>
-            <p className="text-gray-600 mb-6">
+            <p className="text-accent-600 mb-6">
               Please sign in to register as a transporter.
             </p>
             <Button onClick={() => router.push('/login')}>Go to Login</Button>
@@ -112,13 +112,13 @@ export default function TransporterRegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <Card>
           <Card.Header>
             <h1 className="text-3xl font-bold">Become a Transporter</h1>
-            <p className="text-gray-600 mt-2">
-              Join Yombal&apos;s network of trusted delivery partners
+            <p className="text-accent-600 mt-2">
+              Join Yembal&apos;s network of trusted delivery partners
             </p>
           </Card.Header>
 
@@ -233,8 +233,8 @@ export default function TransporterRegisterPage() {
                   onChange={(e) => setAccepteConditions(e.target.checked)}
                   className="mt-1"
                 />
-                <span className="text-sm text-gray-700">
-                  I accept Yombal&apos;s terms of service for transporters,
+                <span className="text-sm text-accent-700">
+                  I accept Yembal&apos;s terms of service for transporters,
                   including the 5% commission on each delivery.
                 </span>
               </label>

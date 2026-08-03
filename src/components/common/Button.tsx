@@ -11,10 +11,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-400',
-  secondary: 'border-2 border-orange-500 text-orange-500 hover:bg-orange-50 disabled:border-orange-300',
-  outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:bg-gray-100',
-  ghost: 'text-orange-500 hover:bg-orange-50 disabled:text-orange-300',
+  primary: 'bg-primary-500 text-white hover:bg-primary-600 disabled:bg-primary-300',
+  secondary: 'border-2 border-primary-500 text-primary-500 hover:bg-primary-50 disabled:border-primary-300',
+  outline: 'border border-accent-300 text-accent-700 hover:bg-accent-50 disabled:bg-accent-100',
+  ghost: 'text-primary-500 hover:bg-primary-50 disabled:text-primary-300',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -38,7 +38,7 @@ export function Button({
       disabled={disabled || isLoading}
       className={`
         rounded-lg font-medium transition-all duration-200
-        focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2
+        focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
         disabled:cursor-not-allowed disabled:opacity-50
         ${variantStyles[variant]}
         ${sizeStyles[size]}

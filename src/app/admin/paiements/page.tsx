@@ -81,7 +81,7 @@ export default function AdminPaiementsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <div className="max-w-4xl mx-auto space-y-6">
         <h1 className="text-3xl font-bold">Paiements Transporteurs</h1>
 
@@ -89,8 +89,8 @@ export default function AdminPaiementsPage() {
 
         <Card>
           <CardBody className="text-center">
-            <p className="text-sm text-gray-600">Total dû aux transporteurs</p>
-            <p className="text-3xl font-bold text-orange-500">
+            <p className="text-sm text-accent-600">Total dû aux transporteurs</p>
+            <p className="text-3xl font-bold text-primary-500">
               {totalDu.toLocaleString()} XOF
             </p>
           </CardBody>
@@ -102,22 +102,22 @@ export default function AdminPaiementsPage() {
           </CardHeader>
           <CardBody>
             {paiements.length === 0 ? (
-              <p className="text-gray-600 text-sm">Aucun paiement en attente 🎉</p>
+              <p className="text-accent-600 text-sm">Aucun paiement en attente 🎉</p>
             ) : (
               <div className="space-y-4">
                 {paiements.map((p) => (
                   <div
                     key={p.id}
-                    className="flex items-center justify-between border-b border-gray-100 pb-4 last:border-0"
+                    className="flex items-center justify-between border-b border-accent-100 pb-4 last:border-0"
                   >
                     <div>
                       <p className="font-semibold">{p.transporteurNom}</p>
-                      <p className="text-sm text-gray-600">{p.transporteurPhone}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-sm text-accent-600">{p.transporteurPhone}</p>
+                      <p className="text-xs text-accent-500">
                         Livraison #{p.livraisonId.slice(0, 8)} •{' '}
                         {new Date(p.createdAt).toLocaleDateString()}
                       </p>
-                      <p className="font-bold text-orange-500 mt-1">
+                      <p className="font-bold text-primary-500 mt-1">
                         {p.montant.toLocaleString()} XOF
                       </p>
                     </div>

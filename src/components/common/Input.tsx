@@ -21,31 +21,31 @@ export function Input({
   return (
     <div className="space-y-1">
       {label && (
-        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700">
+        <label htmlFor={inputId} className="block text-sm font-medium text-accent-700">
           {label}
         </label>
       )}
 
       <div className="relative">
-        {icon && <div className="absolute left-3 top-2.5 text-gray-400">{icon}</div>}
+        {icon && <div className="absolute left-3 top-2.5 text-accent-400">{icon}</div>}
 
         <input
           id={inputId}
           {...props}
           className={`
             w-full px-3 py-2 border rounded-lg
-            focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
             transition-colors
             ${icon ? 'pl-10' : ''}
-            ${error ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'}
-            disabled:bg-gray-100 disabled:cursor-not-allowed
+            ${error ? 'border-red-300 focus:ring-red-500' : 'border-accent-300'}
+            disabled:bg-accent-100 disabled:cursor-not-allowed
             ${className}
           `}
         />
       </div>
 
       {error && <p className="text-sm text-red-600 flex items-center gap-1">❌ {error}</p>}
-      {hint && <p className="text-sm text-gray-500">{hint}</p>}
+      {hint && <p className="text-sm text-accent-500">{hint}</p>}
     </div>
   );
 }
@@ -69,7 +69,7 @@ export function Textarea({
   return (
     <div className="space-y-1">
       {label && (
-        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700">
+        <label htmlFor={inputId} className="block text-sm font-medium text-accent-700">
           {label}
         </label>
       )}
@@ -79,16 +79,16 @@ export function Textarea({
         {...props}
         className={`
           w-full px-3 py-2 border rounded-lg
-          focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+          focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
           transition-colors resize-none
-          ${error ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'}
-          disabled:bg-gray-100 disabled:cursor-not-allowed
+          ${error ? 'border-red-300 focus:ring-red-500' : 'border-accent-300'}
+          disabled:bg-accent-100 disabled:cursor-not-allowed
           ${className}
         `}
       />
 
       {error && <p className="text-sm text-red-600 flex items-center gap-1">❌ {error}</p>}
-      {hint && <p className="text-sm text-gray-500">{hint}</p>}
+      {hint && <p className="text-sm text-accent-500">{hint}</p>}
     </div>
   );
 }
@@ -114,7 +114,7 @@ export function Select({
   return (
     <div className="space-y-1">
       {label && (
-        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700">
+        <label htmlFor={inputId} className="block text-sm font-medium text-accent-700">
           {label}
         </label>
       )}
@@ -124,10 +124,10 @@ export function Select({
         {...props}
         className={`
           w-full px-3 py-2 border rounded-lg appearance-none
-          focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+          focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
           transition-colors bg-white cursor-pointer
-          ${error ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'}
-          disabled:bg-gray-100 disabled:cursor-not-allowed
+          ${error ? 'border-red-300 focus:ring-red-500' : 'border-accent-300'}
+          disabled:bg-accent-100 disabled:cursor-not-allowed
           ${className}
         `}
       >
@@ -139,7 +139,7 @@ export function Select({
       </select>
 
       {error && <p className="text-sm text-red-600 flex items-center gap-1">❌ {error}</p>}
-      {hint && <p className="text-sm text-gray-500">{hint}</p>}
+      {hint && <p className="text-sm text-accent-500">{hint}</p>}
     </div>
   );
 }

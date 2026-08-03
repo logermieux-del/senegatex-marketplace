@@ -18,10 +18,10 @@ export function Loading({ message, size = 'md', fullScreen = false }: LoadingPro
       <div
         className={`
           ${sizeStyles[size]}
-          border-3 border-orange-200 border-t-orange-500 rounded-full animate-spin
+          border-3 border-accent-200 border-t-primary-500 rounded-full animate-spin
         `}
       />
-      {message && <p className="text-gray-600 text-sm">{message}</p>}
+      {message && <p className="text-accent-600 text-sm">{message}</p>}
     </div>
   );
 
@@ -45,7 +45,7 @@ export function Skeleton({ className = 'h-4 w-full', count = 1 }: SkeletonProps)
   return (
     <div className="space-y-3">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className={`bg-gray-200 rounded animate-pulse ${className}`} />
+        <div key={i} className={`bg-accent-200 rounded animate-pulse ${className}`} />
       ))}
     </div>
   );
@@ -59,7 +59,7 @@ export function CardSkeleton({ count = 3 }: CardSkeletonProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
+        <div key={i} className="bg-white rounded-xl border border-accent-200 p-6 space-y-4">
           <Skeleton className="h-40 w-full rounded" />
           <Skeleton className="h-4 w-3/4" />
           <Skeleton className="h-4 w-1/2" />

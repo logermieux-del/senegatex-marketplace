@@ -99,7 +99,7 @@ export default function AdminAssurancePage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-neutral-50 py-12 px-4">
         <div className="max-w-3xl mx-auto">
           {error && <Alert type="error">{error}</Alert>}
         </div>
@@ -108,10 +108,10 @@ export default function AdminAssurancePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <div className="max-w-4xl mx-auto space-y-6">
         <h1 className="text-3xl font-bold">Fonds Assurance Livraison</h1>
-        <p className="text-gray-600 text-sm">
+        <p className="text-accent-600 text-sm">
           Surcharge de {data.taux} appliquée sur chaque livraison, finançant les
           remboursements en cas de litige validé.
         </p>
@@ -121,15 +121,15 @@ export default function AdminAssurancePage() {
         <div className="grid grid-cols-3 gap-4">
           <Card>
             <CardBody className="text-center">
-              <p className="text-sm text-gray-600">Collecté</p>
-              <p className="text-2xl font-bold text-gray-800">
+              <p className="text-sm text-accent-600">Collecté</p>
+              <p className="text-2xl font-bold text-accent-800">
                 {data.fonds.totalCollecte.toLocaleString()} XOF
               </p>
             </CardBody>
           </Card>
           <Card>
             <CardBody className="text-center">
-              <p className="text-sm text-gray-600">Remboursé</p>
+              <p className="text-sm text-accent-600">Remboursé</p>
               <p className="text-2xl font-bold text-red-500">
                 {data.fonds.totalRembourse.toLocaleString()} XOF
               </p>
@@ -137,7 +137,7 @@ export default function AdminAssurancePage() {
           </Card>
           <Card>
             <CardBody className="text-center">
-              <p className="text-sm text-gray-600">Solde disponible</p>
+              <p className="text-sm text-accent-600">Solde disponible</p>
               <p className="text-2xl font-bold text-green-600">
                 {data.fonds.solde.toLocaleString()} XOF
               </p>
@@ -153,22 +153,22 @@ export default function AdminAssurancePage() {
           </CardHeader>
           <CardBody>
             {data.remboursementsEnAttente.length === 0 ? (
-              <p className="text-gray-600 text-sm">Aucun remboursement en attente 🎉</p>
+              <p className="text-accent-600 text-sm">Aucun remboursement en attente 🎉</p>
             ) : (
               <div className="space-y-4">
                 {data.remboursementsEnAttente.map((r) => (
                   <div
                     key={r.id}
-                    className="flex items-center justify-between border-b border-gray-100 pb-4 last:border-0"
+                    className="flex items-center justify-between border-b border-accent-100 pb-4 last:border-0"
                   >
                     <div>
                       <p className="font-semibold">{r.beneficiaireNom}</p>
-                      <p className="text-sm text-gray-600">{r.beneficiairePhone}</p>
-                      <p className="text-xs text-gray-500 capitalize">
+                      <p className="text-sm text-accent-600">{r.beneficiairePhone}</p>
+                      <p className="text-xs text-accent-500 capitalize">
                         {r.raison.replace('_', ' ')} • Livraison #{r.livraisonId.slice(0, 8)} •{' '}
                         {new Date(r.createdAt).toLocaleDateString()}
                       </p>
-                      <p className="font-bold text-orange-500 mt-1">
+                      <p className="font-bold text-primary-500 mt-1">
                         {r.montant.toLocaleString()} XOF
                       </p>
                     </div>

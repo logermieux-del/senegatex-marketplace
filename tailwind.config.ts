@@ -9,50 +9,51 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Open Sans', 'var(--font-sans)', ...defaultTheme.fontFamily.sans],
-        display: ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Plus Jakarta Sans', ...defaultTheme.fontFamily.sans],
+        display: ['var(--font-sans)', 'Plus Jakarta Sans', ...defaultTheme.fontFamily.sans],
         serif: ['Georgia', 'Garamond', 'serif'],
       },
       colors: {
-        // Midnight Blue + Slategray Professional Palette
+        // Yembal brand palette: emerald + anthracite + ivory
         primary: {
-          50: '#f5f7fb',
-          100: '#e8ecf5',
-          200: '#c9d5e8',
-          300: '#a9bdd8',
-          400: '#5a7fa8',
-          500: '#191970', // Midnight Blue
-          600: '#151562',
-          700: '#11104d',
-          800: '#0d0c39',
-          900: '#09082a',
+          50: '#ecfbf6',
+          100: '#d2f4e8',
+          200: '#a8e8d3',
+          300: '#71d4b7',
+          400: '#3cb897',
+          500: '#0F8B6D', // Emerald (brand green)
+          600: '#0c6f58',
+          700: '#0a5945',
+          800: '#084537',
+          900: '#06342a',
         },
         accent: {
-          50: '#f6f9fc',
-          100: '#eef5f8',
-          200: '#d4e5ee',
-          300: '#b9d5e3',
-          400: '#8ab5ce',
-          500: '#708090', // Slategray
-          600: '#64747b',
-          700: '#525860',
-          800: '#414549',
-          900: '#2d3032',
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280', // Neutral gray for muted text/borders
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1F2937', // Anthracite
+          900: '#111827',
         },
+        // Same brand green as primary — one accent color, not two.
         success: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e', // Keep green for "Vendre" CTA
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#145231',
+          50: '#ecfbf6',
+          100: '#d2f4e8',
+          200: '#a8e8d3',
+          300: '#71d4b7',
+          400: '#3cb897',
+          500: '#0F8B6D',
+          600: '#0c6f58',
+          700: '#0a5945',
+          800: '#084537',
+          900: '#06342a',
         },
         neutral: {
-          50: '#f8f9fa',
+          50: '#F7F7F5', // Ivory background
           100: '#f0f2f5',
           200: '#e1e5eb',
           300: '#d1d8e0',
@@ -61,7 +62,7 @@ const config: Config = {
           600: '#525866',
           700: '#3d4452',
           800: '#2d3139',
-          900: '#1a1d23',
+          900: '#1F2937', // Anthracite (primary text color)
         },
       },
       fontSize: {

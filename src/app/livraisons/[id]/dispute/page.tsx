@@ -29,11 +29,11 @@ export default function SignalerProblemePage() {
 
   if (status === 'unauthenticated') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-50">
         <Card>
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Connexion requise</h1>
-            <p className="text-gray-600 mb-6">
+            <p className="text-accent-600 mb-6">
               Connectez-vous pour signaler un problème.
             </p>
             <Button onClick={() => router.push('/login')}>Se connecter</Button>
@@ -78,7 +78,7 @@ export default function SignalerProblemePage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-neutral-50 py-12 px-4">
         <div className="max-w-lg mx-auto">
           <Card>
             <Card.Body>
@@ -97,12 +97,12 @@ export default function SignalerProblemePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <div className="max-w-lg mx-auto">
         <Card>
           <Card.Header>
             <h1 className="text-2xl font-bold">Signaler un problème</h1>
-            <p className="text-sm text-gray-600 mt-1">Livraison #{id}</p>
+            <p className="text-sm text-accent-600 mt-1">Livraison #{id}</p>
           </Card.Header>
           <Card.Body>
             {error && (

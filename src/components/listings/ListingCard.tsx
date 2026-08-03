@@ -60,7 +60,7 @@ export function ListingCard({
                 setIsFavorite(!isFavorite);
               }}
               className={`rounded-full transition-all ${
-                isFavorite ? 'bg-orange-500 text-white p-3' : 'icon-badge text-accent-600 hover:text-orange-500 p-3'
+                isFavorite ? 'bg-primary-500 text-white p-3' : 'icon-badge text-accent-600 hover:text-primary-500 p-3'
               }`}
             >
               <Heart className="w-5 h-5" fill={isFavorite ? 'currentColor' : 'none'} />

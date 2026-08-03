@@ -48,14 +48,14 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold text-center mb-2 text-gray-900">
+        <div className="bg-white rounded-2xl shadow-sm p-8">
+          <h1 className="text-3xl font-bold text-center mb-2 text-neutral-900">
             Welcome Back
           </h1>
-          <p className="text-center text-gray-600 mb-8">
-            Sign in to your Yombal account
+          <p className="text-center text-accent-600 mb-8">
+            Sign in to your Yembal account
           </p>
 
           {errorMsg && (
@@ -66,7 +66,7 @@ function LoginForm() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-accent-700 mb-2">
                 Email
               </label>
               <input
@@ -76,12 +76,12 @@ function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-accent-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-accent-700 mb-2">
                 Password
               </label>
               <input
@@ -91,30 +91,30 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-accent-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-medium py-2 rounded-lg transition"
+              className="w-full bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300 text-white font-medium py-2 rounded-lg transition"
             >
               {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-accent-600">
               Don&apos;t have an account?{' '}
-              <Link href="/signup" className="text-orange-500 hover:text-orange-600 font-medium">
+              <Link href="/signup" className="text-primary-500 hover:text-primary-600 font-medium">
                 Sign up
               </Link>
             </p>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-xs text-gray-500 text-center">
+          <div className="mt-6 pt-6 border-t border-accent-200">
+            <p className="text-xs text-accent-500 text-center">
               Test account: seller@example.com / Password123
             </p>
           </div>

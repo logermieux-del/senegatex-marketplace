@@ -2,111 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Premium Palette: Navy Blue + White + Black */
-:root {
-  --white: #ffffff;
-  --navy-blue: #1e3a8a;
-  --deep-navy: #0c2340;
-  --blue: #2563eb;
-  --black: #000000;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
 body {
   overflow-x: hidden;
-  @apply bg-white text-neutral-900;
 }
 
-/* Premium Typography - Black and White */
+/* Typography defaults — pages set their own color/size utilities where needed */
 h1, h2, h3, h4, h5, h6 {
-  @apply font-serif font-bold tracking-tight text-white;
+  @apply font-display font-bold tracking-tight text-neutral-900;
 }
 
-h1 { @apply text-5xl md:text-6xl; }
-h2 { @apply text-3xl md:text-4xl; }
-h3 { @apply text-2xl md:text-3xl; }
-
-/* Hero Section Base */
-.hero-section {
-  @apply relative overflow-hidden;
-}
-
-.hero-overlay {
-  @apply absolute inset-0 bg-gradient-to-r from-primary-500/95 via-primary-500/90 to-primary-500/95;
-}
-
-/* Premium Button Styles */
-.btn-premium {
-  @apply px-6 py-3 font-bold rounded-lg transition-all duration-300 uppercase tracking-widest text-sm;
-  @apply hover:shadow-lg hover:scale-105;
-}
-
-.btn-blue {
-  @apply btn-premium bg-blue-600 text-white hover:bg-blue-700;
-}
-
-.btn-navy {
-  @apply btn-premium bg-accent-800 text-white hover:bg-accent-900;
-}
-
-.btn-white {
-  @apply btn-premium bg-white text-primary-500 hover:bg-gray-100;
-}
-
-/* Luxury Card Styles */
-.card-premium {
-  @apply bg-neutral-50 border border-accent-200 rounded-xl p-6 transition-all duration-300;
-}
-
-.card-premium:hover {
-  border-color: rgb(25 25 112 / 0.5);
-  box-shadow: 0 20px 25px -5px rgb(25 25 112 / 0.15);
-  background-color: rgb(248 249 250 / 0.8);
-}
-
-.card-glass {
-  @apply backdrop-blur-md bg-white/50 border border-accent-200 rounded-xl p-6;
-}
-
-/* Accent Bar */
-.accent-bar {
-  @apply h-1 bg-gradient-to-r from-blue-600 via-accent-400 to-blue-700;
-}
-
-/* Premium Stats */
-.stat-box {
-  @apply text-center p-4;
-}
-
-.stat-number {
-  @apply text-4xl font-bold text-blue-500 font-display;
-}
-
-.stat-label {
-  @apply text-sm uppercase tracking-widest text-gray-300 mt-2;
-}
-
-/* Scrollbar styling - Premium */
+/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(31, 41, 55, 0.08);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);
+  background: linear-gradient(180deg, #0f8b6d 0%, #1f2937 100%);
   border-radius: 5px;
-  border: 2px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(31, 41, 55, 0.08);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #1d4ed8 0%, #0c2340 100%);
+  background: linear-gradient(180deg, #0c6f58 0%, #111827 100%);
 }
 
 /* Additional utility classes */
@@ -121,10 +47,10 @@ h3 { @apply text-2xl md:text-3xl; }
 .icon-badge {
   background: linear-gradient(160deg, #ffffff 0%, #eef1f5 55%, #dfe4ea 100%);
   box-shadow:
-    0 10px 20px -8px rgba(25, 25, 112, 0.18),
-    0 2px 4px rgba(25, 25, 112, 0.08),
+    0 10px 20px -8px rgba(31, 41, 55, 0.18),
+    0 2px 4px rgba(31, 41, 55, 0.08),
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
-  color: #191970;
+  color: #1f2937;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -132,11 +58,11 @@ h3 { @apply text-2xl md:text-3xl; }
 .group:hover .icon-badge {
   transform: translateY(-3px);
   box-shadow:
-    0 16px 28px -10px rgba(25, 25, 112, 0.28),
-    0 2px 6px rgba(25, 25, 112, 0.1),
+    0 16px 28px -10px rgba(31, 41, 55, 0.28),
+    0 2px 6px rgba(31, 41, 55, 0.1),
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .icon-badge-accent {
-  color: #22c55e;
+  color: #0f8b6d;
 }

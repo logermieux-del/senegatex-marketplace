@@ -79,7 +79,7 @@ export default function AdminPage() {
   if (!session) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-600">Redirecting...</p>
+        <p className="text-accent-600">Redirecting...</p>
       </div>
     );
   }
@@ -93,15 +93,15 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-neutral-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-accent-200">
         <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-            <p className="text-gray-600 mt-1">Manage marketplace & moderation</p>
+            <h1 className="text-3xl font-bold text-neutral-900">Admin Dashboard</h1>
+            <p className="text-accent-600 mt-1">Manage marketplace & moderation</p>
           </div>
-          <Link href="/" className="text-orange-500 hover:underline">
+          <Link href="/" className="text-primary-500 hover:underline">
             Back to site
           </Link>
         </div>
@@ -121,7 +121,7 @@ export default function AdminPage() {
 
         {loading ? (
           <div className="text-center py-12">
-            <p className="text-gray-600">Loading dashboard...</p>
+            <p className="text-accent-600">Loading dashboard...</p>
           </div>
         ) : stats ? (
           <>
@@ -137,8 +137,8 @@ export default function AdminPage() {
                   <CardBody>
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-gray-600 text-sm">{stat.label}</p>
-                        <p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
+                        <p className="text-accent-600 text-sm">{stat.label}</p>
+                        <p className="text-2xl font-bold text-neutral-900 mt-2">{stat.value}</p>
                       </div>
                       <span className="text-3xl">{stat.icon}</span>
                     </div>
@@ -150,14 +150,14 @@ export default function AdminPage() {
             {/* Pending Reports */}
             <Card className="mb-8">
               <CardHeader>
-                <h2 className="text-lg font-bold text-gray-900">Pending Reports</h2>
-                <p className="text-sm text-gray-600">
+                <h2 className="text-lg font-bold text-neutral-900">Pending Reports</h2>
+                <p className="text-sm text-accent-600">
                   {stats.pendingReports} items flagged for review
                 </p>
               </CardHeader>
               <CardBody>
                 {reports.length === 0 ? (
-                  <p className="text-gray-600 text-center py-8">No pending reports</p>
+                  <p className="text-accent-600 text-center py-8">No pending reports</p>
                 ) : (
                   <div className="space-y-3">
                     {reports.map((report) => (
@@ -167,10 +167,10 @@ export default function AdminPage() {
                       >
                         <div>
                           <p className="font-semibold">{report.listing.title}</p>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-accent-600 mt-1">
                             <strong>Reason:</strong> {report.reason}
                           </p>
-                          <p className="text-xs text-gray-500 mt-2">
+                          <p className="text-xs text-accent-500 mt-2">
                             Reported: {new Date(report.createdAt).toLocaleDateString()}
                           </p>
                         </div>
@@ -202,7 +202,7 @@ export default function AdminPage() {
               <Card hoverable>
                 <CardBody>
                   <h3 className="font-bold mb-2">👥 Manage Users</h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-accent-600 mb-4">
                     Ban/suspend users, view profiles
                   </p>
                 </CardBody>
@@ -216,7 +216,7 @@ export default function AdminPage() {
               <Card hoverable>
                 <CardBody>
                   <h3 className="font-bold mb-2">📋 All Listings</h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-accent-600 mb-4">
                     Review, delete suspicious listings
                   </p>
                 </CardBody>
@@ -230,7 +230,7 @@ export default function AdminPage() {
               <Card hoverable>
                 <CardBody>
                   <h3 className="font-bold mb-2">💳 Transactions</h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-accent-600 mb-4">
                     View payment history, refunds
                   </p>
                 </CardBody>
@@ -245,11 +245,11 @@ export default function AdminPage() {
             {/* Activity Log */}
             <Card className="mt-8">
               <CardHeader>
-                <h2 className="text-lg font-bold text-gray-900">Activity Log</h2>
-                <p className="text-sm text-gray-600">Recent admin actions</p>
+                <h2 className="text-lg font-bold text-neutral-900">Activity Log</h2>
+                <p className="text-sm text-accent-600">Recent admin actions</p>
               </CardHeader>
               <CardBody>
-                <p className="text-gray-600 text-center py-8">
+                <p className="text-accent-600 text-center py-8">
                   No activity yet (coming soon)
                 </p>
               </CardBody>

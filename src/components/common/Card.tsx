@@ -32,9 +32,9 @@ function CardRoot({
     <div
       onClick={onClick}
       className={`
-        bg-white rounded-lg border border-gray-200 p-6
+        bg-white rounded-xl border border-accent-200 p-6
         transition-all duration-200
-        ${hoverable ? 'hover:shadow-lg hover:border-orange-200 cursor-pointer' : 'shadow-sm'}
+        ${hoverable ? 'hover:shadow-lg hover:border-primary-200 cursor-pointer' : 'shadow-sm'}
         ${className}
       `}
     >
@@ -52,7 +52,7 @@ function CardHeader({ children, className = '' }: CardHeaderProps) {
 }
 
 function CardBody({ children, className = '' }: CardBodyProps) {
-  return <div className={`text-gray-700 ${className}`}>{children}</div>;
+  return <div className={`text-accent-700 ${className}`}>{children}</div>;
 }
 
 function CardFooter({ children, align = 'right' }: CardFooterProps) {
@@ -63,7 +63,7 @@ function CardFooter({ children, align = 'right' }: CardFooterProps) {
   }[align];
 
   return (
-    <div className={`flex ${alignClass} gap-3 mt-6 pt-6 border-t border-gray-200`}>
+    <div className={`flex ${alignClass} gap-3 mt-6 pt-6 border-t border-accent-200`}>
       {children}
     </div>
   );

@@ -71,7 +71,7 @@ export default function CreateListingPage() {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-neutral-50 py-12 px-4">
         <div className="max-w-2xl mx-auto">
           <div className="text-center py-12">Loading...</div>
         </div>
@@ -153,16 +153,16 @@ export default function CreateListingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
-        <Link href="/" className="text-orange-500 hover:underline mb-6 inline-block">
+        <Link href="/" className="text-primary-500 hover:underline mb-6 inline-block">
           ← Back to listings
         </Link>
 
         <Card>
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">Create New Listing</h1>
-            <p className="text-gray-600">Sell your item to the Senegal community</p>
+            <p className="text-accent-600">Sell your item to the Senegal community</p>
           </div>
 
           {error && <Alert type="error" className="mb-6">{error}</Alert>}
@@ -186,9 +186,9 @@ export default function CreateListingPage() {
                 placeholder="e.g., iPhone 13 Pro"
                 maxLength={100}
                 required
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-accent-500 mt-1">
                 {formData.title.length}/100
               </p>
             </div>
@@ -203,7 +203,7 @@ export default function CreateListingPage() {
                 value={formData.category}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -223,7 +223,7 @@ export default function CreateListingPage() {
                     value={formData.transactionType}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
                   >
                     {transactionTypes.map((type) => (
                       <option key={type.value} value={type.value}>{type.label}</option>
@@ -237,7 +237,7 @@ export default function CreateListingPage() {
                     value={formData.propertyType}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
                   >
                     {propertyTypes.map((type) => (
                       <option key={type.value} value={type.value}>{type.label}</option>
@@ -253,7 +253,7 @@ export default function CreateListingPage() {
                     onChange={handleChange}
                     placeholder="e.g., 250"
                     min="0"
-                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
                   />
                 </div>
               </div>
@@ -272,9 +272,9 @@ export default function CreateListingPage() {
                 maxLength={2000}
                 required
                 rows={6}
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-accent-500 mt-1">
                 {formData.description.length}/2000
               </p>
             </div>
@@ -296,9 +296,9 @@ export default function CreateListingPage() {
                 step="1000"
                 min="0"
                 required
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-accent-500 mt-1">
                 Enter price in XOF (West African CFA Franc)
               </p>
             </div>
@@ -313,7 +313,7 @@ export default function CreateListingPage() {
                 value={formData.city}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
               >
                 {cities.map((city) => (
                   <option key={city} value={city}>
@@ -332,7 +332,7 @@ export default function CreateListingPage() {
                 value={formData.region}
                 onChange={handleChange}
                 placeholder="Optional: neighborhood or district"
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-orange-500"
+                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-primary-500"
               />
             </div>
 
@@ -341,14 +341,14 @@ export default function CreateListingPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-orange-500 text-white px-6 py-3 rounded font-medium hover:bg-orange-600 disabled:bg-orange-400 disabled:cursor-not-allowed transition"
+                className="flex-1 bg-primary-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-600 disabled:bg-primary-300 disabled:cursor-not-allowed transition"
               >
                 {loading ? 'Publishing...' : 'Publish Listing'}
               </button>
               <Link href="/">
                 <button
                   type="button"
-                  className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded font-medium hover:bg-gray-50 transition"
+                  className="w-full border border-accent-300 text-accent-700 px-6 py-3 rounded font-medium hover:bg-neutral-50 transition"
                 >
                   Cancel
                 </button>
