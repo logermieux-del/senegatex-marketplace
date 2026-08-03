@@ -4,17 +4,18 @@ import { getAuthSession } from '@/lib/auth';
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const listing = await getListingById(params.id);
+    const { id } = await params;
+    const listing = await getListingById(id);
 
     if (!listing) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
     // Increment view count (async, don't await)
-    incrementViewCount(params.id).catch(console.error);
+    incrementViewCount(id).catch(console.error);
 
     // Parse photos if stored as JSON string
     const photos = listing.photos
@@ -36,7 +37,7 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getAuthSession();
@@ -44,8 +45,9 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
     const body = await request.json();
-    const listing = await updateListing(params.id, session.user.id, body);
+    const listing = await updateListing(id, session.user.id, body);
 
     return NextResponse.json(listing);
   } catch (error) {
@@ -60,7 +62,7 @@ export async function PATCH(
 
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getAuthSession();
@@ -68,7 +70,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await deleteListing(params.id, session.user.id);
+    const { id } = await params;
+    await deleteListing(id, session.user.id);
 
     return NextResponse.json({ success: true });
   } catch (error) {

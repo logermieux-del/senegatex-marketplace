@@ -4,9 +4,10 @@ import { prisma } from '@/lib/db';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getAuthSession();
 
     // Check if admin
@@ -32,7 +33,7 @@ export async function PATCH(
 
     // Update report
     const report = await prisma.report.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         status,
         reviewedBy: session.user.id,
