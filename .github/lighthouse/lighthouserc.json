@@ -1,0 +1,26 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["http://localhost:3000"],
+      "numberOfRuns": 1,
+      "settings": {
+        "chromeFlags": ["--no-sandbox", "--disable-gpu"]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    },
+    "assert": {
+      "preset": "lighthouse:recommended",
+      "assertions": {
+        "cumululative-layout-shift": ["error", {"maxNumericValue": 0.1}],
+        "largest-contentful-paint": ["error", {"maxNumericValue": 2500}],
+        "first-input-delay": ["error", {"maxNumericValue": 100}],
+        "performance": ["warn", {"minScore": 0.85}],
+        "accessibility": ["warn", {"minScore": 0.9}],
+        "best-practices": ["warn", {"minScore": 0.85}],
+        "seo": ["warn", {"minScore": 0.9}]
+      }
+    }
+  }
+}
