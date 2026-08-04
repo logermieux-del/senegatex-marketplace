@@ -91,7 +91,7 @@ jobs:
       - name: Health check
         run: |
           for i in {1..30}; do
-            if curl -sf https://staging.yombal.sn/api/health > /dev/null; then
+            if curl -sf https://staging.yembal.sn/api/health > /dev/null; then
               echo "✅ Health check passed"
               exit 0
             fi
@@ -159,8 +159,8 @@ jobs:
 
           # Backup database before deployment
           ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST << 'EOF'
-            cd /home/yombal
-            docker-compose -f docker-compose.prod.yml exec -T db pg_dump -U yombal_user yombal > backup_$(date +%Y%m%d_%H%M%S).sql
+            cd /home/yembal
+            docker-compose -f docker-compose.prod.yml exec -T db pg_dump -U yembal_user yembal > backup_$(date +%Y%m%d_%H%M%S).sql
             echo "✅ Database backup created"
           EOF
 
@@ -169,7 +169,7 @@ jobs:
       - name: Health check
         run: |
           for i in {1..60}; do
-            if curl -sf https://yombal.sn/api/health > /dev/null; then
+            if curl -sf https://yembal.sn/api/health > /dev/null; then
               echo "✅ Health check passed"
               exit 0
             fi
@@ -198,7 +198,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Production Deploy* - ${{ job.status }}\nCommit: <${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n<https://yombal.sn|View Live>"
+                    "text": "*Production Deploy* - ${{ job.status }}\nCommit: <${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>\n<https://yembal.sn|View Live>"
                   }
                 }
               ]
@@ -230,7 +230,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "⚠️ *Production Deployment Anomalies*\nPlease check application health metrics\n<https://yombal.sn/admin|Admin Dashboard>"
+                    "text": "⚠️ *Production Deployment Anomalies*\nPlease check application health metrics\n<https://yembal.sn/admin|Admin Dashboard>"
                   }
                 }
               ]

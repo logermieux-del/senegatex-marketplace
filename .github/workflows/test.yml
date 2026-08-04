@@ -58,7 +58,7 @@ jobs:
     name: E2E Tests (Playwright)
 
     env:
-      DATABASE_URL: postgresql://test:test@localhost:5432/yombal_test
+      DATABASE_URL: postgresql://test:test@localhost:5432/yembal_test
       REDIS_URL: redis://localhost:6379
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_SECRET: test-secret-key
