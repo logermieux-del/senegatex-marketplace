@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/db';
 import { createListingSchema, updateListingSchema, type CreateListingInput } from '@/lib/validators';
+import { indexListing, deleteListing } from '@/lib/search/meilisearch';
 import { Prisma } from '@prisma/client';
 import type { z } from 'zod';
 
@@ -89,6 +90,9 @@ export async function createListing(userId: string, data: CreateListingInput & {
     include: { user: { select: { id: true, name: true } } },
   });
 
+  // Index in Meilisearch (async, don't block)
+  indexListing(listing as any).catch(console.error);
+
   return toPlainListing(listing);
 }
 
@@ -116,7 +120,11 @@ export async function updateListing(
       ...(price !== undefined && { price: BigInt(price) }),
       ...(photos && { photos: JSON.stringify(photos) }),
     },
+    include: { user: { select: { name: true } } },
   });
+
+  // Reindex in Meilisearch
+  indexListing(updated as any).catch(console.error);
 
   return toPlainListing(updated);
 }
@@ -131,10 +139,15 @@ export async function deleteListing(id: string, userId: string) {
     throw new Error('Unauthorized');
   }
 
-  return prisma.listing.update({
+  const deleted = await prisma.listing.update({
     where: { id },
     data: { status: 'DELETED' },
   });
+
+  // Remove from Meilisearch index
+  deleteListing(id).catch(console.error);
+
+  return deleted;
 }
 
 export async function incrementViewCount(id: string) {

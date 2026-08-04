@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     // Upload to Cloudinary
     const result = await uploadImage(
       fileBuffer,
-      `yombal/user-${session.user.id}`
+      `yembal/listings`
     );
 
     return NextResponse.json(result, { status: 201 });

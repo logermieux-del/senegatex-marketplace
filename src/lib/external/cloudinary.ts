@@ -13,7 +13,7 @@ export interface UploadResult {
   height: number;
 }
 
-export async function uploadImage(file: Buffer, folder: string = 'yombal'): Promise<UploadResult> {
+export async function uploadImage(file: Buffer, folder: string = 'yembal/listings'): Promise<UploadResult> {
   return new Promise((resolve, reject) => {
     const upload = cloudinary.uploader.upload_stream(
       {
