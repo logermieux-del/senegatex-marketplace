@@ -101,13 +101,14 @@ export async function markAllNotificationsAsRead(userId: string) {
 export async function notifyNewMessage(
   toUserId: string,
   fromUserName: string,
-  messageBody: string,
+  listingId: string,
   listingTitle?: string
 ) {
   const title = 'Nouveau message';
   const message = `${fromUserName} vous a envoyé un message${listingTitle ? ` à propos de ${listingTitle}` : ''}`;
 
   return createNotification(toUserId, 'NEW_MESSAGE', title, message, {
+    relatedListingId: listingId,
     actionUrl: '/dashboard/messages',
   });
 }

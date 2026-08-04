@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     const { listingId, reason, description } = reportSchema.parse(body);
 
     // Create report (anonymous or identified)
-    const report = await reportListing(
+    await reportListing(
       listingId,
       reason,
       description,

@@ -32,6 +32,7 @@ model User {
   boughtTransactions Transaction[] @relation("buyer")
   reports       Report[]
   moderatorActions ModeratorAction[]
+  notifications Notification[]
 
   // Metadata
   createdAt     DateTime   @default(now())

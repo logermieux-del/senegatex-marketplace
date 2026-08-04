@@ -102,7 +102,7 @@ export async function reviewReport(
       }
 
       if (action.type === 'suspend-user') {
-        const suspendUntil = action.duration
+        const suspendedUntil = action.duration
           ? new Date(Date.now() + action.duration * 24 * 60 * 60 * 1000)
           : null;
 
@@ -164,7 +164,7 @@ export async function suspendUser(
   adminId: string
 ) {
   try {
-    const suspendUntil = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000);
+    const suspendedUntil = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000);
 
     await prisma.user.update({
       where: { id: userId },

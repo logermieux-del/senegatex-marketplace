@@ -57,10 +57,10 @@ export async function searchListings(
 
     return {
       data: results.hits,
-      total: results.estimatedTotalHits || 0,
+      total: (results as any).estimatedTotalHits || (results as any).totalHits || 0,
       page,
       limit,
-      pages: Math.ceil((results.estimatedTotalHits || 0) / limit),
+      pages: Math.ceil(((results as any).estimatedTotalHits || (results as any).totalHits || 0) / limit),
     };
   } catch (error) {
     console.error('Meilisearch error:', error);

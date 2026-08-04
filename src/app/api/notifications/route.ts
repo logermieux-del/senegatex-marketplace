@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthSession } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { markAllNotificationsAsRead, getUnreadNotifications } from '@/lib/notifications';
+import { markAllNotificationsAsRead } from '@/lib/notifications';
 
 export async function GET(request: NextRequest) {
   try {

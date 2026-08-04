@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/db';
 import { createListingSchema, updateListingSchema, type CreateListingInput } from '@/lib/validators';
-import { indexListing, deleteListing } from '@/lib/search/meilisearch';
+import { indexListing, deleteListing as deleteFromSearch } from '@/lib/search/meilisearch';
 import { Prisma } from '@prisma/client';
 import type { z } from 'zod';
 
@@ -145,7 +145,7 @@ export async function deleteListing(id: string, userId: string) {
   });
 
   // Remove from Meilisearch index
-  deleteListing(id).catch(console.error);
+  deleteFromSearch(id).catch(console.error);
 
   return deleted;
 }

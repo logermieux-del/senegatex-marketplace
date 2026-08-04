@@ -402,3 +402,37 @@ export async function sendPaymentSentEmail(params: {
 
   return sendEmail({ to: toEmail, subject: '💰 Paiement de livraison envoyé', html });
 }
+
+export async function sendAccountSuspendedEmail(params: {
+  email: string;
+  name: string | null;
+  reason: string;
+  durationDays?: number;
+}) {
+  const { email, name, reason, durationDays } = params;
+  const displayName = name || 'Utilisateur';
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h1 style="color: #DC2626; margin: 0 0 10px 0;">🚫 Compte suspendu</h1>
+        <p style="color: #666;">Bonjour <strong>${displayName}</strong>,</p>
+        <p style="color: #666; line-height: 1.6;">
+          Votre compte Yembal a été suspendu en raison de: <strong>${reason}</strong>.
+        </p>
+        ${
+          durationDays
+            ? `<p style="color: #666; line-height: 1.6;">Cette suspension est valable pour <strong>${durationDays} jour(s)</strong>. Votre compte sera réactivé automatiquement après cette période.</p>`
+            : '<p style="color: #666; line-height: 1.6;">Cette suspension est permanente. Veuillez contacter notre équipe d\'assistance pour plus de détails.</p>'
+        }
+        <p style="color: #666; line-height: 1.6;">Si vous pensez qu\'il y a une erreur, veuillez contacter notre équipe d\'assistance.</p>
+      </div>
+    </div>
+  `;
+
+  return sendEmail({
+    to: email,
+    subject: '🚫 Votre compte Yembal a été suspendu',
+    html,
+  });
+}
