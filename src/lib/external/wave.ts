@@ -1,4 +1,5 @@
 import { GraphQLClient, gql } from 'graphql-request';
+import { createHmac } from 'crypto';
 
 const waveClient = new GraphQLClient(process.env.WAVE_API_URL || 'https://api.wave.com/graphql', {
   headers: {
@@ -99,9 +100,7 @@ export function verifyWaveWebhookSignature(
     if (!signature) return false;
 
     // Wave sends HMAC-SHA256 signature in X-Wave-Signature header
-    const crypto = require('crypto');
-    const hash = crypto
-      .createHmac('sha256', process.env.WAVE_API_KEY || '')
+    const hash = createHmac('sha256', process.env.WAVE_API_KEY || '')
       .update(payload)
       .digest('hex');
 
