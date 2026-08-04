@@ -1,6 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthSession } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { reviewReport } from '@/lib/moderation';
+import { z } from 'zod';
+
+const reviewSchema = z.object({
+  status: z.enum(['RESOLVED', 'DISMISSED', 'ESCALATED']),
+  adminNotes: z.string().min(1),
+  action: z
+    .object({
+      type: z.enum(['suspend-user', 'unlist', 'warn']),
+      duration: z.number().int().min(1).optional(),
+    })
+    .optional(),
+});
 
 export async function PATCH(
   request: NextRequest,
@@ -10,7 +23,6 @@ export async function PATCH(
     const { id } = await params;
     const session = await getAuthSession();
 
-    // Check if admin
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -24,36 +36,23 @@ export async function PATCH(
     }
 
     const body = await request.json();
-    const { status } = body;
+    const { status, adminNotes, action } = reviewSchema.parse(body);
 
-    // Validate status
-    if (!['RESOLVED', 'DISMISSED'].includes(status)) {
-      return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
-    }
+    const report = await reviewReport(id, status, adminNotes, session.user.id, action);
 
-    // Update report
-    const report = await prisma.report.update({
-      where: { id },
-      data: {
-        status,
-        reviewedBy: session.user.id,
-      },
+    return NextResponse.json({
+      success: true,
+      report,
+      message: `Report ${status.toLowerCase()}`,
     });
+  } catch (error) {
+    console.error('Report review error:', error);
 
-    // If resolved and reason is severe, delete listing
-    if (status === 'RESOLVED' && ['fraud', 'fake', 'stolen'].includes(report.reason.toLowerCase())) {
-      await prisma.listing.update({
-        where: { id: report.listingId },
-        data: { status: 'DELETED' },
-      });
-
-      console.log(`Listing ${report.listingId} deleted due to: ${report.reason}`);
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
     }
 
-    return NextResponse.json(report);
-  } catch (error) {
-    console.error('Report update error:', error);
-    const message = error instanceof Error ? error.message : 'Failed to update report';
+    const message = error instanceof Error ? error.message : 'Failed to review report';
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
