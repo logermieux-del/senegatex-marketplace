@@ -10,7 +10,7 @@
 ## Step 1: Install Dependencies
 
 ```bash
-cd yombal-marketplace
+cd senegatex-marketplace
 npm install
 ```
 
@@ -30,7 +30,7 @@ Edit `.env.local` with your configuration:
 ```bash
 # Critical variables to generate/update:
 NEXTAUTH_SECRET=<run: openssl rand -base64 32>
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/yombal
+DATABASE_URL=postgresql://yembal:yembal_dev_pw@localhost:5432/yembal
 REDIS_URL=redis://localhost:6379
 MEILISEARCH_URL=http://localhost:7700
 ```
