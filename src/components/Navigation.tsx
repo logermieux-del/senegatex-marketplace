@@ -3,17 +3,16 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Logo from './Logo';
-import { Menu, X, Zap, BarChart3, Trophy, Newspaper, User } from 'lucide-react';
+import { Menu, X, Zap, BarChart3, Newspaper, User } from 'lucide-react';
 
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
-    { href: '/accueil', label: 'ACCUEIL', icon: Zap },
-    { href: '/scores', label: 'SCORES EN DIRECT', icon: BarChart3 },
-    { href: '/classements', label: 'CLASSEMENTS', icon: Trophy },
-    { href: '/actualites', label: 'ACTUALITÉS', icon: Newspaper },
-    { href: '/pour-vous', label: 'MON PROFIL', icon: User },
+    { href: '/', label: 'ACCUEIL', icon: Zap },
+    { href: '/listings', label: 'ANNONCES', icon: BarChart3 },
+    { href: '/messages', label: 'MESSAGES', icon: Newspaper },
+    { href: '/dashboard', label: 'MON PROFIL', icon: User },
   ];
 
   return (
